@@ -3,532 +3,840 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team SA Underwater Hockey — Portugal 2026 Raffle</title>
+  <title>Win Luxury Aesthetic Prizes & Support Team SA — Portugal 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --green: #007A4D;
-      --green-dark: #005c39;
-      --gold: #FFB81C;
-      --gold-dark: #e0a000;
-      --cream: #FDFAF4;
-      --text: #1a1a1a;
-      --muted: #666;
+      --cream:    #F5EFE4;
+      --cream2:   #EDE4D4;
+      --green:    #1B3A2D;
+      --green2:   #2a5240;
+      --gold:     #B8944A;
+      --gold-lt:  #D4AF6A;
+      --text:     #2a2016;
+      --muted:    #7a6a52;
+      --white:    #FDFAF6;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--cream);
       color: var(--text);
     }
 
-    /* ── HERO ─────────────────────────────────────────── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 90vh;
-    }
-
-    .hero-left {
-      background: white;
-      padding: 60px 50px;
+    /* ── UTILITY ─────────────────────────────── */
+    .serif { font-family: 'Cormorant Garamond', serif; }
+    .gold-line {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 0 auto;
     }
-
-    .flag-stripe {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 28px;
-    }
-    .flag-stripe span {
-      height: 5px;
-      border-radius: 3px;
+    .gold-line::before, .gold-line::after {
+      content: '';
       flex: 1;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
     }
-    .flag-stripe .g { background: var(--green); flex: 3; }
-    .flag-stripe .gold { background: var(--gold); flex: 2; }
-    .flag-stripe .r { background: #DE3831; flex: 2; }
-    .flag-stripe .b { background: #002395; flex: 2; }
 
-    .badge {
-      display: inline-block;
-      background: var(--green);
-      color: white;
+    /* ── HERO ────────────────────────────────── */
+    .hero {
+      background: var(--white);
+      text-align: center;
+      padding: 52px 24px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('team.jpg') center/cover no-repeat;
+      opacity: 0.08;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .hero h1 .win { color: var(--gold); font-style: italic; }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-flags { font-size: 1.4rem; margin-bottom: 24px; }
+
+    .portugal-script {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .draw-date {
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-    }
-
-    .hero-left h1 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-
-    .hero-left h1 span { color: var(--green); }
-
-    .hero-left p {
-      font-size: 1.05rem;
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 420px;
       margin-bottom: 32px;
     }
 
-    .goal-bar-wrap { margin-bottom: 36px; max-width: 420px; }
-    .goal-label {
+    /* Goal bar */
+    .goal-wrap {
+      max-width: 440px;
+      margin: 0 auto 32px;
+    }
+    .goal-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 8px;
     }
-    .goal-label strong { color: var(--green); font-size: 15px; }
+    .goal-meta strong { color: var(--green); font-size: 13px; }
     .goal-bar {
-      height: 10px;
-      background: #e8e8e8;
-      border-radius: 5px;
+      height: 6px;
+      background: var(--cream2);
+      border-radius: 3px;
       overflow: hidden;
     }
-    .goal-bar-fill {
+    .goal-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--green), var(--gold));
-      border-radius: 5px;
-      width: 0%;
-      transition: width 1s ease;
+      border-radius: 3px;
+      transition: width 1.2s ease;
     }
 
-    .cta-btn {
+    .hero-cta {
       display: inline-block;
       background: var(--green);
-      color: white;
-      font-size: 1.05rem;
+      color: var(--cream);
+      font-size: 12px;
       font-weight: 700;
-      padding: 16px 36px;
-      border-radius: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border-radius: 2px;
       text-decoration: none;
       transition: background 0.2s;
-      border: none;
-      cursor: pointer;
     }
-    .cta-btn:hover { background: var(--green-dark); }
+    .hero-cta:hover { background: var(--green2); }
 
-    .hero-right {
-      background: var(--green);
-      position: relative;
-      overflow: hidden;
+    /* ── DIVIDER ─────────────────────────────── */
+    .divider {
+      height: 6px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--gold) 50%, var(--green) 100%);
+    }
+
+    /* ── WHY + PRIZES ────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1000px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    .why-col {
+      padding: 52px 44px;
+      background: var(--white);
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .why-col p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .quote-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--green);
+      line-height: 1.7;
+      border-left: 3px solid var(--gold);
+      padding-left: 16px;
+      margin: 24px 0;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tagline::before { content: '♡'; color: var(--gold); font-size: 1rem; }
+
+    .prizes-col {
+      padding: 52px 44px;
+      background: var(--cream);
+      border-left: 1px solid var(--cream2);
+    }
+
+    .prize-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--cream2);
+    }
+    .prize-row:last-child { border-bottom: none; }
+
+    .prize-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gold);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 400px;
+      font-size: 1.4rem;
+      flex-shrink: 0;
     }
 
-    .hero-photo {
+    .prize-info { flex: 1; }
+    .prize-name {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .prize-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .prize-stay-tuned {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ── TEAM PHOTO ──────────────────────────── */
+    .team-photo-wrap {
+      height: 380px;
+      background: var(--green);
+      position: relative;
+      overflow: hidden;
+    }
+    .team-photo-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      position: absolute;
-      inset: 0;
-      opacity: 0.7;
+      opacity: 0.65;
     }
-
-    .hero-photo-placeholder {
+    .team-photo-placeholder {
       width: 100%;
       height: 100%;
-      position: absolute;
-      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.3);
       font-size: 13px;
-      text-align: center;
-      padding: 20px;
+      gap: 10px;
     }
-
-    .hero-overlay {
+    .team-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,60,30,0.85) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(27,58,45,0.9) 0%, transparent 60%);
     }
-
-    .hero-caption {
-      position: relative;
+    .team-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 36px 40px;
       z-index: 2;
-      color: white;
       text-align: center;
-      padding: 40px 30px;
-      align-self: flex-end;
-      width: 100%;
     }
-    .hero-caption p {
-      font-size: 1.1rem;
+    .team-caption h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-style: italic;
-      line-height: 1.6;
-      opacity: 0.95;
+      color: var(--gold-lt);
+      margin-bottom: 6px;
     }
-    .hero-caption strong {
-      display: block;
-      margin-top: 10px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      opacity: 0.7;
+    .team-caption p {
+      font-size: 11px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
     }
 
-    /* ── TICKETS ──────────────────────────────────────── */
-    .section { padding: 70px 40px; }
-    .section-title {
+    /* ── TICKETS ─────────────────────────────── */
+    .tickets-section {
+      background: var(--white);
+      padding: 64px 24px;
       text-align: center;
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 8px;
     }
-    .section-sub {
-      text-align: center;
+
+    .section-heading {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .tickets-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .tickets-note {
+      font-size: 0.82rem;
       color: var(--muted);
       margin-bottom: 44px;
     }
 
-    .tickets {
+    .ticket-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      max-width: 900px;
-      margin: 0 auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 780px;
+      margin: 0 auto 40px;
+    }
+    @media (max-width: 600px) {
+      .ticket-grid { grid-template-columns: 1fr; }
     }
 
     .ticket-card {
-      background: white;
-      border: 2px solid #e8e8e8;
-      border-radius: 16px;
-      padding: 32px 28px;
+      background: var(--cream);
+      border: 1px solid var(--cream2);
+      border-radius: 4px;
+      padding: 36px 24px;
       text-align: center;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
       position: relative;
     }
-    .ticket-card:hover { border-color: var(--green); transform: translateY(-4px); }
-    .ticket-card.popular {
+    .ticket-card:hover {
       border-color: var(--gold);
-      box-shadow: 0 8px 32px rgba(255,184,28,0.2);
+      box-shadow: 0 8px 32px rgba(184,148,74,0.15);
+      transform: translateY(-3px);
+    }
+    .ticket-card.featured {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--cream);
     }
 
-    .popular-badge {
+    .featured-label {
       position: absolute;
-      top: -13px;
+      top: -12px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--gold);
       color: var(--text);
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 5px 16px;
-      border-radius: 20px;
+      padding: 4px 14px;
+      border-radius: 2px;
     }
 
-    .ticket-price {
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--green);
-    }
-    .ticket-price span { font-size: 1rem; font-weight: 500; color: var(--muted); }
-    .ticket-count {
-      font-size: 1.1rem;
+    .t-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
       font-weight: 700;
-      margin: 8px 0 20px;
+      color: var(--green);
+      line-height: 1;
     }
+    .featured .t-price { color: var(--gold-lt); }
 
-    .buy-btn {
+    .t-count {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 8px 0 24px;
+    }
+    .featured .t-count { color: rgba(245,239,228,0.6); }
+
+    .t-btn {
       display: block;
       width: 100%;
-      padding: 13px;
-      border-radius: 8px;
-      font-size: 1rem;
+      padding: 12px;
+      font-size: 11px;
       font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       text-align: center;
-      text-decoration: none;
+      border-radius: 2px;
       cursor: pointer;
       border: none;
-      transition: background 0.2s;
+      transition: all 0.2s;
+      text-decoration: none;
     }
-    .buy-btn-green { background: var(--green); color: white; }
-    .buy-btn-green:hover { background: var(--green-dark); }
-    .buy-btn-gold { background: var(--gold); color: var(--text); }
-    .buy-btn-gold:hover { background: var(--gold-dark); }
+    .t-btn-outline {
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+    }
+    .t-btn-outline:hover { background: var(--green); color: var(--cream); }
+    .t-btn-gold { background: var(--gold); color: var(--text); }
+    .t-btn-gold:hover { background: var(--gold-lt); }
 
-    /* PayFast forms hidden */
     .payfast-form { display: none; }
 
-    /* ── PRIZES ───────────────────────────────────────── */
-    .prizes-section { background: white; }
-    .prizes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 960px;
-      margin: 0 auto;
+    .banner-strip {
+      background: var(--green);
+      color: var(--cream);
+      text-align: center;
+      padding: 14px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
-    .prize-card {
+    .banner-strip span { color: var(--gold-lt); }
+
+    /* ── HOW TO ENTER ────────────────────────── */
+    .how-section {
       background: var(--cream);
-      border-radius: 12px;
-      padding: 28px 20px;
+      padding: 64px 24px;
       text-align: center;
     }
-    .prize-icon { font-size: 2.2rem; margin-bottom: 12px; }
-    .prize-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
-    .prize-value { color: var(--green); font-weight: 800; font-size: 1.1rem; }
 
-    /* ── HOW IT WORKS ─────────────────────────────────── */
-    .steps {
+    .steps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 30px;
-      max-width: 800px;
-      margin: 0 auto;
+      gap: 32px;
+      max-width: 840px;
+      margin: 48px auto 0;
     }
-    .step { text-align: center; }
+
+    .step-item { text-align: center; }
     .step-num {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: var(--green);
-      color: white;
-      font-size: 1.2rem;
-      font-weight: 900;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 14px;
     }
-    .step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
-    .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-
-    /* ── FOOTER ───────────────────────────────────────── */
-    .footer-banner {
-      background: var(--green);
-      color: white;
-      text-align: center;
-      padding: 50px 20px;
-    }
-    .footer-banner h2 {
-      font-size: 2rem;
-      font-weight: 900;
+    .step-item h3 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
       margin-bottom: 8px;
     }
-    .footer-banner p { opacity: 0.85; font-size: 1rem; }
-    .footer-note {
-      background: #1a1a1a;
-      color: #888;
+    .step-item p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── PAYMENT INFO ────────────────────────── */
+    .pay-section {
+      background: var(--white);
+      padding: 56px 24px;
       text-align: center;
-      padding: 20px;
-      font-size: 12px;
+    }
+    .pay-methods {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+    .pay-method {
+      background: var(--cream);
+      border: 1px solid var(--cream2);
+      border-radius: 4px;
+      padding: 20px 32px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .pay-method .pm-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .pay-method .pm-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .pay-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    .pay-note strong { color: var(--green); }
+
+    /* ── FOOTER ──────────────────────────────── */
+    .footer-top {
+      background: var(--green);
+      padding: 56px 24px;
+      text-align: center;
+      color: var(--cream);
+    }
+    .footer-top .together {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-style: italic;
+      color: var(--gold-lt);
+      margin-bottom: 10px;
+    }
+    .footer-top p {
+      font-size: 0.85rem;
+      opacity: 0.65;
+      letter-spacing: 1px;
     }
 
-    /* ── RESPONSIVE ───────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { min-height: 280px; order: -1; }
-      .hero-left { padding: 40px 24px; }
-      .section { padding: 50px 20px; }
+    .footer-bottom {
+      background: #111;
+      color: #555;
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+      .prizes-col { border-left: none; border-top: 1px solid var(--cream2); }
+      .why-col, .prizes-col { padding: 40px 24px; }
+      .team-photo-wrap { height: 280px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── HERO ──────────────────────────────────────────── -->
+<!-- ── HERO ──────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="flag-stripe">
-      <span class="g"></span>
-      <span class="gold"></span>
-      <span class="r"></span>
-      <span class="b"></span>
-    </div>
-    <span class="badge">Team SA · Portugal 2026</span>
-    <h1>Help send <span>Team SA</span> to the World Stage</h1>
-    <p>Our underwater hockey players have earned their place at the international tournament in Portugal. Every ticket brings them one step closer. Every rand counts.</p>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Elite Ladies Underwater Hockey</p>
+    <h1>
+      <span class="win">Win</span> Luxury<br>Aesthetic Prizes
+    </h1>
+    <p class="hero-sub">& Support Team SA <span class="hero-flags">🇿🇦 🇵🇹</span></p>
+    <div class="portugal-script">Portugal 2026</div>
+    <p class="draw-date">Fundraising Raffle &nbsp;·&nbsp; Draw Date: 30 June 2026</p>
 
-    <div class="goal-bar-wrap">
-      <div class="goal-label">
-        <span>Fundraising goal</span>
-        <strong>R50,000</strong>
+    <div class="goal-wrap">
+      <div class="goal-meta">
+        <span>Funds raised</span>
+        <strong>Goal: R50,000</strong>
       </div>
       <div class="goal-bar">
-        <div class="goal-bar-fill" id="goalFill"></div>
+        <div class="goal-fill" id="goalFill"></div>
       </div>
     </div>
 
-    <a href="#tickets" class="cta-btn">Buy Tickets Now</a>
-  </div>
-
-  <div class="hero-right">
-    <!-- Replace with: <img src="team.jpg" alt="Team SA" class="hero-photo"> -->
-    <div class="hero-photo-placeholder">
-      <div style="font-size:4rem; margin-bottom:12px">🤿</div>
-      <div>Add team photo here<br><small>Replace this block with an &lt;img&gt; tag</small></div>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-caption">
-      <p>"Every ticket helps us represent South Africa — and Africa — on the international stage."</p>
-      <strong>— Team SA Underwater Hockey</strong>
-    </div>
+    <a href="#tickets" class="hero-cta">Buy Your Tickets</a>
   </div>
 </section>
 
-<!-- ── TICKETS ────────────────────────────────────────── -->
-<section class="section" id="tickets">
-  <h2 class="section-title">Choose Your Tickets</h2>
-  <p class="section-sub">Draw closes <strong>30 June 2026</strong> · Winner announced via WhatsApp</p>
+<div class="divider"></div>
 
-  <div class="tickets">
+<!-- ── WHY + PRIZES ──────────────────────────────── -->
+<div style="background:var(--white)">
+  <div class="two-col">
+    <div class="why-col">
+      <p class="section-label">Why Your Support Matters</p>
+      <p>I have been selected to represent South Africa at the Elite Ladies Underwater Hockey Test Series in Portugal.</p>
+      <p>As our national team is entirely self-funded, we are responsible for all travel, accommodation and competition costs.</p>
+      <div class="quote-line">
+        "Every ticket helps me represent South Africa — and Africa — on the international stage."
+      </div>
+      <p class="tagline">Doctor. Mother. Athlete. Grateful for every bit of support.</p>
+    </div>
 
-    <!-- R150 package -->
+    <div class="prizes-col">
+      <p class="section-label">Win Incredible Prizes</p>
+
+      <div class="prize-row">
+        <div class="prize-icon-wrap">💎</div>
+        <div class="prize-info">
+          <div class="prize-name">Skin Booster Treatment</div>
+          <div class="prize-value">R7,500</div>
+        </div>
+      </div>
+
+      <div class="prize-row">
+        <div class="prize-icon-wrap">🎁</div>
+        <div class="prize-info">
+          <div class="prize-name">Luxury Skincare Hamper</div>
+          <div class="prize-value" style="font-size:1.1rem;color:var(--muted)">Prize TBC</div>
+        </div>
+      </div>
+
+      <div class="prize-row">
+        <div class="prize-icon-wrap">✨</div>
+        <div class="prize-info">
+          <div class="prize-name">Additional Luxury Prizes</div>
+          <div class="prize-stay-tuned">Added weekly — Stay tuned!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TEAM PHOTO ─────────────────────────────────── -->
+<div class="team-photo-wrap">
+  <!-- Replace with: <img src="team.jpg" alt="Team SA"> -->
+  <div class="team-photo-placeholder">
+    <div style="font-size:3rem">🤿</div>
+    <div>Drop team.jpg here</div>
+  </div>
+  <div class="team-overlay"></div>
+  <div class="team-caption">
+    <h2>"Let's take Team SA to the World."</h2>
+    <p>Together, we can &nbsp;♡</p>
+  </div>
+</div>
+
+<!-- ── TICKETS ────────────────────────────────────── -->
+<section class="tickets-section" id="tickets">
+  <p class="section-heading">Ticket Packages</p>
+  <h2>Choose Your Entry</h2>
+  <p class="tickets-note">Draw closes <strong>30 June 2026</strong> — Winner announced via WhatsApp & social media</p>
+
+  <div class="ticket-grid">
+
+    <!-- R150 -->
     <div class="ticket-card">
-      <div class="ticket-price">R150 <span>/ entry</span></div>
-      <div class="ticket-count">1 Ticket</div>
+      <div class="t-price">R150</div>
+      <div class="t-count">1 Ticket</div>
       <form class="payfast-form" id="form150" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
-        <input type="hidden" name="return_url" value="https://YOUR-DOMAIN/thankyou.html">
-        <input type="hidden" name="cancel_url" value="https://YOUR-DOMAIN/">
-        <input type="hidden" name="notify_url" value="https://YOUR-WEBHOOK-URL">
+        <input type="hidden" name="return_url" value="https://team-sa-raffle.vercel.app/thankyou.html">
+        <input type="hidden" name="cancel_url" value="https://team-sa-raffle.vercel.app/">
+        <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="150.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 1 Ticket">
         <input type="hidden" name="item_description" value="1 raffle ticket · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="1ticket">
       </form>
-      <button class="buy-btn buy-btn-green" onclick="document.getElementById('form150').submit()">Buy for R150</button>
+      <button class="t-btn t-btn-outline" onclick="buyTicket('form150', 150)">Enter for R150</button>
     </div>
 
-    <!-- R250 package -->
-    <div class="ticket-card popular">
-      <span class="popular-badge">Best Value</span>
-      <div class="ticket-price">R250 <span>/ entry</span></div>
-      <div class="ticket-count">3 Tickets</div>
+    <!-- R250 -->
+    <div class="ticket-card featured">
+      <span class="featured-label">Best Value</span>
+      <div class="t-price">R250</div>
+      <div class="t-count">3 Tickets</div>
       <form class="payfast-form" id="form250" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
-        <input type="hidden" name="return_url" value="https://YOUR-DOMAIN/thankyou.html">
-        <input type="hidden" name="cancel_url" value="https://YOUR-DOMAIN/">
-        <input type="hidden" name="notify_url" value="https://YOUR-WEBHOOK-URL">
+        <input type="hidden" name="return_url" value="https://team-sa-raffle.vercel.app/thankyou.html">
+        <input type="hidden" name="cancel_url" value="https://team-sa-raffle.vercel.app/">
+        <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="250.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 3 Tickets">
         <input type="hidden" name="item_description" value="3 raffle tickets · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="3tickets">
       </form>
-      <button class="buy-btn buy-btn-gold" onclick="document.getElementById('form250').submit()">Buy for R250</button>
+      <button class="t-btn t-btn-gold" onclick="buyTicket('form250', 250)">Enter for R250</button>
     </div>
 
-    <!-- R550 package -->
+    <!-- R550 -->
     <div class="ticket-card">
-      <div class="ticket-price">R550 <span>/ entry</span></div>
-      <div class="ticket-count">7 Tickets</div>
+      <div class="t-price">R550</div>
+      <div class="t-count">7 Tickets</div>
       <form class="payfast-form" id="form550" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
-        <input type="hidden" name="return_url" value="https://YOUR-DOMAIN/thankyou.html">
-        <input type="hidden" name="cancel_url" value="https://YOUR-DOMAIN/">
-        <input type="hidden" name="notify_url" value="https://YOUR-WEBHOOK-URL">
+        <input type="hidden" name="return_url" value="https://team-sa-raffle.vercel.app/thankyou.html">
+        <input type="hidden" name="cancel_url" value="https://team-sa-raffle.vercel.app/">
+        <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="550.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 7 Tickets">
         <input type="hidden" name="item_description" value="7 raffle tickets · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="7tickets">
       </form>
-      <button class="buy-btn buy-btn-green" onclick="document.getElementById('form550').submit()">Buy for R550</button>
+      <button class="t-btn t-btn-outline" onclick="buyTicket('form550', 550)">Enter for R550</button>
     </div>
 
   </div>
-</section>
 
-<!-- ── PRIZES ─────────────────────────────────────────── -->
-<section class="section prizes-section">
-  <h2 class="section-title">The Prizes</h2>
-  <p class="section-sub">Luxury aesthetic prizes — confirm final list with Jeanie</p>
-
-  <div class="prizes">
-    <div class="prize-card">
-      <div class="prize-icon">🥇</div>
-      <div class="prize-name">1st Prize</div>
-      <div class="prize-value">TBA</div>
-    </div>
-    <div class="prize-card">
-      <div class="prize-icon">🥈</div>
-      <div class="prize-name">2nd Prize</div>
-      <div class="prize-value">TBA</div>
-    </div>
-    <div class="prize-card">
-      <div class="prize-icon">🥉</div>
-      <div class="prize-name">3rd Prize</div>
-      <div class="prize-value">TBA</div>
-    </div>
+  <div class="banner-strip">
+    ♡ &nbsp; <span>The more tickets you buy, the greater your chance to win!</span> &nbsp; ♡
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ───────────────────────────────────── -->
-<section class="section">
-  <h2 class="section-title">How It Works</h2>
-  <p class="section-sub">Simple, safe, and completely online</p>
+<!-- ── HOW TO ENTER ───────────────────────────────── -->
+<section class="how-section">
+  <p class="section-heading">How to Enter</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--green)">Simple. Quick. Online.</h2>
 
-  <div class="steps">
-    <div class="step">
+  <div class="steps-grid">
+    <div class="step-item">
       <div class="step-num">1</div>
-      <h3>Pick your package</h3>
-      <p>Choose 1, 3, or 7 tickets and pay securely via PayFast.</p>
+      <h3>Choose a Package</h3>
+      <p>Select 1, 3, or 7 tickets and click to pay securely.</p>
     </div>
-    <div class="step">
+    <div class="step-item">
       <div class="step-num">2</div>
-      <h3>Get your numbers</h3>
-      <p>Your ticket numbers are sent to your WhatsApp within minutes.</p>
+      <h3>Pay Securely</h3>
+      <p>Pay via EFT, Zapper, or Shapid — quick and safe.</p>
     </div>
-    <div class="step">
+    <div class="step-item">
       <div class="step-num">3</div>
-      <h3>Watch the draw</h3>
-      <p>Live draw on 30 June 2026 — winner announced on WhatsApp.</p>
+      <h3>Get Your Numbers</h3>
+      <p>Your unique ticket numbers arrive on WhatsApp within minutes.</p>
     </div>
-    <div class="step">
+    <div class="step-item">
       <div class="step-num">4</div>
-      <h3>Collect your prize</h3>
-      <p>We contact the winner directly and arrange delivery or collection.</p>
+      <h3>Watch the Draw</h3>
+      <p>30 June 2026 — winner announced on WhatsApp & social media.</p>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER BANNER ──────────────────────────────────── -->
-<div class="footer-banner">
-  <h2>Together, we can. ♡</h2>
-  <p>Supporting Team SA Underwater Hockey · Durban · Portugal 2026</p>
+<!-- ── PAYMENT METHODS ───────────────────────────── -->
+<section class="pay-section" id="pay">
+  <p class="section-heading">Pay Here</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--green);margin-bottom:8px">Payment Options</h2>
+
+  <div class="pay-methods">
+    <div class="pay-method">
+      <div class="pm-icon">🏦</div>
+      <div class="pm-name">EFT</div>
+    </div>
+    <div class="pay-method">
+      <div class="pm-icon">📱</div>
+      <div class="pm-name">Zapper</div>
+    </div>
+    <div class="pay-method">
+      <div class="pm-icon">💳</div>
+      <div class="pm-name">Shapid</div>
+    </div>
+  </div>
+
+  <p class="pay-note">
+    After payment, use the reference <strong>YOUR NAME + PACKAGE</strong> (e.g. Jane Smith R250).<br>
+    Once payment is confirmed, your raffle ticket numbers will be sent to your WhatsApp.<br><br>
+    <strong>Bank details:</strong> [Jeanie to add EFT details here]
+  </p>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer-top">
+  <div class="together">Together, we can. ♡</div>
+  <p>Your support helps make dreams, sacrifice and hard work worth it.</p>
+  <p style="margin-top:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase">Let's take Team SA to the world</p>
 </div>
-<div class="footer-note">
-  Draw closes 30 June 2026. No cash alternative. Winner notified via WhatsApp. By entering you agree to our terms.
+<div class="footer-bottom">
+  DRAW DATE: 30 JUNE 2026 &nbsp;·&nbsp; WINNERS ANNOUNCED VIA WHATSAPP & SOCIAL MEDIA &nbsp;·&nbsp; NO CASH ALTERNATIVE
+</div>
+
+<!-- Modal for when PayFast isn't set up yet -->
+<div id="payModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center">
+  <div style="background:var(--white);border-radius:4px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative">
+    <button onclick="closeModal()" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)">×</button>
+    <div style="font-size:2rem;margin-bottom:14px">💳</div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--green);margin-bottom:12px" id="modalTitle">Buy 1 Ticket — R150</h3>
+    <p style="font-size:0.85rem;color:var(--muted);line-height:1.8;margin-bottom:24px">
+      Pay <strong id="modalAmount" style="color:var(--green)">R150</strong> using EFT, Zapper or Shapid.<br>
+      Use reference: <strong>Your Name + Package</strong><br><br>
+      <span style="color:var(--muted)">Bank details below</span>
+    </p>
+    <div style="background:var(--cream);border-radius:4px;padding:16px;text-align:left;font-size:0.82rem;line-height:2;margin-bottom:20px;color:var(--text)">
+      <strong>Bank:</strong> [Bank name]<br>
+      <strong>Account holder:</strong> [Name]<br>
+      <strong>Account number:</strong> [Number]<br>
+      <strong>Branch code:</strong> [Code]<br>
+      <strong>Reference:</strong> Your name + R<span id="modalRef">150</span>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted)">After payment, WhatsApp your proof of payment to receive your ticket numbers.</p>
+  </div>
 </div>
 
 <script>
-  // Animate goal bar on load (update raised amount here)
-  const RAISED = 0; // Update this number as money comes in
   const GOAL = 50000;
+  const RAISED = 0; // Update as money comes in
+
   window.addEventListener('load', () => {
     const pct = Math.min((RAISED / GOAL) * 100, 100);
-    setTimeout(() => {
-      document.getElementById('goalFill').style.width = pct + '%';
-    }, 300);
+    setTimeout(() => document.getElementById('goalFill').style.width = pct + '%', 400);
   });
 
-  // Smooth scroll
-  document.querySelector('.cta-btn').addEventListener('click', e => {
+  document.querySelector('.hero-cta').addEventListener('click', e => {
     e.preventDefault();
     document.getElementById('tickets').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const PAYFAST_READY = false; // Set to true once PayFast merchant ID is filled in
+
+  function buyTicket(formId, amount) {
+    if (PAYFAST_READY) {
+      document.getElementById(formId).submit();
+    } else {
+      const pkgMap = { 150: '1 Ticket', 250: '3 Tickets', 550: '7 Tickets' };
+      document.getElementById('modalTitle').textContent = `Buy ${pkgMap[amount]} — R${amount}`;
+      document.getElementById('modalAmount').textContent = `R${amount}`;
+      document.getElementById('modalRef').textContent = amount;
+      const modal = document.getElementById('payModal');
+      modal.style.display = 'flex';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('payModal').style.display = 'none';
+  }
+
+  document.getElementById('payModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('payModal')) closeModal();
   });
 </script>
 </body>
