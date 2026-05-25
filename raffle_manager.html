@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raffle Manager — Team SA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green: #007A4D;
+      --green-dark: #005c39;
+      --gold: #FFB81C;
+      --cream: #FDFAF4;
+      --red: #e53e3e;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f0f4f0;
+      color: #1a1a1a;
+    }
+    header {
+      background: var(--green);
+      color: white;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    header h1 { font-size: 1.2rem; font-weight: 800; }
+    header span { font-size: 0.85rem; opacity: 0.75; }
+
+    .main { padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
+
+    /* Stats row */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 18px;
+      text-align: center;
+    }
+    .stat-val { font-size: 2rem; font-weight: 900; color: var(--green); }
+    .stat-lbl { font-size: 0.8rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Goal bar */
+    .goal-card {
+      background: white;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 28px;
+    }
+    .goal-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; }
+    .goal-header strong { color: var(--green); font-size: 1.1rem; }
+    .goal-bar { height: 12px; background: #e8e8e8; border-radius: 6px; overflow: hidden; }
+    .goal-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      border-radius: 6px;
+      transition: width 0.6s ease;
+    }
+
+    /* Add entry form */
+    .add-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .add-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--green); }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: #fafafa;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--green); }
+    .add-btn {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 11px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .add-btn:hover { background: var(--green-dark); }
+
+    /* Table */
+    .table-card { background: white; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; overflow-x: auto; }
+    .table-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { text-align: left; padding: 10px 12px; background: #f5f5f5; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+    td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+    .del-btn {
+      background: none;
+      border: 1px solid #ffcdd2;
+      color: var(--red);
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .del-btn:hover { background: #fff5f5; }
+
+    /* Draw */
+    .draw-card {
+      background: var(--green);
+      color: white;
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .draw-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .draw-card p { opacity: 0.8; font-size: 0.9rem; margin-bottom: 20px; }
+    .draw-btn {
+      background: var(--gold);
+      color: #1a1a1a;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .draw-btn:hover { background: #e0a000; }
+    .winner-box {
+      display: none;
+      margin-top: 20px;
+      background: white;
+      color: var(--green);
+      border-radius: 10px;
+      padding: 20px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>🏊 Raffle Manager — Team SA Portugal 2026</h1>
+    <span>Admin dashboard · Keep this page private</span>
+  </div>
+  <span id="dateDisplay"></span>
+</header>
+
+<div class="main">
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-val" id="statEntries">0</div><div class="stat-lbl">Total Entries</div></div>
+    <div class="stat"><div class="stat-val" id="statTickets">0</div><div class="stat-lbl">Total Tickets</div></div>
+    <div class="stat"><div class="stat-val" id="statRaised">R0</div><div class="stat-lbl">Raised</div></div>
+    <div class="stat"><div class="stat-val" id="statLeft">R50,000</div><div class="stat-lbl">Still Needed</div></div>
+  </div>
+
+  <!-- Goal bar -->
+  <div class="goal-card">
+    <div class="goal-header">
+      <span>Progress toward goal</span>
+      <strong id="goalPct">0%</strong>
+    </div>
+    <div class="goal-bar"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#888">
+      <span>R0</span><span>R50,000</span>
+    </div>
+  </div>
+
+  <!-- Add entry -->
+  <div class="add-card">
+    <h2>+ Add New Entry</h2>
+    <div class="form-row">
+      <input type="text" id="inputName" placeholder="Full name" />
+      <input type="text" id="inputWhatsApp" placeholder="WhatsApp number" />
+      <select id="inputPackage">
+        <option value="">Select package</option>
+        <option value="150">R150 — 1 ticket</option>
+        <option value="250">R250 — 3 tickets</option>
+        <option value="550">R550 — 7 tickets</option>
+      </select>
+      <input type="text" id="inputNotes" placeholder="Notes (optional)" />
+    </div>
+    <button class="add-btn" onclick="addEntry()">Add Entry</button>
+  </div>
+
+  <!-- Entries table -->
+  <div class="table-card">
+    <h2>All Entries</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>WhatsApp</th>
+          <th>Package</th>
+          <th>Tickets</th>
+          <th>Added</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="entriesBody">
+        <tr><td colspan="8" class="empty">No entries yet. Add the first one above.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Draw winner -->
+  <div class="draw-card">
+    <h2>🎯 Draw the Winner</h2>
+    <p>Use only on draw day — 30 June 2026. This picks a random ticket from all entries.</p>
+    <button class="draw-btn" onclick="drawWinner()">Draw Winner Now</button>
+    <div class="winner-box" id="winnerBox"></div>
+  </div>
+
+</div>
+
+<script>
+  const GOAL = 50000;
+  const PACKAGE_TICKETS = { '150': 1, '250': 3, '550': 7 };
+
+  let entries = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
+  let nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
+
+  function save() {
+    localStorage.setItem('raffleEntries', JSON.stringify(entries));
+    localStorage.setItem('nextTicket', nextTicket);
+  }
+
+  function fmt(n) { return 'R' + n.toLocaleString('en-ZA'); }
+
+  function render() {
+    const totalEntries = entries.length;
+    const totalTickets = entries.reduce((s, e) => s + e.tickets, 0);
+    const raised = entries.reduce((s, e) => s + parseInt(e.pkg), 0);
+    const left = Math.max(0, GOAL - raised);
+    const pct = Math.min(100, Math.round((raised / GOAL) * 100));
+
+    document.getElementById('statEntries').textContent = totalEntries;
+    document.getElementById('statTickets').textContent = totalTickets;
+    document.getElementById('statRaised').textContent = fmt(raised);
+    document.getElementById('statLeft').textContent = fmt(left);
+    document.getElementById('goalPct').textContent = pct + '%';
+    document.getElementById('goalFill').style.width = pct + '%';
+
+    const tbody = document.getElementById('entriesBody');
+    if (entries.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty">No entries yet. Add the first one above.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = entries.map((e, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><strong>${e.name}</strong></td>
+        <td>${e.whatsapp}</td>
+        <td>R${e.pkg}</td>
+        <td>${e.ticketNums}</td>
+        <td>${e.date}</td>
+        <td>${e.notes || '—'}</td>
+        <td><button class="del-btn" onclick="deleteEntry(${i})">Remove</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function addEntry() {
+    const name = document.getElementById('inputName').value.trim();
+    const whatsapp = document.getElementById('inputWhatsApp').value.trim();
+    const pkg = document.getElementById('inputPackage').value;
+    const notes = document.getElementById('inputNotes').value.trim();
+
+    if (!name || !whatsapp || !pkg) {
+      alert('Please fill in name, WhatsApp, and package.');
+      return;
+    }
+
+    const ticketCount = PACKAGE_TICKETS[pkg];
+    const nums = [];
+    for (let i = 0; i < ticketCount; i++) nums.push(nextTicket++);
+    const ticketNums = nums.join(', ');
+
+    entries.push({
+      name, whatsapp, pkg,
+      tickets: ticketCount,
+      ticketNums,
+      notes,
+      date: new Date().toLocaleDateString('en-ZA')
+    });
+
+    save();
+    render();
+
+    // Clear inputs
+    document.getElementById('inputName').value = '';
+    document.getElementById('inputWhatsApp').value = '';
+    document.getElementById('inputPackage').value = '';
+    document.getElementById('inputNotes').value = '';
+  }
+
+  function deleteEntry(i) {
+    if (!confirm(`Remove entry for ${entries[i].name}?`)) return;
+    entries.splice(i, 1);
+    save();
+    render();
+  }
+
+  function drawWinner() {
+    if (entries.length === 0) { alert('No entries yet!'); return; }
+    if (!confirm('Are you sure? This is the official draw!')) return;
+
+    // Build pool of all ticket numbers with owner
+    const pool = [];
+    entries.forEach(e => {
+      e.ticketNums.split(', ').forEach(n => pool.push({ name: e.name, whatsapp: e.whatsapp, ticket: n }));
+    });
+
+    const winner = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.getElementById('winnerBox');
+    box.style.display = 'block';
+    box.innerHTML = `
+      🎉 WINNER! 🎉<br><br>
+      <span style="font-size:1.4rem">${winner.name}</span><br>
+      <span style="font-size:0.95rem;color:#555;font-weight:400">Ticket #${winner.ticket} · ${winner.whatsapp}</span>
+    `;
+  }
+
+  document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-ZA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful — Team SA Raffle</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --green: #007A4D;
+      --gold: #FFB81C;
+      --cream: #FDFAF4;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 56px 48px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+    }
+
+    .check {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2rem;
+      animation: pop 0.4s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      80% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .flag-stripe {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 28px;
+    }
+    .flag-stripe span { height: 4px; border-radius: 2px; flex: 1; }
+    .flag-stripe .g { background: var(--green); flex: 3; }
+    .flag-stripe .gold { background: var(--gold); flex: 2; }
+    .flag-stripe .r { background: #DE3831; flex: 2; }
+    .flag-stripe .b { background: #002395; flex: 2; }
+
+    h1 { font-size: 1.8rem; font-weight: 900; color: var(--green); margin-bottom: 12px; }
+    .subtitle { color: #555; font-size: 1rem; line-height: 1.7; margin-bottom: 28px; }
+
+    .info-box {
+      background: #f4faf8;
+      border: 1px solid #d0ece4;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .info-box p { font-size: 0.9rem; color: #444; line-height: 1.8; }
+    .info-box strong { color: var(--green); }
+
+    .back-link {
+      display: inline-block;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .footer-msg {
+      margin-top: 36px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--green);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="flag-stripe">
+      <span class="g"></span><span class="gold"></span>
+      <span class="r"></span><span class="b"></span>
+    </div>
+    <div class="check">✓</div>
+    <h1>Payment Successful!</h1>
+    <p class="subtitle">
+      Thank you so much for supporting Team SA!<br>
+      Your ticket numbers will be sent to your WhatsApp shortly.
+    </p>
+    <div class="info-box">
+      <p>
+        <strong>What happens next:</strong><br>
+        ✔ Your payment has been confirmed<br>
+        ✔ Your unique ticket numbers will arrive on WhatsApp within a few minutes<br>
+        ✔ Keep those numbers safe — you'll need them on draw day<br><br>
+        <strong>Draw date:</strong> 30 June 2026<br>
+        <strong>Winner announced via WhatsApp</strong>
+      </p>
+    </div>
+    <a href="/" class="back-link">← Buy more tickets</a>
+    <div class="footer-msg">Together, we can. ♡</div>
+  </div>
+</body>
+</html>
