@@ -3,228 +3,292 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Win Luxury Aesthetic Prizes & Support Team SA — Portugal 2026</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Win Luxury Aesthetic Prizes — Team SA Portugal 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --cream:    #F5EFE4;
-      --cream2:   #EDE4D4;
-      --green:    #1B3A2D;
-      --green2:   #2a5240;
-      --gold:     #B8944A;
-      --gold-lt:  #D4AF6A;
-      --text:     #2a2016;
-      --muted:    #7a6a52;
-      --white:    #FDFAF6;
+      --green:  #007A4D;
+      --green2: #005c39;
+      --gold:   #FFB81C;
+      --gold2:  #e0a000;
+      --red:    #DE3831;
+      --blue:   #002395;
+      --white:  #ffffff;
+      --offwhite: #f8f8f6;
     }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--offwhite); color: #1a1a1a; }
 
-    /* ── UTILITY ─────────────────────────────── */
-    .serif { font-family: 'Cormorant Garamond', serif; }
-    .gold-line {
+    /* ── FLAG STRIPE ─────────────────── */
+    .flag-stripe {
+      height: 6px;
       display: flex;
-      align-items: center;
-      gap: 14px;
-      margin: 0 auto;
     }
-    .gold-line::before, .gold-line::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
+    .flag-stripe .s1 { background: var(--green); flex: 4; }
+    .flag-stripe .s2 { background: var(--gold);  flex: 2; }
+    .flag-stripe .s3 { background: var(--red);   flex: 2; }
+    .flag-stripe .s4 { background: var(--blue);  flex: 2; }
 
-    /* ── HERO ────────────────────────────────── */
+    /* ── HERO ────────────────────────── */
     .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+    }
+
+    .hero-left {
       background: var(--white);
-      text-align: center;
-      padding: 52px 24px 44px;
-      position: relative;
-      overflow: hidden;
+      padding: 56px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url('team.jpg') center/cover no-repeat;
-      opacity: 0.08;
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-
-    .eyebrow {
+    .hero-eyebrow {
       font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      font-weight: 700;
-      line-height: 1.0;
-      color: var(--green);
-      margin-bottom: 6px;
-    }
-    .hero h1 .win { color: var(--gold); font-style: italic; }
-
-    .hero-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      font-weight: 400;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-
-    .hero-flags { font-size: 1.4rem; margin-bottom: 24px; }
-
-    .portugal-script {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-style: italic;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .draw-date {
-      font-size: 11px;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-
-    /* Goal bar */
-    .goal-wrap {
-      max-width: 440px;
-      margin: 0 auto 32px;
-    }
-    .goal-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .goal-meta strong { color: var(--green); font-size: 13px; }
-    .goal-bar {
-      height: 6px;
-      background: var(--cream2);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .goal-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      border-radius: 3px;
-      transition: width 1.2s ease;
-    }
-
-    .hero-cta {
-      display: inline-block;
-      background: var(--green);
-      color: var(--cream);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 16px 40px;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .hero-cta:hover { background: var(--green2); }
-
-    /* ── DIVIDER ─────────────────────────────── */
-    .divider {
-      height: 6px;
-      background: linear-gradient(90deg, var(--green) 0%, var(--gold) 50%, var(--green) 100%);
-    }
-
-    /* ── WHY + PRIZES ────────────────────────── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: 1000px;
-      margin: 0 auto;
-      gap: 0;
-    }
-
-    .why-col {
-      padding: 52px 44px;
-      background: var(--white);
-    }
-
-    .section-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .why-col p {
-      font-size: 0.88rem;
-      line-height: 1.9;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .quote-line {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-style: italic;
       color: var(--green);
-      line-height: 1.7;
-      border-left: 3px solid var(--gold);
-      padding-left: 16px;
-      margin: 24px 0;
-    }
-
-    .tagline {
-      font-size: 0.8rem;
-      color: var(--muted);
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .tagline::before { content: '♡'; color: var(--gold); font-size: 1rem; }
+    .hero-eyebrow::after { content: ''; flex: 1; height: 1px; background: #e0e0e0; }
 
-    .prizes-col {
-      padding: 52px 44px;
-      background: var(--cream);
-      border-left: 1px solid var(--cream2);
+    .hero-left h1 {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    .hero-left h1 .accent { color: var(--green); }
+
+    .hero-left .tagline {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 28px;
     }
 
-    .prize-row {
+    /* Bubbles ─ decorative */
+    .bubbles {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .bubble {
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      opacity: 0.25;
+      animation: rise 3s ease-in-out infinite;
+    }
+    .bubble:nth-child(1) { width: 10px; height: 10px; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 16px; height: 16px; animation-delay: 0.4s; }
+    .bubble:nth-child(3) { width: 10px; height: 10px; animation-delay: 0.8s; }
+    .bubble:nth-child(4) { width: 8px;  height: 8px;  animation-delay: 1.2s; }
+    @keyframes rise {
+      0%, 100% { transform: translateY(0); opacity: 0.25; }
+      50% { transform: translateY(-8px); opacity: 0.5; }
+    }
+
+    /* Goal bar */
+    .goal-wrap { max-width: 380px; margin-bottom: 32px; }
+    .goal-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .goal-meta .raised { color: var(--green); font-size: 14px; }
+    .goal-bar { height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
+    .goal-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.2s ease;
+    }
+
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      padding: 15px 36px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--green2); }
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+      padding: 15px 28px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--green); color: white; }
+
+    /* Hero right */
+    .hero-right {
+      background: var(--green);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      position: absolute;
+      inset: 0;
+    }
+    .hero-right-placeholder {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.2);
+      font-size: 5rem;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,50,25,0.9) 0%, rgba(0,80,40,0.3) 60%, transparent 100%);
+    }
+    .hero-right-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 44px 40px;
+      color: white;
+    }
+    .hero-right-content .draw-chip {
+      display: inline-block;
+      background: var(--gold);
+      color: #1a1a1a;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+    .hero-right-content h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .hero-right-content p { font-size: 0.9rem; opacity: 0.75; }
+
+    /* ── SECTION SHARED ──────────────── */
+    .section { padding: 72px 40px; }
+    .section-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 4px;
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .section-sub { color: #666; font-size: 0.9rem; margin-bottom: 48px; }
+
+    /* ── STORY + PRIZES ──────────────── */
+    .story-prizes {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .story-col {
+      padding: 60px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .story-col p {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+    .story-quote {
+      border-left: 4px solid var(--gold);
+      padding: 12px 20px;
+      margin: 24px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--green);
+      line-height: 1.7;
+      background: #f0faf5;
+      border-radius: 0 8px 8px 0;
+    }
+    .dma {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dma::before { content: '♡'; color: var(--gold); font-size: 1.1rem; }
+
+    .prizes-col {
+      background: var(--green);
+      padding: 60px 52px;
+      color: white;
+    }
+    .prizes-col .section-chip { color: var(--gold); border-color: var(--gold); }
+    .prizes-col h2 { color: white; margin-bottom: 32px; }
+
+    .prize-item {
       display: flex;
       align-items: center;
       gap: 18px;
       padding: 18px 0;
-      border-bottom: 1px solid var(--cream2);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
     }
-    .prize-row:last-child { border-bottom: none; }
-
-    .prize-icon-wrap {
-      width: 52px;
-      height: 52px;
+    .prize-item:last-child { border-bottom: none; }
+    .prize-icon {
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       background: var(--gold);
       display: flex;
@@ -233,429 +297,432 @@
       font-size: 1.4rem;
       flex-shrink: 0;
     }
-
-    .prize-info { flex: 1; }
     .prize-name {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--green);
+      opacity: 0.7;
       margin-bottom: 4px;
     }
     .prize-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.3rem;
+      font-weight: 900;
       color: var(--gold);
     }
-    .prize-stay-tuned {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--muted);
-    }
+    .prize-stay { font-size: 0.9rem; font-style: italic; opacity: 0.65; }
 
-    /* ── TEAM PHOTO ──────────────────────────── */
-    .team-photo-wrap {
-      height: 380px;
-      background: var(--green);
-      position: relative;
-      overflow: hidden;
+    /* ── TEAM PHOTO STRIP ────────────── */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      height: 420px;
     }
-    .team-photo-wrap img {
+    .photo-cell {
+      overflow: hidden;
+      position: relative;
+      background: var(--green2);
+    }
+    .photo-cell img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.65;
+      transition: transform 0.6s ease;
     }
-    .team-photo-placeholder {
+    .photo-cell:hover img { transform: scale(1.04); }
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,40,20,0.7) 0%, transparent 60%);
+    }
+    .photo-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .photo-placeholder {
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.3);
-      font-size: 13px;
-      gap: 10px;
-    }
-    .team-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(27,58,45,0.9) 0%, transparent 60%);
-    }
-    .team-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 36px 40px;
-      z-index: 2;
-      text-align: center;
-    }
-    .team-caption h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
-      font-style: italic;
-      color: var(--gold-lt);
-      margin-bottom: 6px;
-    }
-    .team-caption p {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.2);
+      gap: 8px;
+      font-size: 12px;
     }
 
-    /* ── TICKETS ─────────────────────────────── */
+    /* ── TICKETS ─────────────────────── */
     .tickets-section {
-      background: var(--white);
-      padding: 64px 24px;
+      background: var(--offwhite);
       text-align: center;
-    }
-
-    .section-heading {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .tickets-section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 6px;
-    }
-
-    .tickets-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 44px;
     }
 
     .ticket-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      max-width: 780px;
-      margin: 0 auto 40px;
+      max-width: 820px;
+      margin: 0 auto 28px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .ticket-grid { grid-template-columns: 1fr; }
     }
 
     .ticket-card {
-      background: var(--cream);
-      border: 1px solid var(--cream2);
-      border-radius: 4px;
+      background: var(--white);
+      border: 2px solid #ebebeb;
+      border-radius: 12px;
       padding: 36px 24px;
       text-align: center;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
       position: relative;
     }
     .ticket-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 8px 32px rgba(184,148,74,0.15);
-      transform: translateY(-3px);
+      border-color: var(--green);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,122,77,0.12);
     }
     .ticket-card.featured {
-      background: var(--green);
-      border-color: var(--green);
-      color: var(--cream);
+      border-color: var(--gold);
+      box-shadow: 0 8px 32px rgba(255,184,28,0.2);
     }
-
-    .featured-label {
+    .featured-badge {
       position: absolute;
-      top: -12px;
+      top: -13px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--gold);
-      color: var(--text);
+      color: #1a1a1a;
       font-size: 9px;
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 2px;
+      padding: 5px 16px;
+      border-radius: 20px;
     }
-
     .t-price {
-      font-family: 'Cormorant Garamond', serif;
       font-size: 3rem;
-      font-weight: 700;
+      font-weight: 900;
       color: var(--green);
       line-height: 1;
+      margin-bottom: 6px;
     }
-    .featured .t-price { color: var(--gold-lt); }
-
-    .t-count {
+    .featured .t-price { color: var(--gold2); }
+    .t-qty {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--muted);
-      margin: 8px 0 24px;
+      color: #aaa;
+      margin-bottom: 24px;
     }
-    .featured .t-count { color: rgba(245,239,228,0.6); }
-
     .t-btn {
       display: block;
       width: 100%;
-      padding: 12px;
+      padding: 13px;
+      border-radius: 7px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      text-align: center;
-      border-radius: 2px;
-      cursor: pointer;
       border: none;
+      cursor: pointer;
       transition: all 0.2s;
-      text-decoration: none;
     }
-    .t-btn-outline {
-      background: transparent;
-      border: 1px solid var(--green);
-      color: var(--green);
-    }
-    .t-btn-outline:hover { background: var(--green); color: var(--cream); }
-    .t-btn-gold { background: var(--gold); color: var(--text); }
-    .t-btn-gold:hover { background: var(--gold-lt); }
+    .t-green { background: var(--green); color: white; }
+    .t-green:hover { background: var(--green2); }
+    .t-gold  { background: var(--gold);  color: #1a1a1a; }
+    .t-gold:hover  { background: var(--gold2); }
 
     .payfast-form { display: none; }
 
-    .banner-strip {
+    .more-tickets-banner {
       background: var(--green);
-      color: var(--cream);
+      color: white;
       text-align: center;
       padding: 14px 20px;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
+      max-width: 820px;
+      margin: 0 auto;
+      border-radius: 8px;
     }
-    .banner-strip span { color: var(--gold-lt); }
+    .more-tickets-banner span { color: var(--gold); }
 
-    /* ── HOW TO ENTER ────────────────────────── */
-    .how-section {
-      background: var(--cream);
-      padding: 64px 24px;
-      text-align: center;
-    }
-
-    .steps-grid {
+    /* ── HOW TO ENTER ────────────────── */
+    .how-section { background: var(--white); text-align: center; }
+    .steps-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 32px;
-      max-width: 840px;
-      margin: 48px auto 0;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      max-width: 860px;
+      margin: 0 auto;
     }
+    @media (max-width: 700px) { .steps-row { grid-template-columns: 1fr 1fr; } }
 
-    .step-item { text-align: center; }
+    .step { text-align: center; }
     .step-num {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
+      background: var(--green);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 14px;
     }
-    .step-item h3 {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 8px;
-    }
-    .step-item p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .step h3 { font-size: 12px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .step p  { font-size: 0.82rem; color: #777; line-height: 1.7; }
 
-    /* ── PAYMENT INFO ────────────────────────── */
-    .pay-section {
-      background: var(--white);
-      padding: 56px 24px;
-      text-align: center;
-    }
-    .pay-methods {
+    /* ── PAYMENT ─────────────────────── */
+    .pay-section { background: var(--offwhite); text-align: center; }
+    .pay-grid {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 16px;
       flex-wrap: wrap;
-      margin: 32px 0;
+      margin-bottom: 32px;
     }
-    .pay-method {
-      background: var(--cream);
-      border: 1px solid var(--cream2);
-      border-radius: 4px;
-      padding: 20px 32px;
+    .pay-card {
+      background: var(--white);
+      border: 2px solid #ebebeb;
+      border-radius: 10px;
+      padding: 22px 32px;
       text-align: center;
-      min-width: 140px;
+      min-width: 130px;
     }
-    .pay-method .pm-icon { font-size: 1.8rem; margin-bottom: 8px; }
-    .pay-method .pm-name {
+    .pay-card .p-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .pay-card .p-name {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--green);
     }
-    .pay-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      max-width: 500px;
+    .bank-box {
+      background: var(--white);
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 24px 32px;
+      max-width: 440px;
       margin: 0 auto;
-      line-height: 1.8;
+      text-align: left;
+      font-size: 0.88rem;
+      line-height: 2.2;
+      color: #444;
     }
-    .pay-note strong { color: var(--green); }
-
-    /* ── FOOTER ──────────────────────────────── */
-    .footer-top {
-      background: var(--green);
-      padding: 56px 24px;
+    .bank-box strong { color: var(--green); }
+    .bank-note {
+      margin-top: 16px;
+      font-size: 0.78rem;
+      color: #888;
       text-align: center;
-      color: var(--cream);
     }
-    .footer-top .together {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-style: italic;
-      color: var(--gold-lt);
+
+    /* ── FOOTER ──────────────────────── */
+    .footer-banner {
+      background: var(--green);
+      color: white;
+      text-align: center;
+      padding: 56px 20px;
+    }
+    .footer-banner h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
       margin-bottom: 10px;
     }
-    .footer-top p {
-      font-size: 0.85rem;
-      opacity: 0.65;
-      letter-spacing: 1px;
-    }
+    .footer-banner h2 span { color: var(--gold); }
+    .footer-banner p { opacity: 0.7; font-size: 0.9rem; }
 
-    .footer-bottom {
+    .footer-note {
       background: #111;
       color: #555;
       text-align: center;
-      padding: 20px;
+      padding: 18px 20px;
       font-size: 11px;
       letter-spacing: 1px;
     }
 
-    /* ── RESPONSIVE ──────────────────────────── */
-    @media (max-width: 700px) {
-      .two-col { grid-template-columns: 1fr; }
-      .prizes-col { border-left: none; border-top: 1px solid var(--cream2); }
-      .why-col, .prizes-col { padding: 40px 24px; }
-      .team-photo-wrap { height: 280px; }
+    /* ── RESPONSIVE ──────────────────── */
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 300px; order: -1; }
+      .hero-left { padding: 40px 24px; }
+      .story-prizes { grid-template-columns: 1fr; }
+      .story-col, .prizes-col { padding: 44px 24px; }
+      .photo-strip { grid-template-columns: 1fr; height: auto; }
+      .photo-cell { height: 260px; }
+      .photo-cell:last-child { display: none; }
+      .section { padding: 52px 20px; }
     }
+
+    /* ── MODAL ───────────────────────── */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none; border: none;
+      font-size: 1.4rem; cursor: pointer; color: #aaa;
+    }
+    .modal-box h3 { font-size: 1.3rem; font-weight: 900; color: var(--green); margin-bottom: 10px; }
+    .modal-box p  { font-size: 0.85rem; color: #666; line-height: 1.8; margin-bottom: 20px; }
+    .modal-bank {
+      background: var(--offwhite);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: left;
+      font-size: 0.83rem;
+      line-height: 2.1;
+      color: #444;
+      margin-bottom: 14px;
+    }
+    .modal-bank strong { color: var(--green); }
   </style>
 </head>
 <body>
 
-<!-- ── HERO ──────────────────────────────────────── -->
+<!-- Flag stripe -->
+<div class="flag-stripe">
+  <div class="s1"></div><div class="s2"></div>
+  <div class="s3"></div><div class="s4"></div>
+</div>
+
+<!-- ── HERO ──────────────────────────────── -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <p class="eyebrow">Elite Ladies Underwater Hockey</p>
-    <h1>
-      <span class="win">Win</span> Luxury<br>Aesthetic Prizes
-    </h1>
-    <p class="hero-sub">& Support Team SA <span class="hero-flags">🇿🇦 🇵🇹</span></p>
-    <div class="portugal-script">Portugal 2026</div>
-    <p class="draw-date">Fundraising Raffle &nbsp;·&nbsp; Draw Date: 30 June 2026</p>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Elite Ladies Underwater Hockey · Portugal 2026</p>
+    <h1>Win <span class="accent">Luxury</span><br>Aesthetic<br>Prizes</h1>
+    <p class="tagline">Help Jeanie and Team SA represent South Africa at the Elite Ladies Underwater Hockey Test Series in Portugal. Every ticket counts. 🇿🇦 🇵🇹</p>
+
+    <div class="bubbles">
+      <div class="bubble"></div><div class="bubble"></div>
+      <div class="bubble"></div><div class="bubble"></div>
+    </div>
 
     <div class="goal-wrap">
       <div class="goal-meta">
-        <span>Funds raised</span>
-        <strong>Goal: R50,000</strong>
+        <span>Fundraising goal</span>
+        <span class="raised">R50,000</span>
       </div>
-      <div class="goal-bar">
-        <div class="goal-fill" id="goalFill"></div>
-      </div>
+      <div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
     </div>
 
-    <a href="#tickets" class="hero-cta">Buy Your Tickets</a>
+    <div class="cta-row">
+      <a href="#tickets" class="btn-primary">Buy Tickets Now</a>
+      <a href="#why" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <img src="action.jpg" alt="Team SA underwater hockey action" onerror="this.style.display='none'">
+    <div class="hero-right-placeholder">🤿</div>
+    <div class="hero-overlay"></div>
+    <div class="hero-right-content">
+      <span class="draw-chip">Draw: 30 June 2026</span>
+      <h2>Support Team SA on the World Stage</h2>
+      <p>Entirely self-funded — every ticket helps us get there</p>
+    </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ── STORY + PRIZES ─────────────────────── -->
+<div class="story-prizes" id="why">
+  <div class="story-col">
+    <span class="section-chip">Why Your Support Matters</span>
+    <h2 style="font-size:1.8rem;font-weight:900;margin-bottom:20px">Doctor. Mother.<br>Athlete.</h2>
+    <p>I have been selected to represent South Africa at the Elite Ladies Underwater Hockey Test Series in Portugal.</p>
+    <p>As our national team is entirely self-funded, we are responsible for all travel, accommodation and competition costs.</p>
+    <div class="story-quote">
+      "Every ticket helps me represent South Africa — and Africa — on the international stage."
+    </div>
+    <p class="dma">Grateful for every bit of support.</p>
+  </div>
 
-<!-- ── WHY + PRIZES ──────────────────────────────── -->
-<div style="background:var(--white)">
-  <div class="two-col">
-    <div class="why-col">
-      <p class="section-label">Why Your Support Matters</p>
-      <p>I have been selected to represent South Africa at the Elite Ladies Underwater Hockey Test Series in Portugal.</p>
-      <p>As our national team is entirely self-funded, we are responsible for all travel, accommodation and competition costs.</p>
-      <div class="quote-line">
-        "Every ticket helps me represent South Africa — and Africa — on the international stage."
+  <div class="prizes-col">
+    <span class="section-chip">Win Incredible Prizes</span>
+    <h2>Luxury<br>Aesthetic Prizes</h2>
+
+    <div class="prize-item">
+      <div class="prize-icon">💎</div>
+      <div>
+        <div class="prize-name">1st Prize</div>
+        <div class="prize-value">Skin Booster Treatment</div>
+        <div style="color:var(--gold);font-size:0.85rem;font-weight:700;margin-top:2px">Valued at R7,500</div>
       </div>
-      <p class="tagline">Doctor. Mother. Athlete. Grateful for every bit of support.</p>
     </div>
 
-    <div class="prizes-col">
-      <p class="section-label">Win Incredible Prizes</p>
-
-      <div class="prize-row">
-        <div class="prize-icon-wrap">💎</div>
-        <div class="prize-info">
-          <div class="prize-name">Skin Booster Treatment</div>
-          <div class="prize-value">R7,500</div>
-        </div>
+    <div class="prize-item">
+      <div class="prize-icon">🎁</div>
+      <div>
+        <div class="prize-name">2nd Prize</div>
+        <div class="prize-value">Luxury Skincare Hamper</div>
       </div>
+    </div>
 
-      <div class="prize-row">
-        <div class="prize-icon-wrap">🎁</div>
-        <div class="prize-info">
-          <div class="prize-name">Luxury Skincare Hamper</div>
-          <div class="prize-value" style="font-size:1.1rem;color:var(--muted)">Prize TBC</div>
-        </div>
-      </div>
-
-      <div class="prize-row">
-        <div class="prize-icon-wrap">✨</div>
-        <div class="prize-info">
-          <div class="prize-name">Additional Luxury Prizes</div>
-          <div class="prize-stay-tuned">Added weekly — Stay tuned!</div>
-        </div>
+    <div class="prize-item">
+      <div class="prize-icon">✨</div>
+      <div>
+        <div class="prize-name">More Prizes</div>
+        <div class="prize-stay">Additional luxury prizes added weekly<br>— Stay tuned!</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── TEAM PHOTO ─────────────────────────────────── -->
-<div class="team-photo-wrap">
-  <!-- Replace with: <img src="team.jpg" alt="Team SA"> -->
-  <div class="team-photo-placeholder">
-    <div style="font-size:3rem">🤿</div>
-    <div>Drop team.jpg here</div>
+<!-- ── PHOTO STRIP ────────────────────────── -->
+<div class="photo-strip">
+  <div class="photo-cell">
+    <img src="team.jpg" alt="Team SA" onerror="this.outerHTML='<div class=\'photo-placeholder\'>🏊‍♀️<span>team.jpg</span></div>'">
+    <div class="photo-overlay"></div>
+    <div class="photo-label">Team SA · Portugal 2026</div>
   </div>
-  <div class="team-overlay"></div>
-  <div class="team-caption">
-    <h2>"Let's take Team SA to the World."</h2>
-    <p>Together, we can &nbsp;♡</p>
+  <div class="photo-cell">
+    <img src="celebrate.jpg" alt="Team celebrating" onerror="this.outerHTML='<div class=\'photo-placeholder\'>🥇<span>celebrate.jpg</span></div>'">
+    <div class="photo-overlay"></div>
+    <div class="photo-label">Together, we win</div>
   </div>
 </div>
 
-<!-- ── TICKETS ────────────────────────────────────── -->
-<section class="tickets-section" id="tickets">
-  <p class="section-heading">Ticket Packages</p>
+<!-- ── TICKETS ────────────────────────────── -->
+<section class="section tickets-section" id="tickets">
+  <span class="section-chip">Ticket Packages</span>
   <h2>Choose Your Entry</h2>
-  <p class="tickets-note">Draw closes <strong>30 June 2026</strong> — Winner announced via WhatsApp & social media</p>
+  <p class="section-sub">Draw closes <strong>30 June 2026</strong> · Winner announced via WhatsApp & social media</p>
 
   <div class="ticket-grid">
-
     <!-- R150 -->
     <div class="ticket-card">
       <div class="t-price">R150</div>
-      <div class="t-count">1 Ticket</div>
+      <div class="t-qty">1 Ticket</div>
       <form class="payfast-form" id="form150" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
@@ -664,17 +731,16 @@
         <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="150.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 1 Ticket">
-        <input type="hidden" name="item_description" value="1 raffle ticket · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="1ticket">
       </form>
-      <button class="t-btn t-btn-outline" onclick="buyTicket('form150', 150)">Enter for R150</button>
+      <button class="t-btn t-green" onclick="buyTicket('form150', 150, 1)">Enter for R150</button>
     </div>
 
     <!-- R250 -->
     <div class="ticket-card featured">
-      <span class="featured-label">Best Value</span>
+      <span class="featured-badge">Best Value</span>
       <div class="t-price">R250</div>
-      <div class="t-count">3 Tickets</div>
+      <div class="t-qty">3 Tickets</div>
       <form class="payfast-form" id="form250" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
@@ -683,16 +749,15 @@
         <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="250.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 3 Tickets">
-        <input type="hidden" name="item_description" value="3 raffle tickets · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="3tickets">
       </form>
-      <button class="t-btn t-btn-gold" onclick="buyTicket('form250', 250)">Enter for R250</button>
+      <button class="t-btn t-gold" onclick="buyTicket('form250', 250, 3)">Enter for R250</button>
     </div>
 
     <!-- R550 -->
     <div class="ticket-card">
       <div class="t-price">R550</div>
-      <div class="t-count">7 Tickets</div>
+      <div class="t-qty">7 Tickets</div>
       <form class="payfast-form" id="form550" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
@@ -701,142 +766,136 @@
         <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
         <input type="hidden" name="amount" value="550.00">
         <input type="hidden" name="item_name" value="Team SA Raffle — 7 Tickets">
-        <input type="hidden" name="item_description" value="7 raffle tickets · Draw 30 June 2026">
         <input type="hidden" name="custom_str1" value="7tickets">
       </form>
-      <button class="t-btn t-btn-outline" onclick="buyTicket('form550', 550)">Enter for R550</button>
+      <button class="t-btn t-green" onclick="buyTicket('form550', 550, 7)">Enter for R550</button>
     </div>
-
   </div>
 
-  <div class="banner-strip">
-    ♡ &nbsp; <span>The more tickets you buy, the greater your chance to win!</span> &nbsp; ♡
+  <div class="more-tickets-banner">
+    ♡ &nbsp;<span>The more tickets you buy, the greater your chance to win!</span>&nbsp; ♡
   </div>
 </section>
 
-<!-- ── HOW TO ENTER ───────────────────────────────── -->
-<section class="how-section">
-  <p class="section-heading">How to Enter</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--green)">Simple. Quick. Online.</h2>
+<!-- ── HOW TO ENTER ───────────────────────── -->
+<section class="section how-section">
+  <span class="section-chip">How to Enter</span>
+  <h2>Simple. Quick. Online.</h2>
+  <p class="section-sub">Four easy steps and you're in the draw</p>
 
-  <div class="steps-grid">
-    <div class="step-item">
+  <div class="steps-row">
+    <div class="step">
       <div class="step-num">1</div>
-      <h3>Choose a Package</h3>
-      <p>Select 1, 3, or 7 tickets and click to pay securely.</p>
+      <h3>Pick a Package</h3>
+      <p>Choose 1, 3, or 7 tickets and click Enter.</p>
     </div>
-    <div class="step-item">
+    <div class="step">
       <div class="step-num">2</div>
       <h3>Pay Securely</h3>
-      <p>Pay via EFT, Zapper, or Shapid — quick and safe.</p>
+      <p>EFT, Zapper, or Shapid — quick and easy.</p>
     </div>
-    <div class="step-item">
+    <div class="step">
       <div class="step-num">3</div>
       <h3>Get Your Numbers</h3>
-      <p>Your unique ticket numbers arrive on WhatsApp within minutes.</p>
+      <p>Ticket numbers sent to your WhatsApp within minutes.</p>
     </div>
-    <div class="step-item">
+    <div class="step">
       <div class="step-num">4</div>
       <h3>Watch the Draw</h3>
-      <p>30 June 2026 — winner announced on WhatsApp & social media.</p>
+      <p>30 June 2026 — winner announced on WhatsApp & socials.</p>
     </div>
   </div>
 </section>
 
-<!-- ── PAYMENT METHODS ───────────────────────────── -->
-<section class="pay-section" id="pay">
-  <p class="section-heading">Pay Here</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--green);margin-bottom:8px">Payment Options</h2>
+<!-- ── PAYMENT ────────────────────────────── -->
+<section class="section pay-section" id="pay">
+  <span class="section-chip">Pay Here</span>
+  <h2>Payment Options</h2>
+  <p class="section-sub">Choose how you'd like to pay</p>
 
-  <div class="pay-methods">
-    <div class="pay-method">
-      <div class="pm-icon">🏦</div>
-      <div class="pm-name">EFT</div>
-    </div>
-    <div class="pay-method">
-      <div class="pm-icon">📱</div>
-      <div class="pm-name">Zapper</div>
-    </div>
-    <div class="pay-method">
-      <div class="pm-icon">💳</div>
-      <div class="pm-name">Shapid</div>
-    </div>
+  <div class="pay-grid">
+    <div class="pay-card"><div class="p-icon">🏦</div><div class="p-name">EFT</div></div>
+    <div class="pay-card"><div class="p-icon">📱</div><div class="p-name">Zapper</div></div>
+    <div class="pay-card"><div class="p-icon">💳</div><div class="p-name">Shapid</div></div>
   </div>
 
-  <p class="pay-note">
-    After payment, use the reference <strong>YOUR NAME + PACKAGE</strong> (e.g. Jane Smith R250).<br>
-    Once payment is confirmed, your raffle ticket numbers will be sent to your WhatsApp.<br><br>
-    <strong>Bank details:</strong> [Jeanie to add EFT details here]
-  </p>
+  <div class="bank-box">
+    <strong>Bank:</strong> [Bank name]<br>
+    <strong>Account holder:</strong> [Jeanie's name]<br>
+    <strong>Account number:</strong> [Account number]<br>
+    <strong>Branch code:</strong> [Branch code]<br>
+    <strong>Reference:</strong> Your name + package (e.g. Jane R250)
+  </div>
+  <p class="bank-note">After payment, send proof of payment to Jeanie on WhatsApp to receive your ticket numbers.</p>
 </section>
 
-<!-- ── FOOTER ─────────────────────────────────────── -->
-<div class="footer-top">
-  <div class="together">Together, we can. ♡</div>
+<!-- ── FOOTER ─────────────────────────────── -->
+<div class="footer-banner">
+  <h2>Together, we <span>can.</span> ♡</h2>
   <p>Your support helps make dreams, sacrifice and hard work worth it.</p>
-  <p style="margin-top:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase">Let's take Team SA to the world</p>
+  <p style="margin-top:8px;font-size:11px;letter-spacing:2px;opacity:0.5;text-transform:uppercase">Let's take Team SA to the World</p>
 </div>
-<div class="footer-bottom">
+<div class="footer-note">
   DRAW DATE: 30 JUNE 2026 &nbsp;·&nbsp; WINNERS ANNOUNCED VIA WHATSAPP & SOCIAL MEDIA &nbsp;·&nbsp; NO CASH ALTERNATIVE
 </div>
 
-<!-- Modal for when PayFast isn't set up yet -->
-<div id="payModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center">
-  <div style="background:var(--white);border-radius:4px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative">
-    <button onclick="closeModal()" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)">×</button>
-    <div style="font-size:2rem;margin-bottom:14px">💳</div>
-    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--green);margin-bottom:12px" id="modalTitle">Buy 1 Ticket — R150</h3>
-    <p style="font-size:0.85rem;color:var(--muted);line-height:1.8;margin-bottom:24px">
-      Pay <strong id="modalAmount" style="color:var(--green)">R150</strong> using EFT, Zapper or Shapid.<br>
-      Use reference: <strong>Your Name + Package</strong><br><br>
-      <span style="color:var(--muted)">Bank details below</span>
-    </p>
-    <div style="background:var(--cream);border-radius:4px;padding:16px;text-align:left;font-size:0.82rem;line-height:2;margin-bottom:20px;color:var(--text)">
+<!-- ── PAYMENT MODAL ──────────────────────── -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div style="font-size:2.5rem;margin-bottom:12px">🎟️</div>
+    <h3 id="modal-title">Buy 1 Ticket — R150</h3>
+    <p>Pay <strong id="modal-amount" style="color:var(--green)">R150</strong> using EFT, Zapper or Shapid and your ticket numbers will be sent to your WhatsApp.</p>
+    <div class="modal-bank">
       <strong>Bank:</strong> [Bank name]<br>
-      <strong>Account holder:</strong> [Name]<br>
-      <strong>Account number:</strong> [Number]<br>
-      <strong>Branch code:</strong> [Code]<br>
-      <strong>Reference:</strong> Your name + R<span id="modalRef">150</span>
+      <strong>Account holder:</strong> [Jeanie's name]<br>
+      <strong>Account number:</strong> [Account number]<br>
+      <strong>Branch code:</strong> [Branch code]<br>
+      <strong>Reference:</strong> Your name + R<span id="modal-ref">150</span>
     </div>
-    <p style="font-size:0.78rem;color:var(--muted)">After payment, WhatsApp your proof of payment to receive your ticket numbers.</p>
+    <p style="font-size:0.78rem;color:#aaa">Send your proof of payment to Jeanie on WhatsApp to receive your ticket numbers.</p>
   </div>
 </div>
 
 <script>
   const GOAL = 50000;
-  const RAISED = 0; // Update as money comes in
+  const RAISED = 0; // Update this as money comes in
+  const PAYFAST_READY = false; // Set to true once PayFast is configured
 
   window.addEventListener('load', () => {
-    const pct = Math.min((RAISED / GOAL) * 100, 100);
-    setTimeout(() => document.getElementById('goalFill').style.width = pct + '%', 400);
+    setTimeout(() => {
+      document.getElementById('goalFill').style.width =
+        Math.min((RAISED / GOAL) * 100, 100) + '%';
+    }, 400);
   });
 
-  document.querySelector('.hero-cta').addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('tickets').scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
   });
 
-  const PAYFAST_READY = false; // Set to true once PayFast merchant ID is filled in
+  const pkgNames = { 150: '1 Ticket', 250: '3 Tickets', 550: '7 Tickets' };
 
-  function buyTicket(formId, amount) {
+  function buyTicket(formId, amount, qty) {
     if (PAYFAST_READY) {
       document.getElementById(formId).submit();
-    } else {
-      const pkgMap = { 150: '1 Ticket', 250: '3 Tickets', 550: '7 Tickets' };
-      document.getElementById('modalTitle').textContent = `Buy ${pkgMap[amount]} — R${amount}`;
-      document.getElementById('modalAmount').textContent = `R${amount}`;
-      document.getElementById('modalRef').textContent = amount;
-      const modal = document.getElementById('payModal');
-      modal.style.display = 'flex';
+      return;
     }
+    document.getElementById('modal-title').textContent =
+      `Buy ${pkgNames[amount]} — R${amount}`;
+    document.getElementById('modal-amount').textContent = `R${amount}`;
+    document.getElementById('modal-ref').textContent = amount;
+    const m = document.getElementById('modal');
+    m.style.display = 'flex';
   }
 
   function closeModal() {
-    document.getElementById('payModal').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
   }
-
-  document.getElementById('payModal').addEventListener('click', e => {
-    if (e.target === document.getElementById('payModal')) closeModal();
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal')) closeModal();
   });
 </script>
 </body>
