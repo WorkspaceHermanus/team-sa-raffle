@@ -725,8 +725,8 @@
       <div class="prize-numeral">I</div>
       <div>
         <div class="prize-label">First Prize</div>
-        <div class="prize-name">Skin Booster Treatment</div>
-        <div class="prize-value">Valued at R7,500</div>
+        <div class="prize-name">Collagen Biostimulator &amp; Skin Booster</div>
+        <div class="prize-value">Dr. Le-Jean Ehlers · Aesthetic Options · R10,500</div>
       </div>
     </div>
 
@@ -734,17 +734,26 @@
       <div class="prize-numeral">II</div>
       <div>
         <div class="prize-label">Second Prize</div>
-        <div class="prize-name">Luxury Skincare Hamper</div>
-        <div class="prize-value">Curated luxury skincare</div>
+        <div class="prize-name">Comprehensive Skin Assessment</div>
+        <div class="prize-value">Dr. Le-Jean Ehlers · Valued at R1,500</div>
       </div>
     </div>
 
     <div class="prize-row">
       <div class="prize-numeral">III</div>
       <div>
-        <div class="prize-label">Coming Soon</div>
-        <div class="prize-name">Additional Luxury Prizes</div>
-        <div class="prize-tuned">New prizes added weekly</div>
+        <div class="prize-label">Third Prize</div>
+        <div class="prize-name">4 × Reformer Pilates Sessions</div>
+        <div class="prize-value">Tracy Dawber · The Pearls, Umhlanga</div>
+      </div>
+    </div>
+
+    <div class="prize-row">
+      <div class="prize-numeral">IV</div>
+      <div>
+        <div class="prize-label">Fourth Prize</div>
+        <div class="prize-name">Luxury Skincare Hamper</div>
+        <div class="prize-value">Valued at R2,000</div>
       </div>
     </div>
   </div>
@@ -754,11 +763,11 @@
 <!-- ── TEAM PHOTOS ────────────────────────────────── -->
 <div class="photo-grid">
   <div class="photo-frame">
-    <img src="action.jpeg" alt="Team SA in action" onerror="this.style.display='none'">
+    <img src="huddle.jpeg" alt="Team SA huddle" onerror="this.style.display='none'">
     <div class="photo-frame-overlay"></div>
   </div>
   <div class="photo-frame">
-    <img src="celebrate.jpeg" alt="Team celebrating" onerror="this.style.display='none'">
+    <img src="hero.jpeg" alt="Team SA in action" onerror="this.style.display='none'">
     <div class="photo-frame-overlay"></div>
   </div>
 </div>
@@ -791,35 +800,35 @@
 
     <div class="ticket-card featured">
       <div class="featured-mark">Best Value</div>
-      <div class="t-price">R250</div>
-      <div class="t-qty">3 Tickets</div>
-      <form class="payfast-form" id="form250" action="https://www.payfast.co.za/eng/process" method="post">
+      <div class="t-price">R500</div>
+      <div class="t-qty">5 Tickets</div>
+      <form class="payfast-form" id="form500" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
         <input type="hidden" name="return_url" value="https://team-sa-raffle.vercel.app/thankyou.html">
         <input type="hidden" name="cancel_url" value="https://team-sa-raffle.vercel.app/">
         <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
-        <input type="hidden" name="amount" value="250.00">
-        <input type="hidden" name="item_name" value="Team SA Raffle — 3 Tickets">
-        <input type="hidden" name="custom_str1" value="3tickets">
+        <input type="hidden" name="amount" value="500.00">
+        <input type="hidden" name="item_name" value="Team SA Raffle — 5 Tickets">
+        <input type="hidden" name="custom_str1" value="5tickets">
       </form>
-      <button class="t-btn t-btn-gold" onclick="buyTicket('form250',250,3)">Enter for R250</button>
+      <button class="t-btn t-btn-gold" onclick="buyTicket('form500',500,5)">Enter for R500</button>
     </div>
 
     <div class="ticket-card">
-      <div class="t-price">R550</div>
-      <div class="t-qty">7 Tickets</div>
-      <form class="payfast-form" id="form550" action="https://www.payfast.co.za/eng/process" method="post">
+      <div class="t-price">R700</div>
+      <div class="t-qty">10 Tickets</div>
+      <form class="payfast-form" id="form700" action="https://www.payfast.co.za/eng/process" method="post">
         <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
         <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
         <input type="hidden" name="return_url" value="https://team-sa-raffle.vercel.app/thankyou.html">
         <input type="hidden" name="cancel_url" value="https://team-sa-raffle.vercel.app/">
         <input type="hidden" name="notify_url" value="YOUR_WEBHOOK_URL">
-        <input type="hidden" name="amount" value="550.00">
-        <input type="hidden" name="item_name" value="Team SA Raffle — 7 Tickets">
-        <input type="hidden" name="custom_str1" value="7tickets">
+        <input type="hidden" name="amount" value="700.00">
+        <input type="hidden" name="item_name" value="Team SA Raffle — 10 Tickets">
+        <input type="hidden" name="custom_str1" value="10tickets">
       </form>
-      <button class="t-btn t-btn-dark" onclick="buyTicket('form550',550,7)">Enter for R550</button>
+      <button class="t-btn t-btn-dark" onclick="buyTicket('form700',700,10)">Enter for R700</button>
     </div>
 
   </div>
@@ -935,7 +944,7 @@
     }, 500);
   });
 
-  const pkgMap = { 150: '1 Ticket — R150', 250: '3 Tickets — R250', 550: '7 Tickets — R550' };
+  const pkgMap = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
 
   function buyTicket(formId, amount) {
     if (PAYFAST_READY) { document.getElementById(formId).submit(); return; }

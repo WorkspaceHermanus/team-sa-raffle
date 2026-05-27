@@ -186,8 +186,8 @@
       <select id="inputPackage">
         <option value="">Select package</option>
         <option value="150">R150 — 1 ticket</option>
-        <option value="250">R250 — 3 tickets</option>
-        <option value="550">R550 — 7 tickets</option>
+        <option value="500">R500 — 5 tickets</option>
+        <option value="700">R700 — 10 tickets</option>
       </select>
       <input type="text" id="inputNotes" placeholder="Notes (optional)" />
     </div>
@@ -228,7 +228,7 @@
 
 <script>
   const GOAL = 50000;
-  const PACKAGE_TICKETS = { '150': 1, '250': 3, '550': 7 };
+  const PACKAGE_TICKETS = { '150': 1, '500': 5, '700': 10 };
 
   let entries = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
   let nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
