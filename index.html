@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Win Luxury Aesthetic Prizes — Team SA · Portugal 2026</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -656,6 +657,59 @@
       .section { padding: 60px 24px; }
       .tickets-section { padding: 60px 20px; }
     }
+
+    /* ── PRIZES FULL WIDTH ───────────── */
+    .prizes-full { background: var(--green); padding: 64px 60px; color: white; text-align: center; }
+    .prizes-grid-full {
+      display: grid; grid-template-columns: 1fr 1fr;
+      max-width: 860px; margin: 0 auto; text-align: left;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .pf-row {
+      display: grid; grid-template-columns: 44px 1fr; gap: 16px;
+      align-items: start; padding: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .pf-row:nth-child(2n) { border-right: none; }
+    .pf-row:nth-child(3), .pf-row:nth-child(4) { border-bottom: none; }
+    .pf-num { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--gold); opacity: 0.65; padding-top: 4px; }
+    .pf-label { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 5px; }
+    .pf-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: white; margin-bottom: 5px; line-height: 1.35; }
+    .pf-val { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-lt); line-height: 1.7; }
+
+    /* ── STORY FULL WIDTH ────────────── */
+    .story-full { background: var(--white); padding: 64px 60px; }
+    .story-full-inner { max-width: 680px; margin: 0 auto; }
+    .story-full-inner p { font-size: 0.9rem; color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
+
+    /* ── SPONSORS ────────────────────── */
+    .sponsors-section { background: var(--cream3); padding: 52px 40px; text-align: center; }
+    .sponsors-logos { display: flex; justify-content: center; align-items: center; gap: 52px; flex-wrap: wrap; margin-top: 32px; }
+    .sponsor-logo { height: 60px; width: auto; opacity: 0.6; filter: grayscale(20%); transition: all 0.25s; }
+    .sponsor-logo:hover { opacity: 1; filter: none; }
+
+    /* ── PAYMENT CHOICE MODAL ────────── */
+    .pay-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 16px; }
+    .pay-choice { border: 1px solid var(--cream2); background: var(--cream3); padding: 18px 12px; text-align: center; cursor: pointer; transition: all 0.2s; border-radius: 2px; }
+    .pay-choice:hover { border-color: var(--green); background: #f0f7f3; }
+    .pay-choice-pf { background: var(--green); border-color: var(--green); }
+    .pay-choice-pf:hover { background: var(--green2); }
+    .pc-icon { font-size: 1.4rem; display: block; margin-bottom: 8px; }
+    .pc-title { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 3px; color: var(--green); }
+    .pc-desc { font-size: 9px; color: var(--muted); letter-spacing: 0.5px; }
+    .pay-choice-pf .pc-title { color: white; }
+    .pay-choice-pf .pc-desc { color: rgba(255,255,255,0.55); }
+    .back-btn { background: none; border: none; color: var(--light); font-size: 11px; letter-spacing: 1px; cursor: pointer; padding: 0 0 16px 0; display: flex; align-items: center; gap: 5px; }
+    .back-btn:hover { color: var(--green); }
+
+    @media (max-width: 700px) {
+      .prizes-full { padding: 52px 20px; }
+      .prizes-grid-full { grid-template-columns: 1fr; }
+      .pf-row { border-right: none; padding: 22px 16px; }
+      .pf-row:nth-child(3) { border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .story-full { padding: 48px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -700,64 +754,59 @@
 
 </section>
 
-<!-- ── STORY + PRIZES ─────────────────────────────── -->
-<div class="split" id="story">
+<!-- ── PRIZES (full width, first thing after hero) ── -->
+<div class="prizes-full" id="prizes">
+  <p class="section-tag" style="color:var(--gold-lt)">Win Incredible Prizes</p>
+  <h2 class="section-title" style="color:white;margin-bottom:40px"><em>Luxury</em> Aesthetic Prizes</h2>
 
-  <div class="story-side">
+  <div class="prizes-grid-full">
+    <div class="pf-row">
+      <div class="pf-num">I</div>
+      <div>
+        <div class="pf-label">First Prize</div>
+        <div class="pf-name">Injectable Collagen Biostimulator &amp; Skin Booster Treatment</div>
+        <div class="pf-val">Dr. Le-Jean Ehlers · Aesthetic Options, The Pearls, Umhlanga · Valued at R10,500</div>
+      </div>
+    </div>
+    <div class="pf-row">
+      <div class="pf-num">II</div>
+      <div>
+        <div class="pf-label">Second Prize</div>
+        <div class="pf-name">Comprehensive Skin Assessment</div>
+        <div class="pf-val">Dr. Le-Jean Ehlers · Aesthetic Options · Valued at R1,500</div>
+      </div>
+    </div>
+    <div class="pf-row">
+      <div class="pf-num">III</div>
+      <div>
+        <div class="pf-label">Third Prize</div>
+        <div class="pf-name">4 × Reformer Pilates Sessions</div>
+        <div class="pf-val">Tracy Dawber Pilates · The Pearls, Umhlanga · Valued at R2,000</div>
+      </div>
+    </div>
+    <div class="pf-row">
+      <div class="pf-num">IV</div>
+      <div>
+        <div class="pf-label">Fourth Prize</div>
+        <div class="pf-name">Luxury Skincare Hamper</div>
+        <div class="pf-val">Valued at R2,000</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STORY ──────────────────────────────────────── -->
+<div class="story-full" id="story">
+  <div class="story-full-inner">
     <p class="section-tag">Why Your Support Matters</p>
-    <h2 class="section-title" style="margin-bottom:24px">We are<br><em>Team SA.</em></h2>
-
+    <h2 class="section-title" style="margin-bottom:24px">We are <em>Team SA.</em></h2>
     <p>Our team has been invited to represent South Africa at the International Underwater Hockey Test Series in Portugal.</p>
     <p>As our national team is entirely self-funded, we are responsible for all travel, accommodation and competition costs. Every rand raised goes directly toward getting us there.</p>
-
     <div class="story-quote">
       <p>"Every ticket helps us represent South Africa — and Africa — on the international stage."</p>
     </div>
-
     <p class="team-tag">Students. Professionals. Mothers. Athletes. Grateful for every bit of support.</p>
   </div>
-
-  <div class="prizes-side">
-    <p class="section-tag">Win Incredible Prizes</p>
-    <h2 class="section-title" style="margin-bottom:32px"><em>Luxury</em><br>Aesthetic Prizes</h2>
-
-    <div class="prize-row">
-      <div class="prize-numeral">I</div>
-      <div>
-        <div class="prize-label">First Prize</div>
-        <div class="prize-name">Collagen Biostimulator &amp; Skin Booster</div>
-        <div class="prize-value">Dr. Le-Jean Ehlers · Aesthetic Options · R10,500</div>
-      </div>
-    </div>
-
-    <div class="prize-row">
-      <div class="prize-numeral">II</div>
-      <div>
-        <div class="prize-label">Second Prize</div>
-        <div class="prize-name">Comprehensive Skin Assessment</div>
-        <div class="prize-value">Dr. Le-Jean Ehlers · Valued at R1,500</div>
-      </div>
-    </div>
-
-    <div class="prize-row">
-      <div class="prize-numeral">III</div>
-      <div>
-        <div class="prize-label">Third Prize</div>
-        <div class="prize-name">4 × Reformer Pilates Sessions</div>
-        <div class="prize-value">Tracy Dawber · The Pearls, Umhlanga</div>
-      </div>
-    </div>
-
-    <div class="prize-row">
-      <div class="prize-numeral">IV</div>
-      <div>
-        <div class="prize-label">Fourth Prize</div>
-        <div class="prize-name">Luxury Skincare Hamper</div>
-        <div class="prize-value">Valued at R2,000</div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <!-- ── TEAM PHOTOS ────────────────────────────────── -->
@@ -848,7 +897,7 @@
     <div class="step">
       <div class="step-n">01</div>
       <h3>Choose a Package</h3>
-      <p>Select 1, 3, or 7 tickets and click to enter.</p>
+      <p>Select 1, 5, or 10 tickets and click to enter.</p>
     </div>
     <div class="step">
       <div class="step-n">02</div>
@@ -868,38 +917,16 @@
   </div>
 </section>
 
-<!-- ── PAYMENT ────────────────────────────────────── -->
-<section class="section pay-section" id="pay">
-  <p class="section-tag">Pay Here</p>
-  <h2 class="section-title">Payment Options</h2>
-  <p class="section-lead" style="max-width:380px;margin-left:auto;margin-right:auto">Choose how you'd like to pay, then send proof of payment via WhatsApp.</p>
-
-  <div class="pay-methods">
-    <div class="pay-method">
-      <div class="pm-icon">🏦</div>
-      <div class="pm-name">EFT</div>
-    </div>
-    <div class="pay-method">
-      <div class="pm-icon">📱</div>
-      <div class="pm-name">Zapper</div>
-    </div>
-    <div class="pay-method">
-      <div class="pm-icon">💳</div>
-      <div class="pm-name">Shapid</div>
-    </div>
+<!-- ── SPONSORS ───────────────────────────────────── -->
+<div class="sponsors-section">
+  <p class="section-tag">Proudly Supported By</p>
+  <h2 class="section-title" style="font-size:1.6rem;margin-bottom:4px">Our Prize Sponsors</h2>
+  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0">Thank you for making this possible</p>
+  <div class="sponsors-logos">
+    <img src="marketing2.jpeg" alt="Institute of Aesthetic Options" class="sponsor-logo">
+    <img src="marketing1.jpeg" alt="Tracy Dawber Pilates" class="sponsor-logo">
   </div>
-
-  <div class="bank-details">
-    <h3>Banking Details</h3>
-    <div class="bank-row"><span class="bk">Bank</span><span class="bv">ABSA</span></div>
-    <div class="bank-row"><span class="bk">Account Holder</span><span class="bv">Dr. JS van der Merwe</span></div>
-    <div class="bank-row"><span class="bk">Account Number</span><span class="bv">4078616138</span></div>
-    <div class="bank-row"><span class="bk">Account Type</span><span class="bv">Cheque Account</span></div>
-    <div class="bank-row"><span class="bk">Branch Code</span><span class="bv">632005</span></div>
-    <div class="bank-row"><span class="bk">Reference</span><span class="bv">Your name + package</span></div>
-    <p class="bank-note">e.g. Reference: Jane Smith R250<br>Send proof of payment via WhatsApp to receive your ticket numbers.</p>
-  </div>
-</section>
+</div>
 
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <div class="footer-together">
@@ -915,44 +942,92 @@
 <div class="modal-wrap" id="modal">
   <div class="modal-inner">
     <button class="modal-close" onclick="closeModal()">×</button>
-    <div style="font-size:2rem;margin-bottom:16px">🎟️</div>
-    <h3 id="m-title">1 Ticket — R150</h3>
-    <p class="m-sub">
-      Pay <strong id="m-amount" style="color:var(--green)">R150</strong> using EFT, Zapper or Shapid.<br>
-      Use reference: <em>Your name + R<span id="m-ref">150</span></em>
-    </p>
-    <div class="modal-bank">
-      <div class="bank-row"><span class="bk">Bank</span><span class="bv">ABSA</span></div>
-      <div class="bank-row"><span class="bk">Account Holder</span><span class="bv">Dr. JS van der Merwe</span></div>
-      <div class="bank-row"><span class="bk">Account Number</span><span class="bv">4078616138</span></div>
-      <div class="bank-row"><span class="bk">Branch Code</span><span class="bv">632005</span></div>
-      <div class="bank-row"><span class="bk">Reference</span><span class="bv">Your name + R<span id="m-ref2">150</span></span></div>
+
+    <!-- Step 1: Choose payment method -->
+    <div id="modal-step1">
+      <div style="font-size:2rem;margin-bottom:14px">🎟️</div>
+      <h3 id="m-title">1 Ticket — R150</h3>
+      <p class="m-sub">How would you like to pay <strong id="m-amount" style="color:var(--green)">R150</strong>?</p>
+      <div class="pay-choices">
+        <button class="pay-choice pay-choice-pf" onclick="payWithPayfast()">
+          <span class="pc-icon">💳</span>
+          <span class="pc-title">Pay Online</span>
+          <span class="pc-desc">Card · Instant EFT · PayFast</span>
+        </button>
+        <button class="pay-choice" onclick="showEFT()">
+          <span class="pc-icon">🏦</span>
+          <span class="pc-title">Pay via EFT</span>
+          <span class="pc-desc">Manual bank transfer</span>
+        </button>
+      </div>
+      <p class="modal-note">Ticket numbers sent to your WhatsApp once payment is confirmed.</p>
     </div>
-    <p class="modal-note">Send your proof of payment via WhatsApp to receive your unique ticket numbers.</p>
+
+    <!-- Step 2: EFT details -->
+    <div id="modal-step2" style="display:none">
+      <button class="back-btn" onclick="backToChoices()">← Back</button>
+      <h3 id="m-title2">1 Ticket — R150</h3>
+      <p class="m-sub" style="margin-bottom:16px">Pay <strong id="m-amount2" style="color:var(--green)">R150</strong> via EFT using the details below.</p>
+      <div class="modal-bank">
+        <div class="bank-row"><span class="bk">Bank</span><span class="bv">ABSA</span></div>
+        <div class="bank-row"><span class="bk">Account Holder</span><span class="bv">Dr. JS van der Merwe</span></div>
+        <div class="bank-row"><span class="bk">Account Number</span><span class="bv">4078616138</span></div>
+        <div class="bank-row"><span class="bk">Account Type</span><span class="bv">Cheque Account</span></div>
+        <div class="bank-row"><span class="bk">Branch Code</span><span class="bv">632005</span></div>
+        <div class="bank-row"><span class="bk">Reference</span><span class="bv">Your name + R<span id="m-ref">150</span></span></div>
+      </div>
+      <p class="modal-note">Send your proof of payment via WhatsApp to receive your unique ticket numbers.</p>
+    </div>
   </div>
 </div>
 
 <script>
   const RAISED = 0;
   const GOAL = 50000;
+  // ── Set MERCHANT_ID and MERCHANT_KEY then set PAYFAST_READY = true ──
   const PAYFAST_READY = false;
+  const MERCHANT_ID   = 'YOUR_MERCHANT_ID';
+  const MERCHANT_KEY  = 'YOUR_MERCHANT_KEY';
 
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('goalFill').style.width =
         Math.min((RAISED / GOAL) * 100, 100) + '%';
     }, 500);
+    // Inject PayFast credentials into all forms
+    document.querySelectorAll('[name="merchant_id"]').forEach(el => el.value = MERCHANT_ID);
+    document.querySelectorAll('[name="merchant_key"]').forEach(el => el.value = MERCHANT_KEY);
   });
 
   const pkgMap = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
+  let activeFormId = null;
 
   function buyTicket(formId, amount) {
-    if (PAYFAST_READY) { document.getElementById(formId).submit(); return; }
-    document.getElementById('m-title').textContent = pkgMap[amount];
-    document.getElementById('m-amount').textContent = 'R' + amount;
+    activeFormId = formId;
+    const label = pkgMap[amount];
+    document.getElementById('m-title').textContent  = label;
+    document.getElementById('m-title2').textContent = label;
+    document.getElementById('m-amount').textContent  = 'R' + amount;
+    document.getElementById('m-amount2').textContent = 'R' + amount;
     document.getElementById('m-ref').textContent = amount;
-    document.getElementById('m-ref2').textContent = amount;
+    document.getElementById('modal-step1').style.display = 'block';
+    document.getElementById('modal-step2').style.display = 'none';
     document.getElementById('modal').style.display = 'flex';
+  }
+
+  function payWithPayfast() {
+    if (!PAYFAST_READY) { alert('Online payments coming soon! Please use EFT for now.'); return; }
+    document.getElementById(activeFormId).submit();
+  }
+
+  function showEFT() {
+    document.getElementById('modal-step1').style.display = 'none';
+    document.getElementById('modal-step2').style.display = 'block';
+  }
+
+  function backToChoices() {
+    document.getElementById('modal-step1').style.display = 'block';
+    document.getElementById('modal-step2').style.display = 'none';
   }
 
   function closeModal() { document.getElementById('modal').style.display = 'none'; }
