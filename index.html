@@ -716,6 +716,13 @@
     .back-btn { background: none; border: none; color: var(--light); font-size: 11px; letter-spacing: 1px; cursor: pointer; padding: 0 0 16px 0; display: flex; align-items: center; gap: 5px; }
     .back-btn:hover { color: var(--green); }
 
+    /* ── MODAL ENTRY FORM ─────────── */
+    .m-input { width: 100%; padding: 12px 14px; border: 1px solid var(--cream2); font-family: 'Jost', sans-serif; font-size: 0.9rem; background: var(--cream3); color: var(--text); margin-bottom: 10px; outline: none; transition: border-color 0.2s; display: block; }
+    .m-input:focus { border-color: var(--green); background: white; }
+    .m-input::placeholder { color: var(--light); }
+    .m-submit { width: 100%; padding: 15px; background: var(--green); color: var(--cream); border: none; font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; margin-top: 4px; transition: background 0.2s; }
+    .m-submit:hover { background: var(--green2); }
+
     @media (max-width: 700px) {
       .prizes-full { padding: 52px 20px; }
       .prizes-grid-full { grid-template-columns: 1fr; }
@@ -983,9 +990,20 @@
   <div class="modal-inner">
     <button class="modal-close" onclick="closeModal()">×</button>
 
-    <!-- Step 1: Choose payment method -->
-    <div id="modal-step1">
+    <!-- Step 0: Entry details form -->
+    <div id="modal-step0">
       <div style="font-size:2rem;margin-bottom:14px">🎟️</div>
+      <h3>Secure Your Entry</h3>
+      <p class="m-sub">Enter your details below. We'll send your ticket numbers to your WhatsApp once payment is confirmed.</p>
+      <input type="text"  id="m-name"  class="m-input" placeholder="Your full name *" autocomplete="name">
+      <input type="tel"   id="m-phone" class="m-input" placeholder="WhatsApp number * e.g. 082 123 4567" autocomplete="tel">
+      <p style="font-size:9px;color:var(--light);margin-bottom:14px;line-height:1.7;letter-spacing:0.3px">* Ticket numbers will be sent to this WhatsApp number after payment confirmation.</p>
+      <button class="m-submit" onclick="submitDetails()">Continue to Payment →</button>
+    </div>
+
+    <!-- Step 1: Choose payment method -->
+    <div id="modal-step1" style="display:none">
+      <button class="back-btn" onclick="backToDetails()">← Back</button>
       <h3 id="m-title">1 Ticket — R150</h3>
       <p class="m-sub">How would you like to pay <strong id="m-amount" style="color:var(--green)">R150</strong>?</p>
       <div class="pay-choices">
@@ -1014,63 +1032,131 @@
         <div class="bank-row"><span class="bk">Account Number</span><span class="bv">4078616138</span></div>
         <div class="bank-row"><span class="bk">Account Type</span><span class="bv">Cheque Account</span></div>
         <div class="bank-row"><span class="bk">Branch Code</span><span class="bv">632005</span></div>
-        <div class="bank-row"><span class="bk">Reference</span><span class="bv">Your name + R<span id="m-ref">150</span></span></div>
+        <div class="bank-row"><span class="bk">Reference</span><span class="bv" id="m-ref-display" style="font-weight:700;color:var(--green);font-size:0.95rem">SA-XX-0000</span></div>
       </div>
-      <p class="modal-note">Send your proof of payment via WhatsApp to receive your unique ticket numbers.</p>
+      <p class="modal-note">Send proof of payment to <strong style="color:var(--green)">+27 82 464 8674</strong> on WhatsApp. Ticket numbers follow shortly. ♡</p>
     </div>
   </div>
 </div>
 
 <script>
-  const RAISED = 0;
-  const GOAL = 50000;
-  // ── PayFast live credentials ──
+  /* ── Config ───────────────────────────────────────── */
+  const RAISED        = 0;
+  const GOAL          = 50000;
   const PAYFAST_READY = true;
   const MERCHANT_ID   = '12344237';
   const MERCHANT_KEY  = '8aqrv8r8mg2t3';
+  const JEANIE_WA     = '27824648674';
+  const SITE_URL      = 'https://team-sa-raffle.vercel.app';
 
+  const pkgMap     = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
+  const ticketsMap = { 150: 1, 500: 5, 700: 10 };
+
+  let activeFormId  = null;
+  let activeAmount  = null;
+  let activeEntrant = null; // { name, phone }
+  let activeRef     = null;
+
+  /* ── Init ─────────────────────────────────────────── */
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('goalFill').style.width =
         Math.min((RAISED / GOAL) * 100, 100) + '%';
     }, 500);
-    // Inject PayFast credentials into all forms
     document.querySelectorAll('[name="merchant_id"]').forEach(el => el.value = MERCHANT_ID);
     document.querySelectorAll('[name="merchant_key"]').forEach(el => el.value = MERCHANT_KEY);
   });
 
-  const pkgMap = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
-  let activeFormId = null;
-
-  function buyTicket(formId, amount) {
-    activeFormId = formId;
-    const label = pkgMap[amount];
-    document.getElementById('m-title').textContent  = label;
-    document.getElementById('m-title2').textContent = label;
-    document.getElementById('m-amount').textContent  = 'R' + amount;
-    document.getElementById('m-amount2').textContent = 'R' + amount;
-    document.getElementById('m-ref').textContent = amount;
-    document.getElementById('modal-step1').style.display = 'block';
-    document.getElementById('modal-step2').style.display = 'none';
-    document.getElementById('modal').style.display = 'flex';
+  /* ── Generate unique reference ────────────────────── */
+  function generateRef(name) {
+    const parts = name.trim().split(/\s+/);
+    const inits = parts.slice(0, 2).map(p => (p[0] || '')).join('').toUpperCase();
+    const code  = Date.now().toString(36).slice(-4).toUpperCase();
+    return `SA-${inits}-${code}`;
   }
 
+  /* ── Step 1: Open modal (show entry form first) ────── */
+  function buyTicket(formId, amount) {
+    activeFormId  = formId;
+    activeAmount  = amount;
+    activeEntrant = null;
+    activeRef     = null;
+    ['modal-step0','modal-step1','modal-step2'].forEach(id =>
+      document.getElementById(id).style.display = 'none'
+    );
+    document.getElementById('modal-step0').style.display = 'block';
+    document.getElementById('modal').style.display = 'flex';
+    setTimeout(() => document.getElementById('m-name').focus(), 150);
+  }
+
+  /* ── Step 0 → 1: Validate details & proceed ──────── */
+  function submitDetails() {
+    const name  = document.getElementById('m-name').value.trim();
+    const phone = document.getElementById('m-phone').value.trim();
+    if (!name)  { document.getElementById('m-name').focus();  return; }
+    if (!phone) { document.getElementById('m-phone').focus(); return; }
+
+    activeEntrant = { name, phone };
+    activeRef     = generateRef(name);
+
+    const label = pkgMap[activeAmount];
+    document.getElementById('m-title').textContent   = label;
+    document.getElementById('m-title2').textContent  = label;
+    document.getElementById('m-amount').textContent  = 'R' + activeAmount;
+    document.getElementById('m-amount2').textContent = 'R' + activeAmount;
+    document.getElementById('m-ref-display').textContent = activeRef;
+
+    document.getElementById('modal-step0').style.display = 'none';
+    document.getElementById('modal-step1').style.display = 'block';
+  }
+
+  /* ── Pay via PayFast ──────────────────────────────── */
   function payWithPayfast() {
-    if (!PAYFAST_READY) { showEFT(); return; } // fallback to EFT if not ready
+    if (!PAYFAST_READY) { showEFT(); return; }
     document.getElementById(activeFormId).submit();
   }
 
+  /* ── Step 1 → 2: Show EFT + notify Jeanie ────────── */
   function showEFT() {
     document.getElementById('modal-step1').style.display = 'none';
     document.getElementById('modal-step2').style.display = 'block';
+    if (activeEntrant) {
+      const t = ticketsMap[activeAmount];
+      setTimeout(() => notifyJeanie(activeEntrant.name, activeEntrant.phone, activeAmount, t, activeRef), 400);
+    }
   }
 
+  /* ── Notify Jeanie via WhatsApp with magic link ───── */
+  function notifyJeanie(name, phone, amount, tickets, ref) {
+    const t         = tickets === 1 ? '1 ticket' : `${tickets} tickets`;
+    const entryData = btoa(JSON.stringify({ name, phone, pkg: amount, tickets, ref }));
+    const magicLink = `${SITE_URL}/raffle_manager.html?add=${entryData}`;
+    const msg =
+      `🎟️ NEW RAFFLE ENTRY\n\n` +
+      `👤 Name: ${name}\n` +
+      `📱 WhatsApp: ${phone}\n` +
+      `💰 Package: R${amount} (${t})\n` +
+      `🔖 Ref: ${ref}\n\n` +
+      `👆 Tap to add to manager:\n${magicLink}`;
+    window.open(`https://wa.me/${JEANIE_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  /* ── Back navigation ──────────────────────────────── */
+  function backToDetails() {
+    document.getElementById('modal-step1').style.display = 'none';
+    document.getElementById('modal-step0').style.display = 'block';
+  }
   function backToChoices() {
-    document.getElementById('modal-step1').style.display = 'block';
     document.getElementById('modal-step2').style.display = 'none';
+    document.getElementById('modal-step1').style.display = 'block';
   }
 
-  function closeModal() { document.getElementById('modal').style.display = 'none'; }
+  /* ── Close modal ──────────────────────────────────── */
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+    document.getElementById('m-name').value  = '';
+    document.getElementById('m-phone').value = '';
+  }
   document.getElementById('modal').addEventListener('click', e => {
     if (e.target === document.getElementById('modal')) closeModal();
   });

@@ -7,338 +7,460 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --green: #007A4D;
-      --green-dark: #005c39;
-      --gold: #FFB81C;
-      --cream: #FDFAF4;
-      --red: #e53e3e;
+      --green:  #007A4D;
+      --gd:     #005c39;
+      --gold:   #FFB81C;
+      --red:    #e53e3e;
+      --blue:   #2b6cb0;
+      --orange: #c05621;
+      --cream:  #FDFAF4;
     }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #f0f4f0;
-      color: #1a1a1a;
-    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f0; color: #1a1a1a; font-size: 14px; }
+
+    /* ── HEADER ── */
     header {
       background: var(--green);
       color: white;
-      padding: 20px 32px;
+      padding: 18px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
-    header h1 { font-size: 1.2rem; font-weight: 800; }
-    header span { font-size: 0.85rem; opacity: 0.75; }
-
-    .main { padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
-
-    /* Stats row */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
-    .stat {
-      background: white;
-      border-radius: 12px;
-      padding: 20px 18px;
-      text-align: center;
-    }
-    .stat-val { font-size: 2rem; font-weight: 900; color: var(--green); }
-    .stat-lbl { font-size: 0.8rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
-
-    /* Goal bar */
-    .goal-card {
-      background: white;
-      border-radius: 12px;
-      padding: 22px 24px;
-      margin-bottom: 28px;
-    }
-    .goal-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; }
-    .goal-header strong { color: var(--green); font-size: 1.1rem; }
-    .goal-bar { height: 12px; background: #e8e8e8; border-radius: 6px; overflow: hidden; }
-    .goal-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      border-radius: 6px;
-      transition: width 0.6s ease;
-    }
-
-    /* Add entry form */
-    .add-card {
-      background: white;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 28px;
-    }
-    .add-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--green); }
-    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 12px; }
-    input, select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      background: #fafafa;
-    }
-    input:focus, select:focus { outline: none; border-color: var(--green); }
-    .add-btn {
-      background: var(--green);
-      color: white;
-      border: none;
-      padding: 11px 28px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .add-btn:hover { background: var(--green-dark); }
-
-    /* Table */
-    .table-card { background: white; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; overflow-x: auto; }
-    .table-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    th { text-align: left; padding: 10px 12px; background: #f5f5f5; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
-    td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
-    tr:last-child td { border-bottom: none; }
-    .del-btn {
-      background: none;
-      border: 1px solid #ffcdd2;
-      color: var(--red);
-      border-radius: 6px;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .del-btn:hover { background: #fff5f5; }
-
-    /* Draw */
-    .draw-card {
-      background: var(--green);
-      color: white;
-      border-radius: 12px;
-      padding: 32px 24px;
-      text-align: center;
-      margin-bottom: 28px;
-    }
-    .draw-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
-    .draw-card p { opacity: 0.8; font-size: 0.9rem; margin-bottom: 20px; }
-    .draw-btn {
+    header h1 { font-size: 1.1rem; font-weight: 800; }
+    header .sub { font-size: 0.8rem; opacity: 0.65; margin-top: 2px; }
+    .hdr-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .hdr-date { font-size: 0.75rem; opacity: 0.6; }
+    .draw-link {
       background: var(--gold);
       color: #1a1a1a;
-      border: none;
-      padding: 14px 36px;
-      border-radius: 8px;
-      font-size: 1.05rem;
+      text-decoration: none;
+      padding: 8px 18px;
+      font-size: 0.8rem;
       font-weight: 800;
-      cursor: pointer;
-      transition: background 0.2s;
+      border-radius: 6px;
+      white-space: nowrap;
     }
-    .draw-btn:hover { background: #e0a000; }
-    .winner-box {
-      display: none;
-      margin-top: 20px;
-      background: white;
-      color: var(--green);
-      border-radius: 10px;
-      padding: 20px;
-      font-size: 1.1rem;
-      font-weight: 800;
-    }
+    .draw-link:hover { background: #e0a000; }
 
-    .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.9rem; }
+    /* ── LAYOUT ── */
+    .main { padding: 24px 20px; max-width: 1300px; margin: 0 auto; }
+
+    /* ── HOW-IT-WORKS BANNER ── */
+    .how-card {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+    }
+    .how-card h3 { font-size: 0.9rem; color: #92400e; margin-bottom: 10px; }
+    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+    .how-step { background: white; border-radius: 8px; padding: 12px 14px; }
+    .how-num { font-size: 1.2rem; font-weight: 900; color: var(--green); margin-bottom: 4px; }
+    .how-step p { font-size: 0.8rem; color: #555; line-height: 1.5; }
+    .how-step strong { color: #1a1a1a; }
+    .hide-btn { font-size: 0.75rem; color: #92400e; cursor: pointer; margin-top: 10px; opacity: 0.7; }
+    .hide-btn:hover { opacity: 1; }
+
+    /* ── STATS ── */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .stat { background: white; border-radius: 10px; padding: 18px 16px; text-align: center; }
+    .stat-val { font-size: 1.9rem; font-weight: 900; color: var(--green); line-height: 1; }
+    .stat-lbl { font-size: 0.72rem; color: #888; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    .stat.orange .stat-val { color: var(--orange); }
+    .stat.blue   .stat-val { color: var(--blue); }
+
+    /* ── GOAL BAR ── */
+    .goal-card { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
+    .goal-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .goal-hdr span { font-size: 0.85rem; color: #888; }
+    .goal-hdr strong { font-size: 1.05rem; color: var(--green); }
+    .goal-bar { height: 10px; background: #e8e8e8; border-radius: 5px; overflow: hidden; }
+    .goal-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 5px; transition: width 0.7s ease; }
+    .goal-foot { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: #aaa; }
+
+    /* ── FORM ── */
+    .add-card { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
+    .add-card h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; color: var(--green); }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 10px; }
+    input, select { width: 100%; padding: 9px 11px; border: 1px solid #ddd; border-radius: 7px; font-size: 0.88rem; background: #fafafa; }
+    input:focus, select:focus { outline: none; border-color: var(--green); }
+    .add-btn { background: var(--green); color: white; border: none; padding: 10px 24px; border-radius: 7px; font-size: 0.88rem; font-weight: 700; cursor: pointer; }
+    .add-btn:hover { background: var(--gd); }
+
+    /* ── TABLE ── */
+    .table-card { background: white; border-radius: 10px; padding: 18px 22px; margin-bottom: 24px; overflow-x: auto; }
+    .table-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 8px; }
+    .table-hdr h2 { font-size: 0.95rem; font-weight: 700; }
+    .table-sub { font-size: 0.78rem; color: #888; margin-bottom: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 700px; }
+    th { text-align: left; padding: 9px 10px; background: #f5f5f5; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888; white-space: nowrap; }
+    td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── BADGES ── */
+    .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+    .b-pending   { background: #fff3cd; color: #8a6a00; }
+    .b-confirmed { background: #cce5ff; color: #004085; }
+    .b-sent      { background: #d4edda; color: #155724; }
+
+    /* ── ACTION BUTTONS ── */
+    .btn { border-radius: 6px; padding: 5px 11px; cursor: pointer; font-size: 0.75rem; font-weight: 600; white-space: nowrap; border: none; }
+    .btn-confirm  { background: #e8f5e9; color: var(--green); border: 1px solid #a5d6a7; }
+    .btn-confirm:hover  { background: #c8e6c9; }
+    .btn-send     { background: var(--green); color: white; }
+    .btn-send:hover     { background: var(--gd); }
+    .btn-resend   { background: #f0f0f0; color: #666; border: 1px solid #ddd; }
+    .btn-resend:hover   { background: #e0e0e0; }
+    .btn-del      { background: none; color: var(--red); border: 1px solid #ffcdd2; margin-left: 4px; }
+    .btn-del:hover      { background: #fff5f5; }
+    .actions-cell { display: flex; align-items: center; gap: 4px; }
+
+    /* ── DRAW CARD ── */
+    .draw-card { background: var(--green); color: white; border-radius: 10px; padding: 28px 22px; text-align: center; margin-bottom: 24px; }
+    .draw-card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+    .draw-card p  { font-size: 0.85rem; opacity: 0.75; margin-bottom: 18px; }
+
+    .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.88rem; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #1a1a1a; color: white;
+      padding: 12px 20px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 999; opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
+
 <header>
   <div>
     <h1>🏊 Raffle Manager — Team SA Portugal 2026</h1>
-    <span>Admin dashboard · Keep this page private</span>
+    <div class="sub">Admin dashboard · Keep this page private · <a href="/" style="color:rgba(255,255,255,0.6)">View public site</a></div>
   </div>
-  <div style="display:flex;align-items:center;gap:16px">
-    <span id="dateDisplay"></span>
-    <a href="draw.html" style="background:var(--gold);color:#1a1a1a;text-decoration:none;padding:9px 22px;font-size:0.82rem;font-weight:700;border-radius:6px;">🎯 Draw Winner</a>
+  <div class="hdr-actions">
+    <span class="hdr-date" id="dateDisplay"></span>
+    <a class="draw-link" href="draw.html">🎯 Draw Winner</a>
   </div>
 </header>
 
 <div class="main">
 
+  <!-- How it works -->
+  <div class="how-card" id="howCard">
+    <h3>⚡ Jeanie's workflow — 3 taps per entry</h3>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <p>Customer buys on the website → <strong>WhatsApp arrives on your phone</strong> with a magic link. Tap the link → entry is added here automatically.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <p>Check your ABSA app. When you see the EFT → come back here and tap <strong>"✓ Paid"</strong> next to the entry.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <p>Tap <strong>"📱 Send Tickets"</strong> → WhatsApp opens with the ticket numbers already written → tap <strong>Send</strong>. Done!</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">🎯</div>
+        <p>On <strong>30 June 2026</strong>, click "Draw Winner" above. The spin page will randomly pick the winner from all tickets.</p>
+      </div>
+    </div>
+    <p class="hide-btn" onclick="document.getElementById('howCard').style.display='none'">Hide these instructions ×</p>
+  </div>
+
   <!-- Stats -->
   <div class="stats">
-    <div class="stat"><div class="stat-val" id="statEntries">0</div><div class="stat-lbl">Total Entries</div></div>
-    <div class="stat"><div class="stat-val" id="statTickets">0</div><div class="stat-lbl">Total Tickets</div></div>
-    <div class="stat"><div class="stat-val" id="statRaised">R0</div><div class="stat-lbl">Raised</div></div>
-    <div class="stat"><div class="stat-val" id="statLeft">R50,000</div><div class="stat-lbl">Still Needed</div></div>
+    <div class="stat"><div class="stat-val" id="sEntries">0</div><div class="stat-lbl">Total Entries</div></div>
+    <div class="stat"><div class="stat-val" id="sTickets">0</div><div class="stat-lbl">Tickets Sold</div></div>
+    <div class="stat"><div class="stat-val" id="sRaised">R0</div><div class="stat-lbl">Raised</div></div>
+    <div class="stat orange"><div class="stat-val" id="sPending">0</div><div class="stat-lbl">Awaiting Payment</div></div>
+    <div class="stat blue"><div class="stat-val" id="sConfirmed">0</div><div class="stat-lbl">Confirmed + Sent</div></div>
+    <div class="stat"><div class="stat-val" id="sLeft">R50,000</div><div class="stat-lbl">Still Needed</div></div>
   </div>
 
   <!-- Goal bar -->
   <div class="goal-card">
-    <div class="goal-header">
-      <span>Progress toward goal</span>
+    <div class="goal-hdr">
+      <span>Progress to goal</span>
       <strong id="goalPct">0%</strong>
     </div>
     <div class="goal-bar"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
-    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#888">
-      <span>R0</span><span>R50,000</span>
-    </div>
+    <div class="goal-foot"><span>R0</span><span>R50,000</span></div>
   </div>
 
-  <!-- Add entry -->
+  <!-- Add entry manually -->
   <div class="add-card">
-    <h2>+ Add New Entry</h2>
+    <h2>+ Add Entry Manually &nbsp;<span style="font-weight:400;color:#888;font-size:0.8rem">(for walk-ins, cash payments, etc.)</span></h2>
     <div class="form-row">
-      <input type="text" id="inputName" placeholder="Full name" />
-      <input type="text" id="inputWhatsApp" placeholder="WhatsApp number" />
-      <select id="inputPackage">
-        <option value="">Select package</option>
+      <input type="text" id="iName"    placeholder="Full name *" />
+      <input type="tel"  id="iWA"      placeholder="WhatsApp number" />
+      <select id="iPkg">
+        <option value="">Select package *</option>
         <option value="150">R150 — 1 ticket</option>
         <option value="500">R500 — 5 tickets</option>
         <option value="700">R700 — 10 tickets</option>
       </select>
-      <input type="text" id="inputNotes" placeholder="Notes (optional)" />
+      <input type="text" id="iNotes"   placeholder="Notes / reference (optional)" />
     </div>
     <button class="add-btn" onclick="addEntry()">Add Entry</button>
   </div>
 
   <!-- Entries table -->
   <div class="table-card">
-    <h2>All Entries</h2>
+    <div class="table-hdr">
+      <h2>All Entries</h2>
+    </div>
+    <p class="table-sub" id="tableSub">No entries yet.</p>
     <table>
       <thead>
         <tr>
           <th>#</th>
           <th>Name</th>
           <th>WhatsApp</th>
-          <th>Package</th>
-          <th>Tickets</th>
-          <th>Added</th>
-          <th>Notes</th>
-          <th></th>
+          <th>Pkg</th>
+          <th>Ticket Numbers</th>
+          <th>Ref / Notes</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="entriesBody">
-        <tr><td colspan="8" class="empty">No entries yet. Add the first one above.</td></tr>
+      <tbody id="tbody">
+        <tr><td colspan="9" class="empty">No entries yet. Add one above or wait for website entries.</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Draw winner -->
+  <!-- Draw -->
   <div class="draw-card">
-    <h2>🎯 Draw the Winner</h2>
-    <p>Use only on draw day — 30 June 2026. This picks a random ticket from all entries.</p>
-    <button class="draw-btn" onclick="drawWinner()">Draw Winner Now</button>
-    <div class="winner-box" id="winnerBox"></div>
+    <h2>🎯 Ready to Draw?</h2>
+    <p>Use the draw page on 30 June 2026 — it randomly picks a ticket from all confirmed entries and has a cool spin animation!</p>
+    <a href="draw.html" style="display:inline-block;background:var(--gold);color:#1a1a1a;text-decoration:none;padding:12px 32px;border-radius:7px;font-size:0.95rem;font-weight:800;">Open Draw Page →</a>
   </div>
 
 </div>
 
-<script>
-  const GOAL = 50000;
-  const PACKAGE_TICKETS = { '150': 1, '500': 5, '700': 10 };
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
 
-  let entries = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
+<script>
+  /* ── Config ─────────────────────────────────────── */
+  const GOAL            = 50000;
+  const PKG_TICKETS     = { '150': 1, '500': 5, '700': 10 };
+
+  let entries    = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
   let nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
 
+  /* ── Persistence ─────────────────────────────────── */
   function save() {
     localStorage.setItem('raffleEntries', JSON.stringify(entries));
-    localStorage.setItem('nextTicket', nextTicket);
+    localStorage.setItem('nextTicket', String(nextTicket));
   }
 
+  /* ── Toast ───────────────────────────────────────── */
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  /* ── Render ──────────────────────────────────────── */
   function fmt(n) { return 'R' + n.toLocaleString('en-ZA'); }
 
   function render() {
-    const totalEntries = entries.length;
-    const totalTickets = entries.reduce((s, e) => s + e.tickets, 0);
-    const raised = entries.reduce((s, e) => s + parseInt(e.pkg), 0);
-    const left = Math.max(0, GOAL - raised);
-    const pct = Math.min(100, Math.round((raised / GOAL) * 100));
+    const total     = entries.length;
+    const tickets   = entries.reduce((s, e) => s + e.tickets, 0);
+    const raised    = entries.reduce((s, e) => s + parseInt(e.pkg), 0);
+    const pending   = entries.filter(e => !e.status || e.status === 'pending').length;
+    const confirmed = entries.filter(e => e.status === 'confirmed' || e.status === 'sent').length;
+    const left      = Math.max(0, GOAL - raised);
+    const pct       = Math.min(100, Math.round((raised / GOAL) * 100));
 
-    document.getElementById('statEntries').textContent = totalEntries;
-    document.getElementById('statTickets').textContent = totalTickets;
-    document.getElementById('statRaised').textContent = fmt(raised);
-    document.getElementById('statLeft').textContent = fmt(left);
-    document.getElementById('goalPct').textContent = pct + '%';
-    document.getElementById('goalFill').style.width = pct + '%';
+    document.getElementById('sEntries').textContent   = total;
+    document.getElementById('sTickets').textContent   = tickets;
+    document.getElementById('sRaised').textContent    = fmt(raised);
+    document.getElementById('sPending').textContent   = pending;
+    document.getElementById('sConfirmed').textContent = confirmed;
+    document.getElementById('sLeft').textContent      = fmt(left);
+    document.getElementById('goalPct').textContent    = pct + '%';
+    document.getElementById('goalFill').style.width   = pct + '%';
+    document.getElementById('tableSub').textContent   = total === 0
+      ? 'No entries yet.'
+      : `${total} entr${total > 1 ? 'ies' : 'y'} · ${pending} pending payment · ${confirmed} confirmed`;
 
-    const tbody = document.getElementById('entriesBody');
-    if (entries.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="empty">No entries yet. Add the first one above.</td></tr>';
+    const tbody = document.getElementById('tbody');
+    if (total === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="empty">No entries yet. Add one above or wait for website entries to arrive via WhatsApp link.</td></tr>';
       return;
     }
-    tbody.innerHTML = entries.map((e, i) => `
-      <tr>
+
+    const badges = {
+      'pending':   '<span class="badge b-pending">⏳ Pending</span>',
+      'confirmed': '<span class="badge b-confirmed">✓ Confirmed</span>',
+      'sent':      '<span class="badge b-sent">✅ Tickets Sent</span>'
+    };
+
+    tbody.innerHTML = entries.map((e, i) => {
+      const status = e.status || 'pending';
+      const badge  = badges[status] || badges['pending'];
+      let actions  = '';
+      if (status === 'pending') {
+        actions = `<button class="btn btn-confirm" onclick="confirmPayment(${i})" title="Mark as paid">✓ Paid</button>
+                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+      } else if (status === 'confirmed') {
+        actions = `<button class="btn btn-send" onclick="sendTickets(${i})">📱 Send Tickets</button>
+                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+      } else {
+        actions = `<button class="btn btn-resend" onclick="sendTickets(${i})" title="Resend ticket numbers">↩ Resend</button>
+                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+      }
+      return `<tr>
         <td>${i + 1}</td>
         <td><strong>${e.name}</strong></td>
-        <td>${e.whatsapp}</td>
-        <td>R${e.pkg}</td>
-        <td>${e.ticketNums}</td>
-        <td>${e.date}</td>
-        <td>${e.notes || '—'}</td>
-        <td><button class="del-btn" onclick="deleteEntry(${i})">Remove</button></td>
-      </tr>
-    `).join('');
+        <td style="font-size:0.78rem;color:#555">${e.whatsapp || '<span style="color:#ccc">—</span>'}</td>
+        <td style="font-weight:700">R${e.pkg}</td>
+        <td style="font-family:monospace;font-size:0.78rem;color:#333">${e.ticketNums}</td>
+        <td style="font-size:0.75rem;color:#999">${e.ref || e.notes || '<span style="color:#ddd">—</span>'}</td>
+        <td style="font-size:0.78rem;white-space:nowrap;color:#777">${e.date}</td>
+        <td>${badge}</td>
+        <td><div class="actions-cell">${actions}</div></td>
+      </tr>`;
+    }).join('');
   }
 
+  /* ── Add entry manually ──────────────────────────── */
   function addEntry() {
-    const name = document.getElementById('inputName').value.trim();
-    const whatsapp = document.getElementById('inputWhatsApp').value.trim();
-    const pkg = document.getElementById('inputPackage').value;
-    const notes = document.getElementById('inputNotes').value.trim();
+    const name = document.getElementById('iName').value.trim();
+    const wa   = document.getElementById('iWA').value.trim();
+    const pkg  = document.getElementById('iPkg').value;
+    const notes= document.getElementById('iNotes').value.trim();
 
-    if (!name || !whatsapp || !pkg) {
-      alert('Please fill in name, WhatsApp, and package.');
-      return;
-    }
+    if (!name || !pkg) { alert('Name and package are required.'); return; }
 
-    const ticketCount = PACKAGE_TICKETS[pkg];
+    const tc   = PKG_TICKETS[pkg];
     const nums = [];
-    for (let i = 0; i < ticketCount; i++) nums.push(nextTicket++);
-    const ticketNums = nums.join(', ');
+    for (let i = 0; i < tc; i++) nums.push(nextTicket++);
 
     entries.push({
-      name, whatsapp, pkg,
-      tickets: ticketCount,
-      ticketNums,
-      notes,
-      date: new Date().toLocaleDateString('en-ZA')
+      name, whatsapp: wa, pkg,
+      tickets: tc,
+      ticketNums: nums.join(', '),
+      notes, ref: notes || '—',
+      date:   new Date().toLocaleDateString('en-ZA'),
+      status: 'confirmed'   // manual = assume paid
     });
 
-    save();
-    render();
-
-    // Clear inputs
-    document.getElementById('inputName').value = '';
-    document.getElementById('inputWhatsApp').value = '';
-    document.getElementById('inputPackage').value = '';
-    document.getElementById('inputNotes').value = '';
+    save(); render();
+    document.getElementById('iName').value  = '';
+    document.getElementById('iWA').value    = '';
+    document.getElementById('iPkg').value   = '';
+    document.getElementById('iNotes').value = '';
+    toast('✅ Entry added — status set to Confirmed');
   }
 
+  /* ── Confirm payment ─────────────────────────────── */
+  function confirmPayment(i) {
+    entries[i].status = 'confirmed';
+    save(); render();
+    toast('✓ Payment confirmed for ' + entries[i].name);
+  }
+
+  /* ── Send tickets via WhatsApp ───────────────────── */
+  function sendTickets(i) {
+    const e = entries[i];
+    if (!e.whatsapp) {
+      alert('No WhatsApp number saved for ' + e.name + '.\nAdd their number manually in the notes field.');
+      return;
+    }
+    let ph = e.whatsapp.replace(/[\s\-\(\)\.]/g, '');
+    if (ph.startsWith('0')) ph = '27' + ph.slice(1);
+    if (ph.startsWith('+')) ph = ph.slice(1);
+    if (!ph.startsWith('27')) ph = '27' + ph;
+
+    const tc  = e.tickets;
+    const msg = encodeURIComponent(
+      `🎟️ *Team SA Raffle — Your Ticket${tc > 1 ? 's' : ''}!* 🇿🇦\n\n` +
+      `Hi ${e.name}!\n\n` +
+      `Your raffle ticket number${tc > 1 ? 's are' : ' is'}:\n` +
+      `*${e.ticketNums}*\n\n` +
+      `📅 Draw date: *30 June 2026*\n` +
+      `📣 Winner announced on WhatsApp & social media\n\n` +
+      `Thank you so much for supporting Team SA on our journey to Portugal! 🏊‍♀️✨\n\n` +
+      `_Together, we can. ♡_\n` +
+      `_team-sa-raffle.vercel.app_`
+    );
+
+    window.open(`https://wa.me/${ph}?text=${msg}`, '_blank');
+    entries[i].status = 'sent';
+    save(); render();
+    toast('📱 WhatsApp opened for ' + e.name + ' — tap Send!');
+  }
+
+  /* ── Delete entry ────────────────────────────────── */
   function deleteEntry(i) {
-    if (!confirm(`Remove entry for ${entries[i].name}?`)) return;
+    if (!confirm(`Remove entry for ${entries[i].name}?\nThis cannot be undone.`)) return;
     entries.splice(i, 1);
-    save();
-    render();
+    save(); render();
+    toast('Entry removed.');
   }
 
-  function drawWinner() {
-    if (entries.length === 0) { alert('No entries yet!'); return; }
-    if (!confirm('Are you sure? This is the official draw!')) return;
+  /* ── Handle ?add= URL param (from website entry) ──── */
+  function checkURLParams() {
+    const params  = new URLSearchParams(window.location.search);
+    const addData = params.get('add');
+    if (!addData) return;
+    history.replaceState({}, '', window.location.pathname);
 
-    // Build pool of all ticket numbers with owner
-    const pool = [];
-    entries.forEach(e => {
-      e.ticketNums.split(', ').forEach(n => pool.push({ name: e.name, whatsapp: e.whatsapp, ticket: n }));
-    });
+    try {
+      const d  = JSON.parse(atob(addData));
+      const tc = PKG_TICKETS[String(d.pkg)] || d.tickets || 1;
 
-    const winner = pool[Math.floor(Math.random() * pool.length)];
-    const box = document.getElementById('winnerBox');
-    box.style.display = 'block';
-    box.innerHTML = `
-      🎉 WINNER! 🎉<br><br>
-      <span style="font-size:1.4rem">${winner.name}</span><br>
-      <span style="font-size:0.95rem;color:#555;font-weight:400">Ticket #${winner.ticket} · ${winner.whatsapp}</span>
-    `;
+      const confirmed = confirm(
+        `New entry from website — add to manager?\n\n` +
+        `👤  ${d.name}\n` +
+        `📱  ${d.phone}\n` +
+        `💰  R${d.pkg} · ${tc} ticket${tc > 1 ? 's' : ''}\n` +
+        `🔖  Ref: ${d.ref}\n\n` +
+        `Status will be PENDING — confirm after you see the EFT in your bank.`
+      );
+      if (!confirmed) return;
+
+      const nums = [];
+      for (let j = 0; j < tc; j++) nums.push(nextTicket++);
+      entries.push({
+        name:      d.name,
+        whatsapp:  d.phone,
+        pkg:       String(d.pkg),
+        tickets:   tc,
+        ticketNums: nums.join(', '),
+        notes:     '',
+        ref:       d.ref,
+        date:      new Date().toLocaleDateString('en-ZA'),
+        status:    'pending'
+      });
+      save(); render();
+      toast('✅ Entry added! Tap ✓ Paid once you confirm the EFT.');
+    } catch (err) {
+      console.warn('Invalid ?add param:', err);
+    }
   }
 
-  document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-ZA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  /* ── Init ────────────────────────────────────────── */
+  document.getElementById('dateDisplay').textContent =
+    new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
+  checkURLParams();
   render();
 </script>
 </body>
