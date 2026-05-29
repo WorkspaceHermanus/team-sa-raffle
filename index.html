@@ -684,10 +684,23 @@
     .story-full-inner p { font-size: 0.9rem; color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
 
     /* ── SPONSORS ────────────────────── */
-    .sponsors-section { background: var(--cream3); padding: 52px 40px; text-align: center; }
-    .sponsors-logos { display: flex; justify-content: center; align-items: center; gap: 52px; flex-wrap: wrap; margin-top: 32px; }
-    .sponsor-logo { height: 60px; width: auto; opacity: 0.6; filter: grayscale(20%); transition: all 0.25s; }
-    .sponsor-logo:hover { opacity: 1; filter: none; }
+    .sponsors-section { background: var(--white); padding: 80px 60px; text-align: center; }
+    .sponsors-intro { font-size: 0.88rem; color: var(--muted); line-height: 1.85; max-width: 520px; margin: 0 auto 52px; }
+    .sponsor-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; max-width: 900px; margin: 0 auto; text-align: left; }
+    .sponsor-card { background: var(--cream3); display: flex; flex-direction: column; }
+    .sponsor-img-wrap { height: 280px; overflow: hidden; background: var(--cream2); position: relative; }
+    .sponsor-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s ease; }
+    .sponsor-card:hover .sponsor-img-wrap img { transform: scale(1.05); }
+    .sponsor-info { padding: 30px 32px 34px; flex: 1; border: 1px solid var(--cream2); border-top: none; }
+    .sponsor-name { font-family: 'Cormorant Garamond', serif; font-size: 1.65rem; font-weight: 400; color: var(--green); margin-bottom: 4px; line-height: 1.2; }
+    .sponsor-loc { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+    .sponsor-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.85; margin-bottom: 22px; }
+    .sponsor-prize-tag { display: inline-block; background: var(--green); color: var(--gold-lt); font-size: 8px; letter-spacing: 2px; text-transform: uppercase; padding: 8px 18px; }
+    @media (max-width: 700px) {
+      .sponsors-section { padding: 60px 20px; }
+      .sponsor-cards { grid-template-columns: 1fr; }
+      .sponsor-img-wrap { height: 220px; }
+    }
 
     /* ── PAYMENT CHOICE MODAL ────────── */
     .pay-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 16px; }
@@ -902,7 +915,7 @@
     <div class="step">
       <div class="step-n">02</div>
       <h3>Pay Securely</h3>
-      <p>EFT, Zapper, or Shapid — quick and safe.</p>
+      <p>Pay online via PayFast (card, instant EFT) or by manual bank transfer.</p>
     </div>
     <div class="step">
       <div class="step-n">03</div>
@@ -918,15 +931,42 @@
 </section>
 
 <!-- ── SPONSORS ───────────────────────────────────── -->
-<div class="sponsors-section">
+<section class="sponsors-section">
   <p class="section-tag">Proudly Supported By</p>
-  <h2 class="section-title" style="font-size:1.6rem;margin-bottom:4px">Our Prize Sponsors</h2>
-  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0">Thank you for making this possible</p>
-  <div class="sponsors-logos">
-    <img src="marketing2.jpeg" alt="Institute of Aesthetic Options" class="sponsor-logo">
-    <img src="marketing1.jpeg" alt="Tracy Dawber Pilates" class="sponsor-logo">
+  <h2 class="section-title" style="margin-bottom:16px">Our <em>Generous</em> Sponsors</h2>
+  <p class="sponsors-intro">
+    These incredible local businesses have donated luxury prizes to make this raffle possible.
+    They are part of our community — please show them your support.
+  </p>
+
+  <div class="sponsor-cards">
+
+    <div class="sponsor-card">
+      <div class="sponsor-img-wrap">
+        <img src="marketing2.jpeg" alt="Aesthetic Options, The Pearls Umhlanga">
+      </div>
+      <div class="sponsor-info">
+        <div class="sponsor-name">Aesthetic Options</div>
+        <span class="sponsor-loc">The Pearls, Umhlanga &nbsp;·&nbsp; Dr. Le-Jean Ehlers</span>
+        <p class="sponsor-desc">World-class aesthetic medicine offering injectable collagen biostimulators, skin boosters, and comprehensive skin assessments — tailored to you.</p>
+        <div class="sponsor-prize-tag">Prize I · R10,500 &nbsp;&nbsp;·&nbsp;&nbsp; Prize II · R1,500</div>
+      </div>
+    </div>
+
+    <div class="sponsor-card">
+      <div class="sponsor-img-wrap">
+        <img src="marketing1.jpeg" alt="Tracy Dawber Pilates, The Pearls Umhlanga">
+      </div>
+      <div class="sponsor-info">
+        <div class="sponsor-name">Tracy Dawber Pilates</div>
+        <span class="sponsor-loc">The Pearls, Umhlanga &nbsp;·&nbsp; Tracy Dawber</span>
+        <p class="sponsor-desc">Premium reformer pilates studio offering personalised sessions for strength, flexibility and mindful movement in a beautiful, luxurious setting.</p>
+        <div class="sponsor-prize-tag">Prize III · 4× Reformer Sessions · R2,000</div>
+      </div>
+    </div>
+
   </div>
-</div>
+</section>
 
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <div class="footer-together">
@@ -984,10 +1024,10 @@
 <script>
   const RAISED = 0;
   const GOAL = 50000;
-  // ── Set MERCHANT_ID and MERCHANT_KEY then set PAYFAST_READY = true ──
-  const PAYFAST_READY = false;
-  const MERCHANT_ID   = 'YOUR_MERCHANT_ID';
-  const MERCHANT_KEY  = 'YOUR_MERCHANT_KEY';
+  // ── PayFast live credentials ──
+  const PAYFAST_READY = true;
+  const MERCHANT_ID   = '12344237';
+  const MERCHANT_KEY  = '8aqrv8r8mg2t3';
 
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -1016,7 +1056,7 @@
   }
 
   function payWithPayfast() {
-    if (!PAYFAST_READY) { alert('Online payments coming soon! Please use EFT for now.'); return; }
+    if (!PAYFAST_READY) { showEFT(); return; } // fallback to EFT if not ready
     document.getElementById(activeFormId).submit();
   }
 
