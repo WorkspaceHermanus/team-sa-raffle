@@ -1,1 +1,6 @@
 .vercel
+node_modules/
+package.json
+package-lock.json
+screenshot.js
+Team-SA-Raffle-*.png
