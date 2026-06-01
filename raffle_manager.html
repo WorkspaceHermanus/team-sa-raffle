@@ -13,76 +13,131 @@
       --red:    #e53e3e;
       --blue:   #2b6cb0;
       --orange: #c05621;
-      --cream:  #FDFAF4;
     }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f0; color: #1a1a1a; font-size: 14px; }
 
-    /* ── HEADER ── */
-    header {
+    /* ── LOCK SCREEN ── */
+    #lockScreen {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: #1B3A2D;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lock-card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .lock-icon { font-size: 2.8rem; margin-bottom: 20px; }
+    .lock-card h2 { font-size: 1.3rem; color: var(--green); margin-bottom: 8px; }
+    .lock-card p { font-size: 0.85rem; color: #888; margin-bottom: 28px; line-height: 1.6; }
+    .lock-input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .lock-input:focus { border-color: var(--green); }
+    .lock-input.error { border-color: var(--red); animation: shake 0.3s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .lock-error { font-size: 0.8rem; color: var(--red); margin-bottom: 14px; min-height: 18px; }
+    .lock-btn {
+      width: 100%;
+      padding: 14px;
       background: var(--green);
       color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-btn:hover { background: var(--gd); }
+    .lock-hint { margin-top: 20px; font-size: 0.75rem; color: #bbb; line-height: 1.6; }
+    .lock-hint a { color: #999; cursor: pointer; text-decoration: underline; }
+
+    /* ── APP (hidden until authenticated) ── */
+    #app { display: none; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--green); color: white;
       padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
     }
     header h1 { font-size: 1.1rem; font-weight: 800; }
-    header .sub { font-size: 0.8rem; opacity: 0.65; margin-top: 2px; }
+    .hdr-sub { font-size: 0.78rem; opacity: 0.6; margin-top: 2px; }
     .hdr-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .hdr-date { font-size: 0.75rem; opacity: 0.6; }
+    .hdr-date { font-size: 0.75rem; opacity: 0.55; }
     .draw-link {
-      background: var(--gold);
-      color: #1a1a1a;
-      text-decoration: none;
-      padding: 8px 18px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      border-radius: 6px;
-      white-space: nowrap;
+      background: var(--gold); color: #1a1a1a;
+      text-decoration: none; padding: 8px 18px;
+      font-size: 0.8rem; font-weight: 800;
+      border-radius: 6px; white-space: nowrap;
     }
     .draw-link:hover { background: #e0a000; }
+    .lock-out-btn {
+      background: rgba(255,255,255,0.15); color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 7px 14px; border-radius: 6px;
+      font-size: 0.75rem; cursor: pointer;
+    }
+    .lock-out-btn:hover { background: rgba(255,255,255,0.25); }
 
     /* ── LAYOUT ── */
     .main { padding: 24px 20px; max-width: 1300px; margin: 0 auto; }
 
-    /* ── HOW-IT-WORKS BANNER ── */
+    /* ── HOW-IT-WORKS ── */
     .how-card {
-      background: #fffbeb;
-      border: 1px solid #fcd34d;
-      border-radius: 10px;
-      padding: 18px 22px;
-      margin-bottom: 24px;
+      background: #fffbeb; border: 1px solid #fcd34d;
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 24px;
     }
-    .how-card h3 { font-size: 0.9rem; color: #92400e; margin-bottom: 10px; }
-    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+    .how-card h3 { font-size: 0.9rem; color: #92400e; margin-bottom: 12px; }
+    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
     .how-step { background: white; border-radius: 8px; padding: 12px 14px; }
-    .how-num { font-size: 1.2rem; font-weight: 900; color: var(--green); margin-bottom: 4px; }
-    .how-step p { font-size: 0.8rem; color: #555; line-height: 1.5; }
-    .how-step strong { color: #1a1a1a; }
+    .how-num { font-size: 1.3rem; font-weight: 900; color: var(--green); margin-bottom: 4px; }
+    .how-step p { font-size: 0.79rem; color: #555; line-height: 1.55; }
     .hide-btn { font-size: 0.75rem; color: #92400e; cursor: pointer; margin-top: 10px; opacity: 0.7; }
-    .hide-btn:hover { opacity: 1; }
 
     /* ── STATS ── */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
-    .stat { background: white; border-radius: 10px; padding: 18px 16px; text-align: center; }
-    .stat-val { font-size: 1.9rem; font-weight: 900; color: var(--green); line-height: 1; }
-    .stat-lbl { font-size: 0.72rem; color: #888; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .stat { background: white; border-radius: 10px; padding: 16px 14px; text-align: center; }
+    .stat-val { font-size: 1.85rem; font-weight: 900; color: var(--green); line-height: 1; }
+    .stat-lbl { font-size: 0.7rem; color: #888; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
     .stat.orange .stat-val { color: var(--orange); }
     .stat.blue   .stat-val { color: var(--blue); }
 
-    /* ── GOAL BAR ── */
-    .goal-card { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
-    .goal-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    /* ── GOAL ── */
+    .goal-card { background: white; border-radius: 10px; padding: 18px 22px; margin-bottom: 22px; }
+    .goal-hdr { display: flex; justify-content: space-between; margin-bottom: 8px; }
     .goal-hdr span { font-size: 0.85rem; color: #888; }
-    .goal-hdr strong { font-size: 1.05rem; color: var(--green); }
+    .goal-hdr strong { color: var(--green); }
     .goal-bar { height: 10px; background: #e8e8e8; border-radius: 5px; overflow: hidden; }
-    .goal-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--gold)); border-radius: 5px; transition: width 0.7s ease; }
+    .goal-fill { height: 100%; background: linear-gradient(90deg,var(--green),var(--gold)); border-radius: 5px; transition: width 0.7s; }
     .goal-foot { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: #aaa; }
 
     /* ── FORM ── */
-    .add-card { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
+    .add-card { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 22px; }
     .add-card h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; color: var(--green); }
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 10px; }
     input, select { width: 100%; padding: 9px 11px; border: 1px solid #ddd; border-radius: 7px; font-size: 0.88rem; background: #fafafa; }
@@ -91,8 +146,8 @@
     .add-btn:hover { background: var(--gd); }
 
     /* ── TABLE ── */
-    .table-card { background: white; border-radius: 10px; padding: 18px 22px; margin-bottom: 24px; overflow-x: auto; }
-    .table-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 8px; }
+    .table-card { background: white; border-radius: 10px; padding: 18px 22px; margin-bottom: 22px; overflow-x: auto; }
+    .table-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 6px; }
     .table-hdr h2 { font-size: 0.95rem; font-weight: 700; }
     .table-sub { font-size: 0.78rem; color: #888; margin-bottom: 14px; }
     table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 700px; }
@@ -100,61 +155,81 @@
     td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
 
-    /* ── BADGES ── */
+    /* Badges */
     .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
     .b-pending   { background: #fff3cd; color: #8a6a00; }
     .b-confirmed { background: #cce5ff; color: #004085; }
     .b-sent      { background: #d4edda; color: #155724; }
 
-    /* ── ACTION BUTTONS ── */
+    /* Buttons */
     .btn { border-radius: 6px; padding: 5px 11px; cursor: pointer; font-size: 0.75rem; font-weight: 600; white-space: nowrap; border: none; }
-    .btn-confirm  { background: #e8f5e9; color: var(--green); border: 1px solid #a5d6a7; }
-    .btn-confirm:hover  { background: #c8e6c9; }
-    .btn-send     { background: var(--green); color: white; }
-    .btn-send:hover     { background: var(--gd); }
-    .btn-resend   { background: #f0f0f0; color: #666; border: 1px solid #ddd; }
-    .btn-resend:hover   { background: #e0e0e0; }
-    .btn-del      { background: none; color: var(--red); border: 1px solid #ffcdd2; margin-left: 4px; }
-    .btn-del:hover      { background: #fff5f5; }
+    .btn-confirm { background: #e8f5e9; color: var(--green); border: 1px solid #a5d6a7; }
+    .btn-confirm:hover { background: #c8e6c9; }
+    .btn-send    { background: var(--green); color: white; }
+    .btn-send:hover { background: var(--gd); }
+    .btn-resend  { background: #f0f0f0; color: #666; border: 1px solid #ddd; }
+    .btn-del     { background: none; color: var(--red); border: 1px solid #ffcdd2; margin-left: 4px; }
+    .btn-del:hover { background: #fff5f5; }
     .actions-cell { display: flex; align-items: center; gap: 4px; }
 
-    /* ── DRAW CARD ── */
-    .draw-card { background: var(--green); color: white; border-radius: 10px; padding: 28px 22px; text-align: center; margin-bottom: 24px; }
+    /* Draw card */
+    .draw-card { background: var(--green); color: white; border-radius: 10px; padding: 28px 22px; text-align: center; margin-bottom: 22px; }
     .draw-card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
     .draw-card p  { font-size: 0.85rem; opacity: 0.75; margin-bottom: 18px; }
 
     .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.88rem; }
 
-    /* ── TOAST ── */
+    /* Toast */
     .toast {
       position: fixed; bottom: 24px; right: 24px;
       background: #1a1a1a; color: white;
       padding: 12px 20px; border-radius: 8px;
       font-size: 0.85rem; font-weight: 500;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      z-index: 999; opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
+      z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
     .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
 
+<!-- ── LOCK SCREEN ──────────────────────────────── -->
+<div id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-icon" id="lockIcon">🔒</div>
+    <h2 id="lockTitle">Raffle Manager</h2>
+    <p id="lockMsg">Enter your password to access the manager.</p>
+    <input type="password" id="pinInput" class="lock-input"
+      placeholder="Password"
+      onkeydown="if(event.key==='Enter') tryUnlock()"
+      autocomplete="current-password">
+    <p class="lock-error" id="lockError"></p>
+    <button class="lock-btn" onclick="tryUnlock()" id="lockBtn">Unlock →</button>
+    <p class="lock-hint" id="lockHint">
+      Keep this page private.<br>
+      <a onclick="showResetFlow()">Forgot password?</a>
+    </p>
+  </div>
+</div>
+
+<!-- ── MAIN APP (hidden until auth) ────────────── -->
+<div id="app">
+
 <header>
   <div>
     <h1>🏊 Raffle Manager — Team SA Portugal 2026</h1>
-    <div class="sub">Admin dashboard · Keep this page private · <a href="/" style="color:rgba(255,255,255,0.6)">View public site</a></div>
+    <div class="hdr-sub">Admin dashboard · <a href="/" style="color:rgba(255,255,255,0.55)">View public site</a></div>
   </div>
   <div class="hdr-actions">
     <span class="hdr-date" id="dateDisplay"></span>
+    <button class="lock-out-btn" onclick="lockOut()">🔒 Lock</button>
     <a class="draw-link" href="draw.html">🎯 Draw Winner</a>
   </div>
 </header>
 
 <div class="main">
 
-  <!-- How it works -->
+  <!-- Workflow guide -->
   <div class="how-card" id="howCard">
     <h3>⚡ Jeanie's workflow — 3 taps per entry</h3>
     <div class="how-steps">
@@ -164,15 +239,15 @@
       </div>
       <div class="how-step">
         <div class="how-num">2</div>
-        <p>Check your ABSA app. When you see the EFT → come back here and tap <strong>"✓ Paid"</strong> next to the entry.</p>
+        <p>Check your ABSA app. When you see the payment → come back here and tap <strong>"✓ Paid"</strong> next to their entry.</p>
       </div>
       <div class="how-step">
         <div class="how-num">3</div>
-        <p>Tap <strong>"📱 Send Tickets"</strong> → WhatsApp opens with the ticket numbers already written → tap <strong>Send</strong>. Done!</p>
+        <p>Tap <strong>"📱 Send Tickets"</strong> → WhatsApp opens with ticket numbers already written → tap <strong>Send</strong>. Done!</p>
       </div>
       <div class="how-step">
         <div class="how-num">🎯</div>
-        <p>On <strong>30 June 2026</strong>, click "Draw Winner" above. The spin page will randomly pick the winner from all tickets.</p>
+        <p>On <strong>30 June 2026</strong> click "Draw Winner" above — the spin page picks the winner from all tickets.</p>
       </div>
     </div>
     <p class="hide-btn" onclick="document.getElementById('howCard').style.display='none'">Hide these instructions ×</p>
@@ -184,7 +259,7 @@
     <div class="stat"><div class="stat-val" id="sTickets">0</div><div class="stat-lbl">Tickets Sold</div></div>
     <div class="stat"><div class="stat-val" id="sRaised">R0</div><div class="stat-lbl">Raised</div></div>
     <div class="stat orange"><div class="stat-val" id="sPending">0</div><div class="stat-lbl">Awaiting Payment</div></div>
-    <div class="stat blue"><div class="stat-val" id="sConfirmed">0</div><div class="stat-lbl">Confirmed + Sent</div></div>
+    <div class="stat blue"><div class="stat-val" id="sConfirmed">0</div><div class="stat-lbl">Confirmed</div></div>
     <div class="stat"><div class="stat-val" id="sLeft">R50,000</div><div class="stat-lbl">Still Needed</div></div>
   </div>
 
@@ -200,17 +275,17 @@
 
   <!-- Add entry manually -->
   <div class="add-card">
-    <h2>+ Add Entry Manually &nbsp;<span style="font-weight:400;color:#888;font-size:0.8rem">(for walk-ins, cash payments, etc.)</span></h2>
+    <h2>+ Add Entry Manually &nbsp;<span style="font-weight:400;color:#888;font-size:0.78rem">(for cash payments, clinic entries, walk-ins)</span></h2>
     <div class="form-row">
-      <input type="text" id="iName"    placeholder="Full name *" />
-      <input type="tel"  id="iWA"      placeholder="WhatsApp number" />
+      <input type="text" id="iName"  placeholder="Full name *" />
+      <input type="tel"  id="iWA"    placeholder="WhatsApp number" />
       <select id="iPkg">
         <option value="">Select package *</option>
         <option value="150">R150 — 1 ticket</option>
         <option value="500">R500 — 5 tickets</option>
         <option value="700">R700 — 10 tickets</option>
       </select>
-      <input type="text" id="iNotes"   placeholder="Notes / reference (optional)" />
+      <input type="text" id="iNotes" placeholder="Notes / reference (optional)" />
     </div>
     <button class="add-btn" onclick="addEntry()">Add Entry</button>
   </div>
@@ -227,7 +302,7 @@
           <th>#</th>
           <th>Name</th>
           <th>WhatsApp</th>
-          <th>Pkg</th>
+          <th>Package</th>
           <th>Ticket Numbers</th>
           <th>Ref / Notes</th>
           <th>Date</th>
@@ -236,7 +311,7 @@
         </tr>
       </thead>
       <tbody id="tbody">
-        <tr><td colspan="9" class="empty">No entries yet. Add one above or wait for website entries.</td></tr>
+        <tr><td colspan="9" class="empty">No entries yet.</td></tr>
       </tbody>
     </table>
   </div>
@@ -244,38 +319,141 @@
   <!-- Draw -->
   <div class="draw-card">
     <h2>🎯 Ready to Draw?</h2>
-    <p>Use the draw page on 30 June 2026 — it randomly picks a ticket from all confirmed entries and has a cool spin animation!</p>
+    <p>Use the draw page on 30 June 2026 — it picks a random ticket with a spin animation!</p>
     <a href="draw.html" style="display:inline-block;background:var(--gold);color:#1a1a1a;text-decoration:none;padding:12px 32px;border-radius:7px;font-size:0.95rem;font-weight:800;">Open Draw Page →</a>
   </div>
 
-</div>
+</div><!-- /main -->
+</div><!-- /app -->
 
-<!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── Config ─────────────────────────────────────── */
-  const GOAL            = 50000;
-  const PKG_TICKETS     = { '150': 1, '500': 5, '700': 10 };
+  /* ── Auth ──────────────────────────────────────────── */
+  const PIN_KEY  = 'rfMgrPin_v1';
+  const AUTH_KEY = 'rfMgrAuthed_v1';
+  let setupMode  = false;
 
-  let entries    = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
-  let nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
+  function initAuth() {
+    const storedPin = localStorage.getItem(PIN_KEY);
 
-  /* ── Persistence ─────────────────────────────────── */
+    // Already authenticated this session → show app directly
+    if (sessionStorage.getItem(AUTH_KEY) === '1' && storedPin) {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      initApp();
+      return;
+    }
+
+    // First time → setup mode
+    if (!storedPin) {
+      setupMode = true;
+      document.getElementById('lockIcon').textContent  = '🎟️';
+      document.getElementById('lockTitle').textContent = 'Welcome, Jeanie!';
+      document.getElementById('lockMsg').textContent   = 'Create a password to protect this manager page.';
+      document.getElementById('pinInput').placeholder  = 'Create a password';
+      document.getElementById('lockBtn').textContent   = 'Set Password →';
+      document.getElementById('lockHint').textContent  = 'Choose something easy to remember — e.g. your dog\'s name + 26.';
+      document.getElementById('pinInput').removeAttribute('autocomplete');
+    }
+
+    // Focus input
+    setTimeout(() => document.getElementById('pinInput').focus(), 100);
+  }
+
+  function tryUnlock() {
+    const input = document.getElementById('pinInput').value;
+    const errEl = document.getElementById('lockError');
+    errEl.textContent = '';
+
+    if (!input) {
+      document.getElementById('pinInput').classList.add('error');
+      setTimeout(() => document.getElementById('pinInput').classList.remove('error'), 400);
+      return;
+    }
+
+    if (setupMode) {
+      if (input.length < 3) {
+        errEl.textContent = 'Password must be at least 3 characters.';
+        return;
+      }
+      localStorage.setItem(PIN_KEY, input);
+      setupMode = false;
+      unlockApp();
+      return;
+    }
+
+    const storedPin = localStorage.getItem(PIN_KEY);
+    if (input === storedPin) {
+      unlockApp();
+    } else {
+      errEl.textContent = 'Incorrect password. Try again.';
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinInput').classList.add('error');
+      setTimeout(() => document.getElementById('pinInput').classList.remove('error'), 400);
+      document.getElementById('pinInput').focus();
+    }
+  }
+
+  function unlockApp() {
+    sessionStorage.setItem(AUTH_KEY, '1');
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initApp();
+  }
+
+  function lockOut() {
+    sessionStorage.removeItem(AUTH_KEY);
+    document.getElementById('pinInput').value = '';
+    document.getElementById('lockError').textContent = '';
+    document.getElementById('app').style.display    = 'none';
+    document.getElementById('lockScreen').style.display = 'flex';
+    document.getElementById('pinInput').focus();
+  }
+
+  function showResetFlow() {
+    const sure = confirm(
+      'To reset your password, the manager data on this device will be cleared.\n\n' +
+      'Your entries are safe — they\'re stored separately.\n\n' +
+      'Continue?'
+    );
+    if (sure) {
+      localStorage.removeItem(PIN_KEY);
+      sessionStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+  }
+
+  /* ── App data ─────────────────────────────────────── */
+  const GOAL        = 50000;
+  const PKG_TICKETS = { '150': 1, '500': 5, '700': 10 };
+
+  let entries    = [];
+  let nextTicket = 1;
+
+  function initApp() {
+    entries    = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
+    nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
+    document.getElementById('dateDisplay').textContent =
+      new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    checkURLParams();
+    render();
+  }
+
   function save() {
     localStorage.setItem('raffleEntries', JSON.stringify(entries));
     localStorage.setItem('nextTicket', String(nextTicket));
   }
 
-  /* ── Toast ───────────────────────────────────────── */
+  /* ── Toast ────────────────────────────────────────── */
   function toast(msg) {
     const el = document.getElementById('toast');
     el.textContent = msg;
     el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3000);
+    setTimeout(() => el.classList.remove('show'), 3200);
   }
 
-  /* ── Render ──────────────────────────────────────── */
+  /* ── Render ───────────────────────────────────────── */
   function fmt(n) { return 'R' + n.toLocaleString('en-ZA'); }
 
   function render() {
@@ -297,7 +475,7 @@
     document.getElementById('goalFill').style.width   = pct + '%';
     document.getElementById('tableSub').textContent   = total === 0
       ? 'No entries yet.'
-      : `${total} entr${total > 1 ? 'ies' : 'y'} · ${pending} pending payment · ${confirmed} confirmed`;
+      : `${total} entr${total > 1 ? 'ies' : 'y'} · ${pending} pending · ${confirmed} confirmed`;
 
     const tbody = document.getElementById('tbody');
     if (total === 0) {
@@ -306,81 +484,75 @@
     }
 
     const badges = {
-      'pending':   '<span class="badge b-pending">⏳ Pending</span>',
-      'confirmed': '<span class="badge b-confirmed">✓ Confirmed</span>',
-      'sent':      '<span class="badge b-sent">✅ Tickets Sent</span>'
+      pending:   '<span class="badge b-pending">⏳ Pending</span>',
+      confirmed: '<span class="badge b-confirmed">✓ Confirmed</span>',
+      sent:      '<span class="badge b-sent">✅ Tickets Sent</span>'
     };
 
     tbody.innerHTML = entries.map((e, i) => {
       const status = e.status || 'pending';
-      const badge  = badges[status] || badges['pending'];
+      const badge  = badges[status] || badges.pending;
       let actions  = '';
       if (status === 'pending') {
-        actions = `<button class="btn btn-confirm" onclick="confirmPayment(${i})" title="Mark as paid">✓ Paid</button>
-                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+        actions = `<button class="btn btn-confirm" onclick="confirmPayment(${i})">✓ Paid</button>
+                   <button class="btn btn-del"     onclick="deleteEntry(${i})">✗</button>`;
       } else if (status === 'confirmed') {
         actions = `<button class="btn btn-send" onclick="sendTickets(${i})">📱 Send Tickets</button>
-                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+                   <button class="btn btn-del"  onclick="deleteEntry(${i})">✗</button>`;
       } else {
-        actions = `<button class="btn btn-resend" onclick="sendTickets(${i})" title="Resend ticket numbers">↩ Resend</button>
-                   <button class="btn btn-del" onclick="deleteEntry(${i})">✗</button>`;
+        actions = `<button class="btn btn-resend" onclick="sendTickets(${i})">↩ Resend</button>
+                   <button class="btn btn-del"    onclick="deleteEntry(${i})">✗</button>`;
       }
       return `<tr>
         <td>${i + 1}</td>
         <td><strong>${e.name}</strong></td>
         <td style="font-size:0.78rem;color:#555">${e.whatsapp || '<span style="color:#ccc">—</span>'}</td>
         <td style="font-weight:700">R${e.pkg}</td>
-        <td style="font-family:monospace;font-size:0.78rem;color:#333">${e.ticketNums}</td>
+        <td style="font-family:monospace;font-size:0.78rem">${e.ticketNums}</td>
         <td style="font-size:0.75rem;color:#999">${e.ref || e.notes || '<span style="color:#ddd">—</span>'}</td>
-        <td style="font-size:0.78rem;white-space:nowrap;color:#777">${e.date}</td>
+        <td style="font-size:0.78rem;color:#777;white-space:nowrap">${e.date}</td>
         <td>${badge}</td>
         <td><div class="actions-cell">${actions}</div></td>
       </tr>`;
     }).join('');
   }
 
-  /* ── Add entry manually ──────────────────────────── */
+  /* ── Add entry manually ───────────────────────────── */
   function addEntry() {
-    const name = document.getElementById('iName').value.trim();
-    const wa   = document.getElementById('iWA').value.trim();
-    const pkg  = document.getElementById('iPkg').value;
-    const notes= document.getElementById('iNotes').value.trim();
-
+    const name  = document.getElementById('iName').value.trim();
+    const wa    = document.getElementById('iWA').value.trim();
+    const pkg   = document.getElementById('iPkg').value;
+    const notes = document.getElementById('iNotes').value.trim();
     if (!name || !pkg) { alert('Name and package are required.'); return; }
 
     const tc   = PKG_TICKETS[pkg];
     const nums = [];
     for (let i = 0; i < tc; i++) nums.push(nextTicket++);
-
     entries.push({
-      name, whatsapp: wa, pkg,
-      tickets: tc,
+      name, whatsapp: wa, pkg, tickets: tc,
       ticketNums: nums.join(', '),
       notes, ref: notes || '—',
-      date:   new Date().toLocaleDateString('en-ZA'),
-      status: 'confirmed'   // manual = assume paid
+      date: new Date().toLocaleDateString('en-ZA'),
+      status: 'confirmed'
     });
-
     save(); render();
-    document.getElementById('iName').value  = '';
-    document.getElementById('iWA').value    = '';
-    document.getElementById('iPkg').value   = '';
-    document.getElementById('iNotes').value = '';
+    ['iName','iWA','iNotes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('iPkg').value = '';
     toast('✅ Entry added — status set to Confirmed');
   }
 
-  /* ── Confirm payment ─────────────────────────────── */
+  /* ── Confirm payment ──────────────────────────────── */
   function confirmPayment(i) {
     entries[i].status = 'confirmed';
     save(); render();
     toast('✓ Payment confirmed for ' + entries[i].name);
   }
 
-  /* ── Send tickets via WhatsApp ───────────────────── */
+  /* ── Send tickets via WhatsApp ────────────────────── */
   function sendTickets(i) {
     const e = entries[i];
     if (!e.whatsapp) {
-      alert('No WhatsApp number saved for ' + e.name + '.\nAdd their number manually in the notes field.');
+      alert('No WhatsApp number for ' + e.name + '. Add it in the notes field first.');
       return;
     }
     let ph = e.whatsapp.replace(/[\s\-\(\)\.]/g, '');
@@ -392,30 +564,27 @@
     const msg = encodeURIComponent(
       `🎟️ *Team SA Raffle — Your Ticket${tc > 1 ? 's' : ''}!* 🇿🇦\n\n` +
       `Hi ${e.name}!\n\n` +
-      `Your raffle ticket number${tc > 1 ? 's are' : ' is'}:\n` +
-      `*${e.ticketNums}*\n\n` +
+      `Your raffle ticket number${tc > 1 ? 's are' : ' is'}:\n*${e.ticketNums}*\n\n` +
       `📅 Draw date: *30 June 2026*\n` +
-      `📣 Winner announced on WhatsApp & social media\n\n` +
+      `📣 Winner announced via WhatsApp & social media\n\n` +
       `Thank you so much for supporting Team SA on our journey to Portugal! 🏊‍♀️✨\n\n` +
-      `_Together, we can. ♡_\n` +
-      `_team-sa-raffle.vercel.app_`
+      `_Together, we can. ♡_`
     );
-
     window.open(`https://wa.me/${ph}?text=${msg}`, '_blank');
     entries[i].status = 'sent';
     save(); render();
     toast('📱 WhatsApp opened for ' + e.name + ' — tap Send!');
   }
 
-  /* ── Delete entry ────────────────────────────────── */
+  /* ── Delete entry ─────────────────────────────────── */
   function deleteEntry(i) {
-    if (!confirm(`Remove entry for ${entries[i].name}?\nThis cannot be undone.`)) return;
+    if (!confirm(`Remove entry for ${entries[i].name}? This cannot be undone.`)) return;
     entries.splice(i, 1);
     save(); render();
     toast('Entry removed.');
   }
 
-  /* ── Handle ?add= URL param (from website entry) ──── */
+  /* ── Handle ?add= URL param (magic link from website) ─ */
   function checkURLParams() {
     const params  = new URLSearchParams(window.location.search);
     const addData = params.get('add');
@@ -426,42 +595,35 @@
       const d  = JSON.parse(atob(addData));
       const tc = PKG_TICKETS[String(d.pkg)] || d.tickets || 1;
 
-      const confirmed = confirm(
-        `New entry from website — add to manager?\n\n` +
+      const ok = confirm(
+        `New website entry — add to manager?\n\n` +
         `👤  ${d.name}\n` +
         `📱  ${d.phone}\n` +
         `💰  R${d.pkg} · ${tc} ticket${tc > 1 ? 's' : ''}\n` +
         `🔖  Ref: ${d.ref}\n\n` +
-        `Status will be PENDING — confirm after you see the EFT in your bank.`
+        `Status: PENDING — tap ✓ Paid once you see the payment.`
       );
-      if (!confirmed) return;
+      if (!ok) return;
 
       const nums = [];
       for (let j = 0; j < tc; j++) nums.push(nextTicket++);
       entries.push({
-        name:      d.name,
-        whatsapp:  d.phone,
-        pkg:       String(d.pkg),
-        tickets:   tc,
+        name: d.name, whatsapp: d.phone,
+        pkg: String(d.pkg), tickets: tc,
         ticketNums: nums.join(', '),
-        notes:     '',
-        ref:       d.ref,
-        date:      new Date().toLocaleDateString('en-ZA'),
-        status:    'pending'
+        notes: '', ref: d.ref,
+        date: new Date().toLocaleDateString('en-ZA'),
+        status: 'pending'
       });
       save(); render();
-      toast('✅ Entry added! Tap ✓ Paid once you confirm the EFT.');
+      toast('✅ Entry added! Tap ✓ Paid once payment confirmed.');
     } catch (err) {
       console.warn('Invalid ?add param:', err);
     }
   }
 
-  /* ── Init ────────────────────────────────────────── */
-  document.getElementById('dateDisplay').textContent =
-    new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-
-  checkURLParams();
-  render();
+  /* ── Boot ─────────────────────────────────────────── */
+  initAuth();
 </script>
 </body>
 </html>

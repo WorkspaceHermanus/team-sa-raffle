@@ -922,7 +922,7 @@
     <div class="step">
       <div class="step-n">02</div>
       <h3>Pay Securely</h3>
-      <p>Pay online via PayFast (card, instant EFT) or by manual bank transfer.</p>
+      <p>Pay via ShapID / PayShap (instant, all SA banks) or manual bank EFT.</p>
     </div>
     <div class="step">
       <div class="step-n">03</div>
@@ -1007,14 +1007,14 @@
       <h3 id="m-title">1 Ticket — R150</h3>
       <p class="m-sub">How would you like to pay <strong id="m-amount" style="color:var(--green)">R150</strong>?</p>
       <div class="pay-choices">
-        <button class="pay-choice pay-choice-pf" onclick="payWithPayfast()">
-          <span class="pc-icon">💳</span>
-          <span class="pc-title">Pay Online</span>
-          <span class="pc-desc">Card · Instant EFT · PayFast</span>
+        <button class="pay-choice pay-choice-pf" onclick="showPayShap()">
+          <span class="pc-icon">⚡</span>
+          <span class="pc-title">ShapID / PayShap</span>
+          <span class="pc-desc">Instant · All SA banks</span>
         </button>
         <button class="pay-choice" onclick="showEFT()">
           <span class="pc-icon">🏦</span>
-          <span class="pc-title">Pay via EFT</span>
+          <span class="pc-title">Bank EFT</span>
           <span class="pc-desc">Manual bank transfer</span>
         </button>
       </div>
@@ -1035,6 +1035,23 @@
         <div class="bank-row"><span class="bk">Reference</span><span class="bv" id="m-ref-display" style="font-weight:700;color:var(--green);font-size:0.95rem">SA-XX-0000</span></div>
       </div>
       <p class="modal-note">Send proof of payment to <strong style="color:var(--green)">+27 82 464 8674</strong> on WhatsApp. Ticket numbers follow shortly. ♡</p>
+    </div>
+
+    <!-- Step 3: ShapID / PayShap -->
+    <div id="modal-step3" style="display:none">
+      <button class="back-btn" onclick="backToChoices()">← Back</button>
+      <h3 id="m-title3">1 Ticket — R150</h3>
+      <p class="m-sub" style="margin-bottom:16px">Pay <strong id="m-ps-amount" style="color:var(--green)">R150</strong> instantly via ShapID or PayShap.</p>
+      <div class="modal-bank">
+        <div class="bank-row"><span class="bk">Method</span><span class="bv">ShapID / PayShap</span></div>
+        <div class="bank-row"><span class="bk">Recipient Number</span><span class="bv" style="font-weight:700;font-size:1.05rem;color:var(--green)">082 464 8674</span></div>
+        <div class="bank-row"><span class="bk">Amount</span><span class="bv" id="m-ps-amt2">R150</span></div>
+        <div class="bank-row"><span class="bk">Reference</span><span class="bv" id="m-ps-ref" style="font-weight:700;color:var(--green)">SA-XX-0000</span></div>
+      </div>
+      <p style="font-size:0.78rem;color:var(--muted);line-height:1.75;margin:14px 0 10px;text-align:left">
+        Open your banking app → find <strong>ShapID</strong> or <strong>PayShap</strong> → enter phone number <strong>082 464 8674</strong> → enter the amount → add your reference. Money arrives instantly!
+      </p>
+      <p class="modal-note">Send your payment screenshot to <strong style="color:var(--green)">+27 82 464 8674</strong> on WhatsApp. ♡</p>
     </div>
   </div>
 </div>
@@ -1110,10 +1127,25 @@
     document.getElementById('modal-step1').style.display = 'block';
   }
 
-  /* ── Pay via PayFast ──────────────────────────────── */
+  /* ── Pay via PayFast (re-enable when verified) ───── */
   function payWithPayfast() {
-    if (!PAYFAST_READY) { showEFT(); return; }
+    if (!PAYFAST_READY) { showPayShap(); return; }
     document.getElementById(activeFormId).submit();
+  }
+
+  /* ── Step 1 → 3: ShapID / PayShap ────────────────── */
+  function showPayShap() {
+    document.getElementById('modal-step1').style.display = 'none';
+    document.getElementById('modal-step3').style.display = 'block';
+    const label = pkgMap[activeAmount];
+    document.getElementById('m-title3').textContent    = label;
+    document.getElementById('m-ps-amount').textContent = 'R' + activeAmount;
+    document.getElementById('m-ps-amt2').textContent   = 'R' + activeAmount;
+    document.getElementById('m-ps-ref').textContent    = activeRef;
+    if (activeEntrant) {
+      const t = ticketsMap[activeAmount];
+      setTimeout(() => notifyJeanie(activeEntrant.name, activeEntrant.phone, activeAmount, t, activeRef), 400);
+    }
   }
 
   /* ── Step 1 → 2: Show EFT + notify Jeanie ────────── */
@@ -1148,6 +1180,7 @@
   }
   function backToChoices() {
     document.getElementById('modal-step2').style.display = 'none';
+    document.getElementById('modal-step3').style.display = 'none';
     document.getElementById('modal-step1').style.display = 'block';
   }
 
