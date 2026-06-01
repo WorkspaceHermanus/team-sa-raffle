@@ -392,21 +392,31 @@
 
     /* ── A4 Sponsors ── */
     .a4-sponsors {
-      background: var(--cream);
-      padding: 14px 48px;
+      background: var(--white);
+      padding: 20px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--cream2);
+      border-top: 2px solid var(--cream2);
     }
     .a4-sp-label {
-      font-size: 7.5px;
-      letter-spacing: 2.5px;
+      font-size: 8px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: #c0b8a8;
+      color: var(--muted);
+      font-weight: 500;
     }
-    .a4-sp-logos { display: flex; gap: 20px; align-items: center; }
-    .a4-sp-logos img { height: 38px; width: auto; opacity: 0.5; filter: grayscale(20%); }
+    .a4-sp-logos { display: flex; gap: 28px; align-items: center; }
+    .a4-sp-logos img {
+      height: 72px;
+      width: auto;
+      opacity: 0.92;
+      filter: none;
+      object-fit: contain;
+      background: white;
+      padding: 6px 12px;
+      border: 1px solid var(--cream2);
+    }
 
     /* ── A4 Footer ── */
     .a4-footer {
@@ -693,6 +703,60 @@
     .story-draw { font-size: 7px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.28); }
     .story-tag { font-size: 7px; letter-spacing: 0.5px; color: rgba(255,255,255,0.2); margin-top: 2px; }
 
+    /* ── SQUARE SPONSORS ── */
+    .sq-sponsors {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 10px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sq-sp-lbl {
+      font-size: 6.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .sq-sp-logos { display: flex; gap: 8px; align-items: center; }
+    .sq-sp-logos img {
+      height: 38px;
+      width: auto;
+      max-width: 130px;
+      object-fit: contain;
+      background: white;
+      padding: 4px 10px;
+    }
+
+    /* ── STORY SPONSORS ── */
+    .story-sponsors {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 8px;
+      margin-bottom: 8px;
+    }
+    .story-sp-lbl {
+      font-size: 6px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .story-sp-logos { display: flex; gap: 6px; align-items: center; }
+    .story-sp-logos img {
+      height: 30px;
+      width: auto;
+      max-width: 100px;
+      object-fit: contain;
+      background: white;
+      padding: 3px 7px;
+    }
+
     /* ── PRINT STYLES ── */
     @media print {
       body { background: none; }
@@ -888,6 +952,15 @@
         </div>
       </div>
 
+      <!-- Sponsors strip -->
+      <div class="sq-sponsors">
+        <div class="sq-sp-lbl">Supported by</div>
+        <div class="sq-sp-logos">
+          <img src="marketing2.jpeg" alt="Aesthetic Options" onerror="this.style.display='none'">
+          <img src="marketing1.jpeg" alt="Tracy Dawber Pilates" onerror="this.style.display='none'">
+        </div>
+      </div>
+
       <div class="sq-bottom">
         <div class="sq-tix-row">
           <div class="sq-tix"><div class="sq-tprice">R150</div><div class="sq-tqty">1 ticket</div></div>
@@ -961,6 +1034,15 @@
         <div class="story-tix-cell"><div class="st-price">R150</div><div class="st-qty">1 ticket</div></div>
         <div class="story-tix-cell feat"><div class="st-price">R500</div><div class="st-qty">5 tickets</div></div>
         <div class="story-tix-cell"><div class="st-price">R700</div><div class="st-qty">10 tickets</div></div>
+      </div>
+
+      <!-- Sponsors strip -->
+      <div class="story-sponsors">
+        <div class="story-sp-lbl">Supported by</div>
+        <div class="story-sp-logos">
+          <img src="marketing2.jpeg" alt="Aesthetic Options" onerror="this.style.display='none'">
+          <img src="marketing1.jpeg" alt="Tracy Dawber Pilates" onerror="this.style.display='none'">
+        </div>
       </div>
 
       <div class="story-bottom">
