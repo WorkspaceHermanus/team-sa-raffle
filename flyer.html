@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <title>Team SA Raffle — Marketing Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Jost:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 0; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:   #1B3A2D;
+      --green2:  #264D3B;
+      --gold:    #C4964A;
+      --gold-lt: #D4AF6F;
+      --cream:   #F7F2EA;
+      --cream2:  #EDE5D4;
+      --cream3:  #F0EBE0;
+      --white:   #FDFAF5;
+      --text:    #231F1A;
+      --muted:   #7A6E5F;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: #D0CEC8;
+    }
+
+    /* ─── CONTROLS ─── */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1B3A2D;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ctrl-label { color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-right: 6px; }
+    .ctrl-btn {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 7px 18px;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+      letter-spacing: 1px;
+    }
+    .ctrl-btn:hover  { background: rgba(255,255,255,0.22); color: white; }
+    .ctrl-btn.active { background: #C4964A; border-color: #C4964A; color: #1B3A2D; font-weight: 700; }
+    .ctrl-sep  { color: rgba(255,255,255,0.2); margin: 0 4px; }
+    .ctrl-right { margin-left: auto; display: flex; gap: 8px; }
+    .print-btn {
+      background: #C4964A;
+      color: #1B3A2D;
+      border: none;
+      padding: 8px 22px;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+    .print-btn:hover { background: #D4AF6F; }
+    .hint-text { color: rgba(255,255,255,0.35); font-size: 11px; }
+
+    /* ─── SECTION WRAPPERS ─── */
+    .section-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 60px;
+      gap: 16px;
+    }
+    .section-wrap.hidden { display: none; }
+    .section-title-bar {
+      background: rgba(0,0,0,0.15);
+      color: rgba(255,255,255,0.4);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 3px;
+      align-self: flex-start;
+      margin-left: calc(50% - 397px);
+    }
+
+    /* ═══════════════════════════════════
+       A4 PAMPHLET  (794 × 1123 px)
+    ═══════════════════════════════════ */
+    .a4 {
+      width: 794px;
+      background: var(--cream);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      overflow: hidden;
+    }
+
+    /* SA flag stripe */
+    .flag-stripe { display: flex; height: 7px; }
+    .fg  { background: #007A4D; flex: 4; }
+    .fy  { background: #FFB612; flex: 2; }
+    .fr  { background: #DE3831; flex: 2; }
+    .fb  { background: #002395; flex: 2; }
+
+    /* ── A4 Header ── */
+    .a4-header {
+      background: var(--green);
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .a4-header-team {
+      font-size: 8.5px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .a4-header-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--gold-lt);
+      letter-spacing: 2px;
+    }
+
+    /* ── A4 Hero ── */
+    .a4-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 310px;
+    }
+    .a4-hero-text {
+      background: var(--white);
+      padding: 44px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .a4-eyebrow {
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .a4-win {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 96px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      line-height: 0.9;
+      margin-bottom: 6px;
+    }
+    .a4-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--green);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .a4-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12.5px;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .a4-rule { width: 36px; height: 1px; background: var(--gold); margin-bottom: 14px; }
+    .a4-draw-pill {
+      display: inline-block;
+      border: 1px solid rgba(27,58,45,0.25);
+      padding: 5px 12px;
+      font-size: 8px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .a4-hero-photo {
+      background: var(--green);
+      position: relative;
+      overflow: hidden;
+    }
+    .a4-hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.52;
+      filter: brightness(0.88) contrast(1.12) saturate(0.9);
+      position: absolute; inset: 0;
+    }
+    .a4-hero-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, transparent 35%, rgba(27,58,45,0.85) 100%);
+    }
+    .a4-hero-photo-caption {
+      position: absolute;
+      bottom: 22px; left: 22px; right: 22px;
+      z-index: 2;
+    }
+    .a4-caption-pill {
+      display: inline-block;
+      border: 1px solid rgba(196,150,74,0.5);
+      color: var(--gold-lt);
+      font-size: 7.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      margin-bottom: 8px;
+    }
+    .a4-caption-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.5;
+    }
+
+    /* ── A4 Prizes ── */
+    .a4-prizes {
+      background: var(--green);
+      padding: 30px 48px 34px;
+    }
+    .a4-section-head {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .a4-section-head .stag {
+      font-size: 7.5px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(196,150,74,0.7);
+      margin-bottom: 5px;
+    }
+    .a4-section-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+    }
+
+    .a4-prizes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .a4-prize {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .a4-prize:nth-child(2n) { border-right: none; }
+    .a4-prize:nth-child(3), .a4-prize:nth-child(4) { border-bottom: none; }
+
+    .pn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.6;
+      padding-top: 2px;
+    }
+    .pl { font-size: 7px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 4px; }
+    .pname { font-family: 'Cormorant Garamond', serif; font-size: 14.5px; color: white; line-height: 1.35; margin-bottom: 3px; }
+    .pval  { font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold-lt); opacity: 0.8; line-height: 1.65; }
+
+    /* ── A4 Tickets ── */
+    .a4-tickets {
+      background: var(--cream3);
+      padding: 26px 48px 28px;
+    }
+    .a4-tix-header { text-align: center; margin-bottom: 16px; }
+    .a4-tix-header .stag { font-size: 7.5px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .a4-tix-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--green); }
+
+    .a4-tix-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border: 1px solid var(--cream2);
+    }
+    .a4-tix {
+      background: var(--white);
+      padding: 18px 14px;
+      text-align: center;
+      border-right: 1px solid var(--cream2);
+      position: relative;
+    }
+    .a4-tix:last-child { border-right: none; }
+    .a4-tix.feat { background: var(--green); }
+    .feat-tag {
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      font-size: 7px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .tp {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .feat .tp { color: var(--gold-lt); }
+    .tq {
+      font-size: 7.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+    .feat .tq { color: rgba(255,255,255,0.35); }
+
+    /* ── A4 Enter / QR ── */
+    .a4-enter {
+      background: var(--white);
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      border-top: 1px solid var(--cream2);
+    }
+    .a4-qr img {
+      width: 90px; height: 90px;
+      display: block;
+      padding: 5px;
+      border: 3px solid var(--cream2);
+      background: white;
+    }
+    .a4-qr-label {
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-top: 7px;
+    }
+    .a4-enter-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+    .a4-enter-body p { font-size: 10.5px; color: var(--muted); line-height: 1.75; }
+    .a4-enter-url {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.5px;
+      display: block;
+      margin-top: 7px;
+    }
+    .a4-methods { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
+    .a4-method {
+      background: var(--cream3);
+      border: 1px solid var(--cream2);
+      padding: 3px 10px;
+      font-size: 7.5px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    /* ── A4 Sponsors ── */
+    .a4-sponsors {
+      background: var(--cream);
+      padding: 14px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--cream2);
+    }
+    .a4-sp-label {
+      font-size: 7.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #c0b8a8;
+    }
+    .a4-sp-logos { display: flex; gap: 20px; align-items: center; }
+    .a4-sp-logos img { height: 38px; width: auto; opacity: 0.5; filter: grayscale(20%); }
+
+    /* ── A4 Footer ── */
+    .a4-footer {
+      background: var(--green);
+      padding: 13px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .a4-footer-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+    .a4-footer-fine {
+      font-size: 7.5px;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.28);
+    }
+
+    /* ═══════════════════════════════════
+       INSTAGRAM SQUARE  (1080×1080)
+       Displayed at 540×540
+    ═══════════════════════════════════ */
+    .sq-wrap {
+      width: 540px;
+      height: 540px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+
+    /* Background photo */
+    .sq-bg {
+      position: absolute; inset: 0;
+      background: var(--green);
+    }
+    .sq-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.22;
+      filter: brightness(0.7) saturate(0.6);
+    }
+    .sq-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(27,58,45,0.92) 0%, rgba(27,58,45,0.75) 55%, rgba(38,77,59,0.88) 100%);
+    }
+
+    /* Content above bg */
+    .sq-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 36px;
+    }
+
+    /* Flag stripe */
+    .sq-flag { display: flex; height: 4px; margin-bottom: 22px; }
+
+    .sq-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+    .sq-team {
+      font-size: 7px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .sq-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+
+    .sq-eyebrow {
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .sq-win {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 88px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-lt);
+      line-height: 0.9;
+      margin-bottom: 4px;
+    }
+    .sq-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: white;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .sq-rule { width: 32px; height: 1px; background: var(--gold); opacity: 0.6; margin-bottom: 16px; }
+
+    /* Mini prizes */
+    .sq-prizes { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; flex: 1; }
+    .sq-prize {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .sq-pn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.55;
+      min-width: 16px;
+    }
+    .sq-pname {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.3;
+      flex: 1;
+    }
+    .sq-pval {
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    /* Bottom bar */
+    .sq-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .sq-tix-row { display: flex; gap: 8px; }
+    .sq-tix {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 6px 12px;
+      text-align: center;
+    }
+    .sq-tix.feat-sq { background: rgba(196,150,74,0.2); border-color: rgba(196,150,74,0.4); }
+    .sq-tprice {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: white;
+      line-height: 1;
+    }
+    .sq-tix.feat-sq .sq-tprice { color: var(--gold-lt); }
+    .sq-tqty {
+      font-size: 7px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .sq-qr-block { text-align: center; }
+    .sq-qr-block img { width: 58px; height: 58px; border: 2px solid rgba(255,255,255,0.15); padding: 3px; background: white; display: block; }
+    .sq-qr-label { font-size: 6.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 4px; }
+    .sq-url-block { text-align: center; }
+    .sq-url { font-size: 9px; font-weight: 600; color: var(--gold-lt); letter-spacing: 0.5px; display: block; }
+    .sq-draw { font-size: 7.5px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 3px; }
+
+
+    /* ═══════════════════════════════════
+       INSTAGRAM STORY  (1080×1920)
+       Displayed at 304×540 (portrait)
+    ═══════════════════════════════════ */
+    .story-wrap {
+      width: 304px;
+      height: 540px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      background: var(--green);
+    }
+    .story-bg img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.2;
+      filter: brightness(0.7) saturate(0.5);
+    }
+    .story-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(27,58,45,0.7) 0%, rgba(27,58,45,0.55) 40%, rgba(27,58,45,0.92) 75%, rgba(27,58,45,1) 100%);
+    }
+    .story-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+    }
+    .story-flag { display: flex; height: 3px; margin-bottom: 16px; }
+    .story-top-tag {
+      font-size: 6.5px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 12px;
+    }
+    .story-eyebrow {
+      font-size: 7px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+    .story-win {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-lt);
+      line-height: 0.85;
+      margin-bottom: 4px;
+    }
+    .story-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 300;
+      color: white;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .story-rule { width: 24px; height: 1px; background: var(--gold); opacity: 0.5; margin-bottom: 12px; }
+    .story-prizes { flex: 1; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+    .story-prize {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .sp-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.55;
+      min-width: 12px;
+      padding-top: 1px;
+    }
+    .sp-info {}
+    .sp-name { font-family: 'Cormorant Garamond', serif; font-size: 11.5px; color: rgba(255,255,255,0.85); line-height: 1.3; }
+    .sp-val  { font-size: 7px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold-lt); opacity: 0.65; margin-top: 1px; }
+
+    .story-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 12px; }
+    .story-tix { display: flex; gap: 5px; margin-bottom: 12px; }
+    .story-tix-cell {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 7px 6px;
+      text-align: center;
+    }
+    .story-tix-cell.feat { background: rgba(196,150,74,0.18); border-color: rgba(196,150,74,0.35); }
+    .st-price { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; color: white; line-height: 1; }
+    .st-qty { font-size: 6.5px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+
+    .story-bottom {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .story-qr img { width: 50px; height: 50px; border: 2px solid rgba(255,255,255,0.12); padding: 2px; background: white; display: block; }
+    .story-qr-lbl { font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 3px; text-align: center; }
+    .story-url-block {}
+    .story-url { font-size: 8.5px; font-weight: 600; color: var(--gold-lt); display: block; margin-bottom: 3px; }
+    .story-draw { font-size: 7px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+    .story-tag { font-size: 7px; letter-spacing: 0.5px; color: rgba(255,255,255,0.2); margin-top: 2px; }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      body { background: none; }
+      .controls { display: none; }
+      .section-wrap { padding: 0; }
+      .section-title-bar { display: none; }
+      .sq-wrap, .story-wrap { display: none !important; }
+      .a4 { box-shadow: none; width: 210mm; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Controls bar -->
+<div class="controls" id="controls">
+  <span class="ctrl-label">Format</span>
+  <button class="ctrl-btn active" id="btn-a4" onclick="showSection('a4')">A4 Pamphlet</button>
+  <button class="ctrl-btn" id="btn-sq"  onclick="showSection('sq')">Instagram Square</button>
+  <button class="ctrl-btn" id="btn-st"  onclick="showSection('st')">Instagram Story</button>
+  <div class="ctrl-right">
+    <span class="hint-text" id="hintText">Print or Save as PDF</span>
+    <button class="print-btn" id="printBtn" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+</div>
+
+<!-- ═══ A4 PAMPHLET ═══ -->
+<div class="section-wrap" id="sec-a4">
+  <div class="section-title-bar">A4 · 210 × 297 mm · Print or Save as PDF</div>
+  <div class="a4">
+    <div class="flag-stripe"><div class="fg"></div><div class="fy"></div><div class="fr"></div><div class="fb"></div></div>
+
+    <div class="a4-header">
+      <div class="a4-header-team">SA Ladies Invitational Underwater Hockey Team</div>
+      <div class="a4-header-year">Portugal 2026</div>
+    </div>
+
+    <div class="a4-hero">
+      <div class="a4-hero-text">
+        <p class="a4-eyebrow">Official Fundraising Raffle</p>
+        <div class="a4-win">Win</div>
+        <h1 class="a4-headline">Luxury Aesthetic<br>Prizes</h1>
+        <p class="a4-tagline">& help send Team SA to the world stage</p>
+        <div class="a4-rule"></div>
+        <span class="a4-draw-pill">Draw: 30 June 2026 · Winner via WhatsApp</span>
+      </div>
+      <div class="a4-hero-photo">
+        <img src="team.jpeg" alt="Team SA" onerror="this.style.display='none'">
+        <div class="a4-hero-photo-overlay"></div>
+        <div class="a4-hero-photo-caption">
+          <div class="a4-caption-pill">SA · Portugal 2026</div>
+          <div class="a4-caption-quote">"Help us represent South Africa<br>on the international stage."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a4-prizes">
+      <div class="a4-section-head">
+        <p class="stag">Four Prizes to be Won</p>
+        <h2>Luxury Aesthetic Prizes</h2>
+      </div>
+      <div class="a4-prizes-grid">
+        <div class="a4-prize">
+          <div class="pn">I</div>
+          <div>
+            <div class="pl">First Prize</div>
+            <div class="pname">Injectable Collagen Biostimulator &amp; Skin Booster Treatment</div>
+            <div class="pval">Dr. Le-Jean Ehlers · Aesthetic Options, The Pearls, Umhlanga · R10,500</div>
+          </div>
+        </div>
+        <div class="a4-prize">
+          <div class="pn">II</div>
+          <div>
+            <div class="pl">Second Prize</div>
+            <div class="pname">Comprehensive Skin Assessment</div>
+            <div class="pval">Dr. Le-Jean Ehlers · Aesthetic Options, The Pearls, Umhlanga · R1,500</div>
+          </div>
+        </div>
+        <div class="a4-prize">
+          <div class="pn">III</div>
+          <div>
+            <div class="pl">Third Prize</div>
+            <div class="pname">4 × Reformer Pilates Sessions</div>
+            <div class="pval">Tracy Dawber Pilates · The Pearls, Umhlanga · R2,000</div>
+          </div>
+        </div>
+        <div class="a4-prize">
+          <div class="pn">IV</div>
+          <div>
+            <div class="pl">Fourth Prize</div>
+            <div class="pname">Luxury Skincare Hamper</div>
+            <div class="pval">Valued at R2,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a4-tickets">
+      <div class="a4-tix-header">
+        <p class="stag">Ticket Packages</p>
+        <h2>Choose Your Entry</h2>
+      </div>
+      <div class="a4-tix-row">
+        <div class="a4-tix">
+          <div class="tp">R150</div>
+          <div class="tq">1 Ticket</div>
+        </div>
+        <div class="a4-tix feat">
+          <div class="feat-tag">Best Value</div>
+          <div class="tp">R500</div>
+          <div class="tq">5 Tickets</div>
+        </div>
+        <div class="a4-tix">
+          <div class="tp">R700</div>
+          <div class="tq">10 Tickets</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a4-enter">
+      <div class="a4-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=1B3A2D&bgcolor=FFFFFF&qzone=1&data=https://team-sa-raffle.vercel.app" alt="QR Code">
+        <div class="a4-qr-label">Scan to Enter</div>
+      </div>
+      <div class="a4-enter-body">
+        <h3>How to Enter — Simple &amp; Quick</h3>
+        <p>Scan the QR code or visit the website, choose your ticket package, and pay via ShapID, PayShap or Bank EFT. Receive your unique ticket numbers on WhatsApp instantly.</p>
+        <span class="a4-enter-url">team-sa-raffle.vercel.app</span>
+        <div class="a4-methods">
+          <div class="a4-method">ShapID</div>
+          <div class="a4-method">PayShap</div>
+          <div class="a4-method">Bank EFT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a4-sponsors">
+      <div class="a4-sp-label">Proudly Supported By</div>
+      <div class="a4-sp-logos">
+        <img src="marketing2.jpeg" alt="Aesthetic Options" onerror="this.style.display='none'">
+        <img src="marketing1.jpeg" alt="Tracy Dawber Pilates" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <div class="a4-footer">
+      <span class="a4-footer-main">Together, we can. ♡</span>
+      <span class="a4-footer-fine">Draw: 30 June 2026 · No cash alternative · Winner announced via WhatsApp</span>
+    </div>
+
+  </div><!-- /a4 -->
+</div><!-- /sec-a4 -->
+
+
+<!-- ═══ INSTAGRAM SQUARE ═══ -->
+<div class="section-wrap hidden" id="sec-sq">
+  <div class="section-title-bar">Instagram / Facebook · 1080×1080 · Screenshot this box</div>
+  <div class="sq-wrap">
+    <div class="sq-bg">
+      <img src="team.jpeg" alt="" onerror="this.style.display='none'">
+      <div class="sq-bg-overlay"></div>
+    </div>
+    <div class="sq-content">
+      <div class="sq-flag"><div class="fg"></div><div class="fy"></div><div class="fr"></div><div class="fb"></div></div>
+      <div class="sq-top">
+        <div class="sq-team">SA Ladies Invitational Underwater Hockey Team</div>
+        <div class="sq-year">Portugal 2026</div>
+      </div>
+
+      <p class="sq-eyebrow">Official Fundraising Raffle</p>
+      <div class="sq-win">Win</div>
+      <div class="sq-headline">Luxury Aesthetic<br>Prizes &amp; support<br>Team SA 🇿🇦</div>
+      <div class="sq-rule"></div>
+
+      <div class="sq-prizes">
+        <div class="sq-prize">
+          <div class="sq-pn">I</div>
+          <div class="sq-pname">Injectable Collagen Biostimulator &amp; Skin Booster</div>
+          <div class="sq-pval">R10,500</div>
+        </div>
+        <div class="sq-prize">
+          <div class="sq-pn">II</div>
+          <div class="sq-pname">Comprehensive Skin Assessment</div>
+          <div class="sq-pval">R1,500</div>
+        </div>
+        <div class="sq-prize">
+          <div class="sq-pn">III</div>
+          <div class="sq-pname">4 × Reformer Pilates Sessions</div>
+          <div class="sq-pval">R2,000</div>
+        </div>
+        <div class="sq-prize">
+          <div class="sq-pn">IV</div>
+          <div class="sq-pname">Luxury Skincare Hamper</div>
+          <div class="sq-pval">R2,000</div>
+        </div>
+      </div>
+
+      <div class="sq-bottom">
+        <div class="sq-tix-row">
+          <div class="sq-tix"><div class="sq-tprice">R150</div><div class="sq-tqty">1 ticket</div></div>
+          <div class="sq-tix feat-sq"><div class="sq-tprice">R500</div><div class="sq-tqty">5 tickets</div></div>
+          <div class="sq-tix"><div class="sq-tprice">R700</div><div class="sq-tqty">10 tickets</div></div>
+        </div>
+        <div class="sq-qr-block">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=FFFFFF&bgcolor=1B3A2D&qzone=1&data=https://team-sa-raffle.vercel.app" alt="QR">
+          <div class="sq-qr-label">Scan to enter</div>
+        </div>
+        <div class="sq-url-block">
+          <div class="sq-url">team-sa-raffle.vercel.app</div>
+          <div class="sq-draw">Draw: 30 June 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /sec-sq -->
+
+
+<!-- ═══ INSTAGRAM STORY ═══ -->
+<div class="section-wrap hidden" id="sec-st">
+  <div class="section-title-bar">Instagram Stories · 1080×1920 · Screenshot this box</div>
+  <div class="story-wrap">
+    <div class="story-bg">
+      <img src="team.jpeg" alt="" onerror="this.style.display='none'">
+    </div>
+    <div class="story-overlay"></div>
+    <div class="story-content">
+      <div class="story-flag"><div class="fg"></div><div class="fy"></div><div class="fr"></div><div class="fb"></div></div>
+      <div class="story-top-tag">SA Ladies Invitational · Underwater Hockey · Portugal 2026</div>
+
+      <p class="story-eyebrow">Official Raffle</p>
+      <div class="story-win">Win</div>
+      <div class="story-headline">Luxury Aesthetic<br>Prizes 🇿🇦</div>
+      <div class="story-rule"></div>
+
+      <div class="story-prizes">
+        <div class="story-prize">
+          <div class="sp-num">I</div>
+          <div class="sp-info">
+            <div class="sp-name">Collagen Biostimulator &amp; Skin Booster</div>
+            <div class="sp-val">Aesthetic Options · R10,500</div>
+          </div>
+        </div>
+        <div class="story-prize">
+          <div class="sp-num">II</div>
+          <div class="sp-info">
+            <div class="sp-name">Comprehensive Skin Assessment</div>
+            <div class="sp-val">Aesthetic Options · R1,500</div>
+          </div>
+        </div>
+        <div class="story-prize">
+          <div class="sp-num">III</div>
+          <div class="sp-info">
+            <div class="sp-name">4 × Reformer Pilates Sessions</div>
+            <div class="sp-val">Tracy Dawber Pilates · R2,000</div>
+          </div>
+        </div>
+        <div class="story-prize">
+          <div class="sp-num">IV</div>
+          <div class="sp-info">
+            <div class="sp-name">Luxury Skincare Hamper</div>
+            <div class="sp-val">R2,000</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-divider"></div>
+      <div class="story-tix">
+        <div class="story-tix-cell"><div class="st-price">R150</div><div class="st-qty">1 ticket</div></div>
+        <div class="story-tix-cell feat"><div class="st-price">R500</div><div class="st-qty">5 tickets</div></div>
+        <div class="story-tix-cell"><div class="st-price">R700</div><div class="st-qty">10 tickets</div></div>
+      </div>
+
+      <div class="story-bottom">
+        <div class="story-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&color=FFFFFF&bgcolor=1B3A2D&qzone=1&data=https://team-sa-raffle.vercel.app" alt="QR">
+          <div class="story-qr-lbl">Scan to enter</div>
+        </div>
+        <div class="story-url-block">
+          <span class="story-url">team-sa-raffle.vercel.app</span>
+          <div class="story-draw">Draw: 30 June 2026</div>
+          <div class="story-tag">ShapID · PayShap · Bank EFT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /sec-st -->
+
+
+<script>
+  function showSection(which) {
+    ['a4','sq','st'].forEach(s => {
+      document.getElementById('sec-' + s).classList.toggle('hidden', s !== which);
+      document.getElementById('btn-' + s).classList.toggle('active', s === which);
+    });
+
+    const hints = {
+      a4: ['Print / Save PDF', 'Print or Save as PDF → A4 portrait'],
+      sq: ['Screenshot the box', 'Screenshot the coloured box → crop · share on Instagram / Facebook'],
+      st: ['Screenshot the box', 'Screenshot the coloured box → crop · use as Instagram / Facebook Story']
+    };
+    document.getElementById('printBtn').textContent = which === 'a4' ? '🖨️ Print / Save PDF' : '📸 Screenshot Tip';
+    document.getElementById('printBtn').onclick = which === 'a4' ? () => window.print() : () => alert(hints[which][1]);
+    document.getElementById('hintText').textContent = hints[which][1];
+  }
+</script>
+</body>
+</html>
