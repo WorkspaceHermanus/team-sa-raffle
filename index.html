@@ -1064,7 +1064,6 @@
   const MERCHANT_ID   = '12344237';
   const MERCHANT_KEY  = '8aqrv8r8mg2t3';
   const JEANIE_WA     = '27824648674';
-  const SITE_URL      = 'https://team-sa-raffle.vercel.app';
 
   const pkgMap     = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
   const ticketsMap = { 150: 1, 500: 5, 700: 10 };
@@ -1158,18 +1157,16 @@
     }
   }
 
-  /* ── Notify Jeanie via WhatsApp with magic link ───── */
+  /* ── Notify Jeanie via WhatsApp (no manager link exposed) ── */
   function notifyJeanie(name, phone, amount, tickets, ref) {
-    const t         = tickets === 1 ? '1 ticket' : `${tickets} tickets`;
-    const entryData = btoa(JSON.stringify({ name, phone, pkg: amount, tickets, ref }));
-    const magicLink = `${SITE_URL}/raffle_manager.html?add=${entryData}`;
+    const t   = tickets === 1 ? '1 ticket' : `${tickets} tickets`;
     const msg =
       `🎟️ NEW RAFFLE ENTRY\n\n` +
-      `👤 Name: ${name}\n` +
-      `📱 WhatsApp: ${phone}\n` +
-      `💰 Package: R${amount} (${t})\n` +
+      `👤 ${name}\n` +
+      `📱 ${phone}\n` +
+      `💰 R${amount} (${t})\n` +
       `🔖 Ref: ${ref}\n\n` +
-      `👆 Tap to add to manager:\n${magicLink}`;
+      `Add to manager once payment confirmed.`;
     window.open(`https://wa.me/${JEANIE_WA}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
