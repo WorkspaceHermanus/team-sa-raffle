@@ -179,6 +179,55 @@
 
     .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.88rem; }
 
+    /* Device warning */
+    .device-warning {
+      background: #fff8e1;
+      border: 1px solid #ffc107;
+      border-left: 4px solid #ffc107;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 0.83rem;
+      color: #7a5a00;
+      line-height: 1.6;
+    }
+    .device-warning strong { color: #5a4000; }
+
+    /* Backup card */
+    .backup-card {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      border: 1px solid #e0e0e0;
+    }
+    .backup-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+    .backup-hdr h2 { font-size: 0.88rem; font-weight: 700; color: #555; }
+    .backup-btns { display: flex; gap: 8px; }
+    .backup-btn {
+      padding: 7px 16px;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .export-btn { background: var(--green); color: white; }
+    .export-btn:hover { background: var(--gd); }
+    .import-btn { background: #f0f0f0; color: #444; }
+    .import-btn:hover { background: #e0e0e0; }
+    .backup-area textarea {
+      width: 100%; height: 72px;
+      font-size: 0.72rem;
+      font-family: monospace;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      resize: none;
+      margin-bottom: 8px;
+    }
+    .backup-hint { font-size: 0.75rem; color: #888; margin-top: 4px; line-height: 1.5; }
+
     /* Toast */
     .toast {
       position: fixed; bottom: 24px; right: 24px;
@@ -246,6 +295,14 @@
     <p class="hide-btn" onclick="document.getElementById('howCard').style.display='none'">Hide these instructions ×</p>
   </div>
 
+  <!-- Device warning -->
+  <div class="device-warning">
+    ⚠️ <strong>Important — use ONE device.</strong>
+    Entries are saved on this specific browser/device only. If you open the manager on a different phone or computer, it will be empty.
+    Always use <strong>the same device</strong> (your phone is best).
+    If you need to move entries to another device, use the <strong>Export / Import</strong> buttons below.
+  </div>
+
   <!-- Stats -->
   <div class="stats">
     <div class="stat"><div class="stat-val" id="sEntries">0</div><div class="stat-lbl">Total Entries</div></div>
@@ -307,6 +364,26 @@
         <tr><td colspan="9" class="empty">No entries yet.</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Backup / Restore -->
+  <div class="backup-card">
+    <div class="backup-hdr">
+      <h2>📦 Backup &amp; Move to Another Device</h2>
+      <div class="backup-btns">
+        <button class="backup-btn export-btn" onclick="exportEntries()">📤 Export (copy data)</button>
+        <button class="backup-btn import-btn" onclick="showImport()">📥 Import (paste data)</button>
+      </div>
+    </div>
+    <div id="backupExportArea" class="backup-area" style="display:none">
+      <textarea id="exportText" readonly placeholder="Your entries will appear here..."></textarea>
+      <p class="backup-hint">✅ Copied to clipboard! Paste this into the <strong>Import</strong> box on your other device to transfer all entries.</p>
+    </div>
+    <div id="backupImportArea" class="backup-area" style="display:none">
+      <textarea id="importText" placeholder="Paste the exported text here, then tap Import."></textarea>
+      <button class="add-btn" onclick="importEntries()" style="font-size:0.82rem;padding:8px 20px">Import Entries</button>
+      <p class="backup-hint">This will <strong>replace</strong> all entries on this device with the imported ones.</p>
+    </div>
   </div>
 
   <!-- Draw -->
@@ -526,6 +603,45 @@
     entries.splice(i, 1);
     save(); render();
     toast('Entry removed.');
+  }
+
+  /* ── Export / Import (copy entries between devices) ─── */
+  function exportEntries() {
+    const data = JSON.stringify({ entries, nextTicket, exportedAt: new Date().toISOString() });
+    document.getElementById('exportText').value = data;
+    document.getElementById('backupExportArea').style.display = 'block';
+    document.getElementById('backupImportArea').style.display = 'none';
+    // Try to copy to clipboard
+    try {
+      navigator.clipboard.writeText(data).catch(() => {});
+    } catch(e) {}
+    document.getElementById('exportText').focus();
+    document.getElementById('exportText').select();
+  }
+
+  function showImport() {
+    document.getElementById('backupImportArea').style.display = 'block';
+    document.getElementById('backupExportArea').style.display = 'none';
+    document.getElementById('importText').value = '';
+    document.getElementById('importText').focus();
+  }
+
+  function importEntries() {
+    const text = document.getElementById('importText').value.trim();
+    if (!text) return;
+    try {
+      const data = JSON.parse(text);
+      if (!Array.isArray(data.entries)) throw new Error('Bad format');
+      const count = data.entries.length;
+      if (!confirm(`This will replace ${entries.length} current entries with ${count} imported entries.\n\nContinue?`)) return;
+      entries    = data.entries;
+      nextTicket = data.nextTicket || 1;
+      save(); render();
+      document.getElementById('backupImportArea').style.display = 'none';
+      toast(`✅ Imported ${count} entries successfully!`);
+    } catch(e) {
+      alert('Could not read that data — make sure you pasted the full exported text.');
+    }
   }
 
   /* ── Handle ?add= URL param (magic link from website) ─ */
