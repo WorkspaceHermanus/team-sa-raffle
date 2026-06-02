@@ -231,19 +231,15 @@
 
   <!-- Workflow guide -->
   <div class="how-card" id="howCard">
-    <h3>⚡ Jeanie's workflow — 3 taps per entry</h3>
+    <h3>⚡ Jeanie's workflow — 2 steps per entry</h3>
     <div class="how-steps">
       <div class="how-step">
         <div class="how-num">1</div>
-        <p>Customer buys on the website → <strong>WhatsApp arrives on your phone</strong> with a magic link. Tap the link → entry is added here automatically.</p>
+        <p>Customer buys on the website → <strong>WhatsApp arrives on your phone</strong> with their details. Add them here using <strong>"+ Add Entry"</strong> above.</p>
       </div>
       <div class="how-step">
         <div class="how-num">2</div>
-        <p>Check your ABSA app. When you see the payment → come back here and tap <strong>"✓ Paid"</strong> next to their entry.</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">3</div>
-        <p>Tap <strong>"📱 Send Tickets"</strong> → WhatsApp opens with ticket numbers already written → tap <strong>Send</strong>. Done!</p>
+        <p>Once you see the payment in your ABSA app → tap <strong>"✅ Send Tickets"</strong> → WhatsApp opens with ticket numbers pre-written → tap <strong>Send</strong>. Done!</p>
       </div>
       <div class="how-step">
         <div class="how-num">🎯</div>
@@ -493,14 +489,11 @@
       const status = e.status || 'pending';
       const badge  = badges[status] || badges.pending;
       let actions  = '';
-      if (status === 'pending') {
-        actions = `<button class="btn btn-confirm" onclick="confirmPayment(${i})">✓ Paid</button>
-                   <button class="btn btn-del"     onclick="deleteEntry(${i})">✗</button>`;
-      } else if (status === 'confirmed') {
-        actions = `<button class="btn btn-send" onclick="sendTickets(${i})">📱 Send Tickets</button>
+      if (status === 'pending' || status === 'confirmed') {
+        actions = `<button class="btn btn-send" onclick="confirmAndSend(${i})">✅ Send Tickets</button>
                    <button class="btn btn-del"  onclick="deleteEntry(${i})">✗</button>`;
       } else {
-        actions = `<button class="btn btn-resend" onclick="sendTickets(${i})">↩ Resend</button>
+        actions = `<button class="btn btn-resend" onclick="confirmAndSend(${i})">↩ Resend</button>
                    <button class="btn btn-del"    onclick="deleteEntry(${i})">✗</button>`;
       }
       return `<tr>
@@ -541,11 +534,11 @@
     toast('✅ Entry added — status set to Confirmed');
   }
 
-  /* ── Confirm payment ──────────────────────────────── */
-  function confirmPayment(i) {
+  /* ── Confirm + send tickets in one tap ────────────── */
+  function confirmAndSend(i) {
     entries[i].status = 'confirmed';
     save(); render();
-    toast('✓ Payment confirmed for ' + entries[i].name);
+    sendTickets(i);
   }
 
   /* ── Send tickets via WhatsApp ────────────────────── */
