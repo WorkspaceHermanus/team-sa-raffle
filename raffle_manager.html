@@ -205,10 +205,7 @@
       autocomplete="current-password">
     <p class="lock-error" id="lockError"></p>
     <button class="lock-btn" onclick="tryUnlock()" id="lockBtn">Unlock →</button>
-    <p class="lock-hint" id="lockHint">
-      Keep this page private.<br>
-      <a onclick="showResetFlow()">Forgot password?</a>
-    </p>
+    <p class="lock-hint">Keep this page private.</p>
   </div>
 </div>
 
@@ -325,35 +322,18 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── Auth ──────────────────────────────────────────── */
-  const PIN_KEY  = 'rfMgrPin_v1';
-  const AUTH_KEY = 'rfMgrAuthed_v1';
-  let setupMode  = false;
+  /* ── Auth (fixed password — cannot be changed) ─────── */
+  const MANAGER_PASSWORD = 'Success1!';
+  const AUTH_KEY         = 'rfMgrAuthed_v1';
 
   function initAuth() {
-    const storedPin = localStorage.getItem(PIN_KEY);
-
-    // Already authenticated this session → show app directly
-    if (sessionStorage.getItem(AUTH_KEY) === '1' && storedPin) {
+    // Already authenticated this session → go straight in
+    if (sessionStorage.getItem(AUTH_KEY) === '1') {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       initApp();
       return;
     }
-
-    // First time → setup mode
-    if (!storedPin) {
-      setupMode = true;
-      document.getElementById('lockIcon').textContent  = '🎟️';
-      document.getElementById('lockTitle').textContent = 'Welcome, Jeanie!';
-      document.getElementById('lockMsg').textContent   = 'Create a password to protect this manager page.';
-      document.getElementById('pinInput').placeholder  = 'Create a password';
-      document.getElementById('lockBtn').textContent   = 'Set Password →';
-      document.getElementById('lockHint').textContent  = 'Choose something easy to remember — e.g. your dog\'s name + 26.';
-      document.getElementById('pinInput').removeAttribute('autocomplete');
-    }
-
-    // Focus input
     setTimeout(() => document.getElementById('pinInput').focus(), 100);
   }
 
@@ -368,20 +348,11 @@
       return;
     }
 
-    if (setupMode) {
-      if (input.length < 3) {
-        errEl.textContent = 'Password must be at least 3 characters.';
-        return;
-      }
-      localStorage.setItem(PIN_KEY, input);
-      setupMode = false;
-      unlockApp();
-      return;
-    }
-
-    const storedPin = localStorage.getItem(PIN_KEY);
-    if (input === storedPin) {
-      unlockApp();
+    if (input === MANAGER_PASSWORD) {
+      sessionStorage.setItem(AUTH_KEY, '1');
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      initApp();
     } else {
       errEl.textContent = 'Incorrect password. Try again.';
       document.getElementById('pinInput').value = '';
@@ -391,13 +362,6 @@
     }
   }
 
-  function unlockApp() {
-    sessionStorage.setItem(AUTH_KEY, '1');
-    document.getElementById('lockScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    initApp();
-  }
-
   function lockOut() {
     sessionStorage.removeItem(AUTH_KEY);
     document.getElementById('pinInput').value = '';
@@ -405,19 +369,6 @@
     document.getElementById('app').style.display    = 'none';
     document.getElementById('lockScreen').style.display = 'flex';
     document.getElementById('pinInput').focus();
-  }
-
-  function showResetFlow() {
-    const sure = confirm(
-      'To reset your password, the manager data on this device will be cleared.\n\n' +
-      'Your entries are safe — they\'re stored separately.\n\n' +
-      'Continue?'
-    );
-    if (sure) {
-      localStorage.removeItem(PIN_KEY);
-      sessionStorage.removeItem(AUTH_KEY);
-      location.reload();
-    }
   }
 
   /* ── App data ─────────────────────────────────────── */
