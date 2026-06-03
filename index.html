@@ -7,6 +7,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1030,7 +1032,12 @@
   const PAYFAST_READY = true;
   const MERCHANT_ID   = '12344237';
   const MERCHANT_KEY  = '8aqrv8r8mg2t3';
-  const JEANIE_WA     = '27824648674';
+
+  const CFG       = window.RAFFLE_CONFIG || {};
+  const JEANIE_WA = CFG.JEANIE_WA || '27824648674';
+  const sb        = (window.supabase && CFG.SUPABASE_URL)
+    ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY)
+    : null;
 
   const pkgMap     = { 150: '1 Ticket — R150', 500: '5 Tickets — R500', 700: '10 Tickets — R700' };
   const ticketsMap = { 150: 1, 500: 5, 700: 10 };
@@ -1071,22 +1078,47 @@
     setTimeout(() => document.getElementById('m-name').focus(), 150);
   }
 
-  /* ── Paid — send WhatsApp to Jeanie ──────────────── */
+  /* ── Paid — save to cloud + WhatsApp to Jeanie ───── */
   function confirmPaid() {
     const name  = document.getElementById('m-name').value.trim();
     const phone = document.getElementById('m-phone').value.trim();
     if (!name)  { document.getElementById('m-name').focus();  return; }
     if (!phone) { document.getElementById('m-phone').focus(); return; }
 
-    const t   = ticketsMap[activeAmount];
+    const t = ticketsMap[activeAmount];
+
+    // 1) Open WhatsApp right away (inside the click — avoids popup blocking on phones)
     const msg =
       `🎟️ RAFFLE PAYMENT\n\n` +
       `👤 ${name}\n` +
       `📱 ${phone}\n` +
       `💰 R${activeAmount} (${t} ticket${t > 1 ? 's' : ''})\n` +
-      `🔖 Ref: ${activeRef}`;
+      `🔖 Ref: ${activeRef}\n\n` +
+      `📎 Please attach your proof of payment here. Your ticket numbers will follow once confirmed. 🇿🇦`;
     window.open(`https://wa.me/${JEANIE_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+
+    // 2) Save entry to the cloud (status: pending until Jeanie confirms payment)
+    if (sb) {
+      sb.rpc('add_raffle_entry', {
+        p_name: name, p_whatsapp: phone, p_pkg: String(activeAmount),
+        p_tickets: t, p_notes: '', p_ref: activeRef,
+        p_date: new Date().toLocaleDateString('en-ZA'), p_status: 'pending'
+      }).then(({ error }) => { if (error) console.error('Cloud save failed:', error); });
+    }
+
+    // 3) Confirm + close
     closeModal();
+    showToast('✅ Entry received! Please send your proof of payment on WhatsApp.');
+  }
+
+  /* ── Lightweight toast ────────────────────────────── */
+  function showToast(text) {
+    const el = document.createElement('div');
+    el.textContent = text;
+    el.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#1B3A2D;color:#F7F2EA;padding:14px 24px;border-radius:4px;font-family:Jost,sans-serif;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,0.3);z-index:500;max-width:90%;text-align:center;opacity:0;transition:opacity .3s;';
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.style.opacity = '1');
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, 4500);
   }
 
   /* ── Close modal ──────────────────────────────────── */

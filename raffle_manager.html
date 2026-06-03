@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Raffle Manager — Team SA</title>
+
+  <!-- Supabase JS client + shared config -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -18,94 +23,97 @@
 
     /* ── LOCK SCREEN ── */
     #lockScreen {
-      display: flex;
-      position: fixed;
-      inset: 0;
-      background: #1B3A2D;
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      display: flex; position: fixed; inset: 0;
+      background: #1B3A2D; z-index: 9999;
+      align-items: center; justify-content: center; padding: 20px;
     }
     .lock-card {
-      background: white;
-      border-radius: 20px;
-      padding: 48px 40px;
-      max-width: 360px;
-      width: 100%;
-      text-align: center;
+      background: white; border-radius: 20px; padding: 48px 40px;
+      max-width: 360px; width: 100%; text-align: center;
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
     .lock-icon { font-size: 2.8rem; margin-bottom: 20px; }
     .lock-card h2 { font-size: 1.3rem; color: var(--green); margin-bottom: 8px; }
-    .lock-card p { font-size: 0.85rem; color: #888; margin-bottom: 28px; line-height: 1.6; }
+    .lock-card p  { font-size: 0.85rem; color: #888; margin-bottom: 28px; line-height: 1.6; }
     .lock-input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      text-align: center;
-      letter-spacing: 4px;
-      margin-bottom: 8px;
-      outline: none;
-      transition: border-color 0.2s;
+      width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 1.1rem; text-align: center; letter-spacing: 4px;
+      margin-bottom: 8px; outline: none; transition: border-color 0.2s;
     }
     .lock-input:focus { border-color: var(--green); }
     .lock-input.error { border-color: var(--red); animation: shake 0.3s ease; }
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
-    }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
     .lock-error { font-size: 0.8rem; color: var(--red); margin-bottom: 14px; min-height: 18px; }
     .lock-btn {
-      width: 100%;
-      padding: 14px;
-      background: var(--green);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
+      width: 100%; padding: 14px; background: var(--green); color: white;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s;
     }
     .lock-btn:hover { background: var(--gd); }
-    .lock-hint { margin-top: 20px; font-size: 0.75rem; color: #bbb; line-height: 1.6; }
-    .lock-hint a { color: #999; cursor: pointer; text-decoration: underline; }
+    .lock-hint { margin-top: 18px; font-size: 0.75rem; color: #bbb; }
 
-    /* ── APP (hidden until authenticated) ── */
+    /* ── APP ── */
     #app { display: none; }
+
+    /* ── LOADING OVERLAY ── */
+    #loadingOverlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(255,255,255,0.75); z-index: 400;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 14px;
+    }
+    #loadingOverlay.show { display: flex; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #e0e0e0; border-top-color: var(--green);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-msg { font-size: 0.85rem; color: #888; letter-spacing: 1px; }
 
     /* ── HEADER ── */
     header {
       background: var(--green); color: white;
-      padding: 18px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 10px;
+      padding: 18px 28px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 10px;
     }
     header h1 { font-size: 1.1rem; font-weight: 800; }
     .hdr-sub { font-size: 0.78rem; opacity: 0.6; margin-top: 2px; }
     .hdr-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .hdr-date { font-size: 0.75rem; opacity: 0.55; }
-    .draw-link {
-      background: var(--gold); color: #1a1a1a;
-      text-decoration: none; padding: 8px 18px;
-      font-size: 0.8rem; font-weight: 800;
-      border-radius: 6px; white-space: nowrap;
-    }
-    .draw-link:hover { background: #e0a000; }
-    .lock-out-btn {
+    .refresh-btn {
       background: rgba(255,255,255,0.15); color: white;
       border: 1px solid rgba(255,255,255,0.3);
       padding: 7px 14px; border-radius: 6px;
       font-size: 0.75rem; cursor: pointer;
     }
+    .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+    .lock-out-btn {
+      background: rgba(255,255,255,0.15); color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 7px 14px; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
     .lock-out-btn:hover { background: rgba(255,255,255,0.25); }
+    .draw-link {
+      background: var(--gold); color: #1a1a1a; text-decoration: none;
+      padding: 8px 18px; font-size: 0.8rem; font-weight: 800;
+      border-radius: 6px; white-space: nowrap;
+    }
+    .draw-link:hover { background: #e0a000; }
 
     /* ── LAYOUT ── */
     .main { padding: 24px 20px; max-width: 1300px; margin: 0 auto; }
+
+    /* ── SETUP BANNER ── */
+    .setup-banner {
+      display: none;
+      background: #fff3cd; border: 1px solid #ffc107;
+      border-left: 4px solid #ffc107; border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 24px;
+    }
+    .setup-banner h3 { color: #856404; margin-bottom: 10px; font-size: 0.95rem; }
+    .setup-banner ol { padding-left: 20px; color: #856404; line-height: 2.2; font-size: 0.85rem; }
+    .setup-banner code { background: #ffeeba; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
 
     /* ── HOW-IT-WORKS ── */
     .how-card {
@@ -155,16 +163,12 @@
     td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
 
-    /* Badges */
     .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
     .b-pending   { background: #fff3cd; color: #8a6a00; }
     .b-confirmed { background: #cce5ff; color: #004085; }
     .b-sent      { background: #d4edda; color: #155724; }
 
-    /* Buttons */
     .btn { border-radius: 6px; padding: 5px 11px; cursor: pointer; font-size: 0.75rem; font-weight: 600; white-space: nowrap; border: none; }
-    .btn-confirm { background: #e8f5e9; color: var(--green); border: 1px solid #a5d6a7; }
-    .btn-confirm:hover { background: #c8e6c9; }
     .btn-send    { background: var(--green); color: white; }
     .btn-send:hover { background: var(--gd); }
     .btn-resend  { background: #f0f0f0; color: #666; border: 1px solid #ddd; }
@@ -172,102 +176,57 @@
     .btn-del:hover { background: #fff5f5; }
     .actions-cell { display: flex; align-items: center; gap: 4px; }
 
-    /* Draw card */
     .draw-card { background: var(--green); color: white; border-radius: 10px; padding: 28px 22px; text-align: center; margin-bottom: 22px; }
     .draw-card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
     .draw-card p  { font-size: 0.85rem; opacity: 0.75; margin-bottom: 18px; }
 
     .empty { text-align: center; color: #aaa; padding: 32px; font-size: 0.88rem; }
 
-    /* Device warning */
-    .device-warning {
-      background: #fff8e1;
-      border: 1px solid #ffc107;
-      border-left: 4px solid #ffc107;
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 22px;
-      font-size: 0.83rem;
-      color: #7a5a00;
-      line-height: 1.6;
-    }
-    .device-warning strong { color: #5a4000; }
-
-    /* Backup card */
-    .backup-card {
-      background: white;
-      border-radius: 10px;
-      padding: 18px 22px;
-      margin-bottom: 22px;
-      border: 1px solid #e0e0e0;
-    }
-    .backup-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-    .backup-hdr h2 { font-size: 0.88rem; font-weight: 700; color: #555; }
-    .backup-btns { display: flex; gap: 8px; }
-    .backup-btn {
-      padding: 7px 16px;
-      border: none;
-      border-radius: 7px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .export-btn { background: var(--green); color: white; }
-    .export-btn:hover { background: var(--gd); }
-    .import-btn { background: #f0f0f0; color: #444; }
-    .import-btn:hover { background: #e0e0e0; }
-    .backup-area textarea {
-      width: 100%; height: 72px;
-      font-size: 0.72rem;
-      font-family: monospace;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      resize: none;
-      margin-bottom: 8px;
-    }
-    .backup-hint { font-size: 0.75rem; color: #888; margin-top: 4px; line-height: 1.5; }
-
-    /* Toast */
     .toast {
       position: fixed; bottom: 24px; right: 24px;
-      background: #1a1a1a; color: white;
-      padding: 12px 20px; border-radius: 8px;
-      font-size: 0.85rem; font-weight: 500;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      background: #1a1a1a; color: white; padding: 12px 20px;
+      border-radius: 8px; font-size: 0.85rem; font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 999;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
     .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
 
-<!-- ── LOCK SCREEN ──────────────────────────────── -->
+<!-- ── LOADING OVERLAY ── -->
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-msg" id="loadingMsg">Loading entries…</div>
+</div>
+
+<!-- ── LOCK SCREEN ── -->
 <div id="lockScreen">
   <div class="lock-card">
-    <div class="lock-icon" id="lockIcon">🔒</div>
-    <h2 id="lockTitle">Raffle Manager</h2>
-    <p id="lockMsg">Enter your password to access the manager.</p>
+    <div class="lock-icon">🔒</div>
+    <h2>Raffle Manager</h2>
+    <p>Enter your password to access the manager.</p>
     <input type="password" id="pinInput" class="lock-input"
       placeholder="Password"
       onkeydown="if(event.key==='Enter') tryUnlock()"
       autocomplete="current-password">
     <p class="lock-error" id="lockError"></p>
-    <button class="lock-btn" onclick="tryUnlock()" id="lockBtn">Unlock →</button>
+    <button class="lock-btn" onclick="tryUnlock()">Unlock →</button>
     <p class="lock-hint">Keep this page private.</p>
   </div>
 </div>
 
-<!-- ── MAIN APP (hidden until auth) ────────────── -->
+<!-- ── MAIN APP ── -->
 <div id="app">
 
 <header>
   <div>
     <h1>🏊 Raffle Manager — Team SA Portugal 2026</h1>
-    <div class="hdr-sub">Admin dashboard · <a href="/" style="color:rgba(255,255,255,0.55)">View public site</a></div>
+    <div class="hdr-sub">Cloud database · Works on all devices · <a href="/" style="color:rgba(255,255,255,0.55)">View public site</a></div>
   </div>
   <div class="hdr-actions">
     <span class="hdr-date" id="dateDisplay"></span>
+    <button class="refresh-btn" onclick="loadEntries()">🔄 Refresh</button>
     <button class="lock-out-btn" onclick="lockOut()">🔒 Lock</button>
     <a class="draw-link" href="draw.html">🎯 Draw Winner</a>
   </div>
@@ -275,9 +234,20 @@
 
 <div class="main">
 
+  <!-- Setup banner (shown if Supabase not configured) -->
+  <div class="setup-banner" id="setupBanner">
+    <h3>⚙️ Cloud database not yet connected</h3>
+    <ol>
+      <li>Go to <strong>supabase.com</strong> → create a new project</li>
+      <li>In the SQL Editor, run the setup SQL (ask Anthony/Claude for it)</li>
+      <li>Go to <strong>Settings → API</strong> → copy <code>Project URL</code> and <code>anon/public</code> key</li>
+      <li>Give those two values to Claude — he'll update two lines and push the update</li>
+    </ol>
+  </div>
+
   <!-- Workflow guide -->
   <div class="how-card" id="howCard">
-    <h3>⚡ Jeanie's workflow — 2 steps per entry</h3>
+    <h3>⚡ Jeanie's workflow — works on any device, any browser</h3>
     <div class="how-steps">
       <div class="how-step">
         <div class="how-num">1</div>
@@ -288,6 +258,10 @@
         <p>Once you see the payment in your ABSA app → tap <strong>"✅ Send Tickets"</strong> → WhatsApp opens with ticket numbers pre-written → tap <strong>Send</strong>. Done!</p>
       </div>
       <div class="how-step">
+        <div class="how-num">☁️</div>
+        <p>All entries are saved to the <strong>cloud</strong>. Open this manager on any phone or computer — same data everywhere. Tap 🔄 Refresh to sync.</p>
+      </div>
+      <div class="how-step">
         <div class="how-num">🎯</div>
         <p>On <strong>30 June 2026</strong> click "Draw Winner" above — the spin page picks the winner from all tickets.</p>
       </div>
@@ -295,30 +269,19 @@
     <p class="hide-btn" onclick="document.getElementById('howCard').style.display='none'">Hide these instructions ×</p>
   </div>
 
-  <!-- Device warning -->
-  <div class="device-warning">
-    ⚠️ <strong>Important — use ONE device.</strong>
-    Entries are saved on this specific browser/device only. If you open the manager on a different phone or computer, it will be empty.
-    Always use <strong>the same device</strong> (your phone is best).
-    If you need to move entries to another device, use the <strong>Export / Import</strong> buttons below.
-  </div>
-
   <!-- Stats -->
   <div class="stats">
     <div class="stat"><div class="stat-val" id="sEntries">0</div><div class="stat-lbl">Total Entries</div></div>
     <div class="stat"><div class="stat-val" id="sTickets">0</div><div class="stat-lbl">Tickets Sold</div></div>
     <div class="stat"><div class="stat-val" id="sRaised">R0</div><div class="stat-lbl">Raised</div></div>
-    <div class="stat orange"><div class="stat-val" id="sPending">0</div><div class="stat-lbl">Awaiting Payment</div></div>
-    <div class="stat blue"><div class="stat-val" id="sConfirmed">0</div><div class="stat-lbl">Confirmed</div></div>
+    <div class="stat orange"><div class="stat-val" id="sPending">0</div><div class="stat-lbl">Awaiting Tickets</div></div>
+    <div class="stat blue"><div class="stat-val" id="sConfirmed">0</div><div class="stat-lbl">Tickets Sent</div></div>
     <div class="stat"><div class="stat-val" id="sLeft">R50,000</div><div class="stat-lbl">Still Needed</div></div>
   </div>
 
   <!-- Goal bar -->
   <div class="goal-card">
-    <div class="goal-hdr">
-      <span>Progress to goal</span>
-      <strong id="goalPct">0%</strong>
-    </div>
+    <div class="goal-hdr"><span>Progress to goal</span><strong id="goalPct">0%</strong></div>
     <div class="goal-bar"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
     <div class="goal-foot"><span>R0</span><span>R50,000</span></div>
   </div>
@@ -342,48 +305,20 @@
 
   <!-- Entries table -->
   <div class="table-card">
-    <div class="table-hdr">
-      <h2>All Entries</h2>
-    </div>
-    <p class="table-sub" id="tableSub">No entries yet.</p>
+    <div class="table-hdr"><h2>All Entries</h2></div>
+    <p class="table-sub" id="tableSub">Loading…</p>
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>WhatsApp</th>
-          <th>Package</th>
-          <th>Ticket Numbers</th>
-          <th>Ref / Notes</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>#</th><th>Name</th><th>WhatsApp</th><th>Package</th>
+          <th>Ticket Numbers</th><th>Ref / Notes</th><th>Date</th>
+          <th>Status</th><th>Actions</th>
         </tr>
       </thead>
       <tbody id="tbody">
-        <tr><td colspan="9" class="empty">No entries yet.</td></tr>
+        <tr><td colspan="9" class="empty">Loading entries from cloud…</td></tr>
       </tbody>
     </table>
-  </div>
-
-  <!-- Backup / Restore -->
-  <div class="backup-card">
-    <div class="backup-hdr">
-      <h2>📦 Backup &amp; Move to Another Device</h2>
-      <div class="backup-btns">
-        <button class="backup-btn export-btn" onclick="exportEntries()">📤 Export (copy data)</button>
-        <button class="backup-btn import-btn" onclick="showImport()">📥 Import (paste data)</button>
-      </div>
-    </div>
-    <div id="backupExportArea" class="backup-area" style="display:none">
-      <textarea id="exportText" readonly placeholder="Your entries will appear here..."></textarea>
-      <p class="backup-hint">✅ Copied to clipboard! Paste this into the <strong>Import</strong> box on your other device to transfer all entries.</p>
-    </div>
-    <div id="backupImportArea" class="backup-area" style="display:none">
-      <textarea id="importText" placeholder="Paste the exported text here, then tap Import."></textarea>
-      <button class="add-btn" onclick="importEntries()" style="font-size:0.82rem;padding:8px 20px">Import Entries</button>
-      <p class="backup-hint">This will <strong>replace</strong> all entries on this device with the imported ones.</p>
-    </div>
   </div>
 
   <!-- Draw -->
@@ -399,12 +334,20 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── Auth (fixed password — cannot be changed) ─────── */
+  /* ═══════════════════════════════════════════════════
+     SUPABASE CONFIG — fill in your project values here
+  ═══════════════════════════════════════════════════ */
+  const CFG               = window.RAFFLE_CONFIG || {};
+  const SUPABASE_URL      = CFG.SUPABASE_URL || '';
+  const SUPABASE_ANON_KEY = CFG.SUPABASE_ANON_KEY || '';
+
+  /* ═══════════════════════════════════════════════════
+     AUTH — fixed password
+  ═══════════════════════════════════════════════════ */
   const MANAGER_PASSWORD = 'Success1!';
-  const AUTH_KEY         = 'rfMgrAuthed_v1';
+  const AUTH_KEY         = 'rfMgrAuthed_v2';
 
   function initAuth() {
-    // Already authenticated this session → go straight in
     if (sessionStorage.getItem(AUTH_KEY) === '1') {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -418,13 +361,9 @@
     const input = document.getElementById('pinInput').value;
     const errEl = document.getElementById('lockError');
     errEl.textContent = '';
-
     if (!input) {
-      document.getElementById('pinInput').classList.add('error');
-      setTimeout(() => document.getElementById('pinInput').classList.remove('error'), 400);
-      return;
+      shake(); return;
     }
-
     if (input === MANAGER_PASSWORD) {
       sessionStorage.setItem(AUTH_KEY, '1');
       document.getElementById('lockScreen').style.display = 'none';
@@ -433,10 +372,15 @@
     } else {
       errEl.textContent = 'Incorrect password. Try again.';
       document.getElementById('pinInput').value = '';
-      document.getElementById('pinInput').classList.add('error');
-      setTimeout(() => document.getElementById('pinInput').classList.remove('error'), 400);
-      document.getElementById('pinInput').focus();
+      shake();
     }
+  }
+
+  function shake() {
+    const el = document.getElementById('pinInput');
+    el.classList.add('error');
+    setTimeout(() => el.classList.remove('error'), 400);
+    el.focus();
   }
 
   function lockOut() {
@@ -448,44 +392,104 @@
     document.getElementById('pinInput').focus();
   }
 
-  /* ── App data ─────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════
+     DATABASE
+  ═══════════════════════════════════════════════════ */
   const GOAL        = 50000;
   const PKG_TICKETS = { '150': 1, '500': 5, '700': 10 };
 
-  let entries    = [];
-  let nextTicket = 1;
+  let sb      = null;
+  let entries = [];
 
-  function initApp() {
-    entries    = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
-    nextTicket = parseInt(localStorage.getItem('nextTicket') || '1');
-    document.getElementById('dateDisplay').textContent =
-      new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    checkURLParams();
-    render();
+  function showSpinner(msg = 'Saving…') {
+    document.getElementById('loadingMsg').textContent = msg;
+    document.getElementById('loadingOverlay').classList.add('show');
+  }
+  function hideSpinner() {
+    document.getElementById('loadingOverlay').classList.remove('show');
   }
 
-  function save() {
-    localStorage.setItem('raffleEntries', JSON.stringify(entries));
-    localStorage.setItem('nextTicket', String(nextTicket));
+  /* Convert DB row → app entry */
+  function fromDB(row) {
+    return {
+      _id:       row.id,
+      name:      row.name,
+      whatsapp:  row.whatsapp  || '',
+      pkg:       row.pkg,
+      tickets:   row.tickets,
+      ticketNums:row.ticket_nums,
+      notes:     row.notes     || '',
+      ref:       row.ref       || '',
+      date:      row.date,
+      status:    row.status    || 'confirmed'
+    };
   }
 
-  /* ── Toast ────────────────────────────────────────── */
-  function toast(msg) {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3200);
+  async function loadEntries() {
+    if (!sb) return;
+    showSpinner('Loading entries…');
+    try {
+      const { data: rows, error } = await sb.from('raffle_entries').select('*').order('id');
+      if (error) throw error;
+      entries = (rows || []).map(fromDB);
+      render();
+      toast('✅ Entries loaded from cloud');
+
+      /* One-time migration from this device's old local data */
+      const legacy = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
+      if (legacy.length > 0 && !localStorage.getItem('rfMigrationDeclined')) {
+        if (confirm(`Found ${legacy.length} entries saved on THIS device from before.\n\nMove them to the cloud so every device can see them?`)) {
+          await migrateFromLocalStorage(legacy);
+        } else {
+          localStorage.setItem('rfMigrationDeclined', '1');
+        }
+      }
+    } catch(err) {
+      console.error(err);
+      toast('⚠️ Could not load from cloud. Check your connection.');
+    } finally {
+      hideSpinner();
+    }
   }
 
-  /* ── Render ───────────────────────────────────────── */
+  async function migrateFromLocalStorage(legacy) {
+    showSpinner('Migrating entries to cloud…');
+    try {
+      const rows = legacy.map(e => ({
+        name: e.name, whatsapp: e.whatsapp || '', pkg: e.pkg,
+        tickets: e.tickets, ticket_nums: e.ticketNums,
+        notes: e.notes || '', ref: e.ref || '', date: e.date,
+        status: e.status || 'confirmed'
+      }));
+      const { error } = await sb.from('raffle_entries').insert(rows);
+      if (error) throw error;
+      // Bump the cloud ticket counter past all migrated numbers
+      let maxNum = 0;
+      legacy.forEach(e => String(e.ticketNums || '').split(',').forEach(n => {
+        const v = parseInt(n); if (!isNaN(v) && v > maxNum) maxNum = v;
+      }));
+      await sb.from('raffle_settings').upsert({ key: 'next_ticket', value: String(maxNum + 1) });
+      localStorage.removeItem('raffleEntries');
+      localStorage.removeItem('nextTicket');
+      await loadEntries();
+      toast(`✅ Migrated ${legacy.length} entries to cloud!`);
+    } catch(err) {
+      console.error(err);
+      toast('⚠️ Migration failed. You can add entries manually.');
+    } finally {
+      hideSpinner();
+    }
+  }
+
+  /* ── Render ── */
   function fmt(n) { return 'R' + n.toLocaleString('en-ZA'); }
 
   function render() {
     const total     = entries.length;
     const tickets   = entries.reduce((s, e) => s + e.tickets, 0);
     const raised    = entries.reduce((s, e) => s + parseInt(e.pkg), 0);
-    const pending   = entries.filter(e => !e.status || e.status === 'pending').length;
-    const confirmed = entries.filter(e => e.status === 'confirmed' || e.status === 'sent').length;
+    const pending   = entries.filter(e => e.status === 'pending' || e.status === 'confirmed').length;
+    const sent      = entries.filter(e => e.status === 'sent').length;
     const left      = Math.max(0, GOAL - raised);
     const pct       = Math.min(100, Math.round((raised / GOAL) * 100));
 
@@ -493,44 +497,40 @@
     document.getElementById('sTickets').textContent   = tickets;
     document.getElementById('sRaised').textContent    = fmt(raised);
     document.getElementById('sPending').textContent   = pending;
-    document.getElementById('sConfirmed').textContent = confirmed;
+    document.getElementById('sConfirmed').textContent = sent;
     document.getElementById('sLeft').textContent      = fmt(left);
     document.getElementById('goalPct').textContent    = pct + '%';
     document.getElementById('goalFill').style.width   = pct + '%';
     document.getElementById('tableSub').textContent   = total === 0
       ? 'No entries yet.'
-      : `${total} entr${total > 1 ? 'ies' : 'y'} · ${pending} pending · ${confirmed} confirmed`;
-
-    const tbody = document.getElementById('tbody');
-    if (total === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="empty">No entries yet. Add one above or wait for website entries to arrive via WhatsApp link.</td></tr>';
-      return;
-    }
+      : `${total} entr${total>1?'ies':'y'} · ${pending} awaiting ticket send · ${sent} tickets sent`;
 
     const badges = {
       pending:   '<span class="badge b-pending">⏳ Pending</span>',
-      confirmed: '<span class="badge b-confirmed">✓ Confirmed</span>',
-      sent:      '<span class="badge b-sent">✅ Tickets Sent</span>'
+      confirmed: '<span class="badge b-confirmed">✓ Added</span>',
+      sent:      '<span class="badge b-sent">✅ Sent</span>'
     };
 
+    const tbody = document.getElementById('tbody');
+    if (total === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="empty">No entries yet. Add one above.</td></tr>';
+      return;
+    }
     tbody.innerHTML = entries.map((e, i) => {
-      const status = e.status || 'pending';
-      const badge  = badges[status] || badges.pending;
-      let actions  = '';
-      if (status === 'pending' || status === 'confirmed') {
-        actions = `<button class="btn btn-send" onclick="confirmAndSend(${i})">✅ Send Tickets</button>
-                   <button class="btn btn-del"  onclick="deleteEntry(${i})">✗</button>`;
-      } else {
-        actions = `<button class="btn btn-resend" onclick="confirmAndSend(${i})">↩ Resend</button>
-                   <button class="btn btn-del"    onclick="deleteEntry(${i})">✗</button>`;
-      }
+      const status = e.status || 'confirmed';
+      const badge  = badges[status] || badges.confirmed;
+      const actions = status === 'sent'
+        ? `<button class="btn btn-resend" onclick="confirmAndSend(${i})">↩ Resend</button>
+           <button class="btn btn-del"    onclick="deleteEntry(${i})">✗</button>`
+        : `<button class="btn btn-send" onclick="confirmAndSend(${i})">✅ Send Tickets</button>
+           <button class="btn btn-del"  onclick="deleteEntry(${i})">✗</button>`;
       return `<tr>
-        <td>${i + 1}</td>
+        <td>${i+1}</td>
         <td><strong>${e.name}</strong></td>
-        <td style="font-size:0.78rem;color:#555">${e.whatsapp || '<span style="color:#ccc">—</span>'}</td>
+        <td style="font-size:0.78rem;color:#555">${e.whatsapp||'<span style="color:#ccc">—</span>'}</td>
         <td style="font-weight:700">R${e.pkg}</td>
         <td style="font-family:monospace;font-size:0.78rem">${e.ticketNums}</td>
-        <td style="font-size:0.75rem;color:#999">${e.ref || e.notes || '<span style="color:#ddd">—</span>'}</td>
+        <td style="font-size:0.75rem;color:#999">${e.ref||e.notes||'<span style="color:#ddd">—</span>'}</td>
         <td style="font-size:0.78rem;color:#777;white-space:nowrap">${e.date}</td>
         <td>${badge}</td>
         <td><div class="actions-cell">${actions}</div></td>
@@ -538,44 +538,51 @@
     }).join('');
   }
 
-  /* ── Add entry manually ───────────────────────────── */
-  function addEntry() {
+  /* ── Add entry (atomic ticket numbering via RPC) ── */
+  async function addEntry() {
     const name  = document.getElementById('iName').value.trim();
     const wa    = document.getElementById('iWA').value.trim();
     const pkg   = document.getElementById('iPkg').value;
     const notes = document.getElementById('iNotes').value.trim();
     if (!name || !pkg) { alert('Name and package are required.'); return; }
 
-    const tc   = PKG_TICKETS[pkg];
-    const nums = [];
-    for (let i = 0; i < tc; i++) nums.push(nextTicket++);
-    entries.push({
-      name, whatsapp: wa, pkg, tickets: tc,
-      ticketNums: nums.join(', '),
-      notes, ref: notes || '—',
-      date: new Date().toLocaleDateString('en-ZA'),
-      status: 'confirmed'
-    });
-    save(); render();
-    ['iName','iWA','iNotes'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('iPkg').value = '';
-    toast('✅ Entry added — status set to Confirmed');
+    showSpinner('Saving…');
+    try {
+      const { data, error } = await sb.rpc('add_raffle_entry', {
+        p_name: name, p_whatsapp: wa, p_pkg: pkg, p_tickets: PKG_TICKETS[pkg],
+        p_notes: notes, p_ref: notes || '—',
+        p_date: new Date().toLocaleDateString('en-ZA'),
+        p_status: 'confirmed'
+      });
+      if (error) throw error;
+      entries.push(fromDB(data));
+      render();
+      ['iName','iWA','iNotes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('iPkg').value = '';
+      toast('✅ Entry added to cloud');
+    } catch(err) {
+      console.error(err); toast('⚠️ Could not save. Check connection.');
+    } finally { hideSpinner(); }
   }
 
-  /* ── Confirm + send tickets in one tap ────────────── */
-  function confirmAndSend(i) {
-    entries[i].status = 'confirmed';
-    save(); render();
-    sendTickets(i);
-  }
-
-  /* ── Send tickets via WhatsApp ────────────────────── */
-  function sendTickets(i) {
+  /* ── Confirm + send tickets ── */
+  async function confirmAndSend(i) {
     const e = entries[i];
     if (!e.whatsapp) {
       alert('No WhatsApp number for ' + e.name + '. Add it in the notes field first.');
       return;
     }
+    showSpinner('Updating…');
+    try {
+      const { error } = await sb.from('raffle_entries').update({ status: 'sent' }).eq('id', e._id);
+      if (error) throw error;
+      entries[i].status = 'sent';
+      render();
+    } catch(err) {
+      console.error(err); toast('⚠️ Could not update status.');
+    } finally { hideSpinner(); }
+
+    /* Open WhatsApp with ticket numbers */
     let ph = e.whatsapp.replace(/[\s\-\(\)\.]/g, '');
     if (ph.startsWith('0')) ph = '27' + ph.slice(1);
     if (ph.startsWith('+')) ph = ph.slice(1);
@@ -583,106 +590,60 @@
 
     const tc  = e.tickets;
     const msg = encodeURIComponent(
-      `🎟️ *Team SA Raffle — Your Ticket${tc > 1 ? 's' : ''}!* 🇿🇦\n\n` +
+      `🎟️ *Team SA Raffle — Your Ticket${tc>1?'s':''}!* 🇿🇦\n\n` +
       `Hi ${e.name}!\n\n` +
-      `Your raffle ticket number${tc > 1 ? 's are' : ' is'}:\n*${e.ticketNums}*\n\n` +
+      `Your raffle ticket number${tc>1?' are':' is'}:\n*${e.ticketNums}*\n\n` +
       `📅 Draw date: *30 June 2026*\n` +
       `📣 Winner announced via WhatsApp & social media\n\n` +
       `Thank you so much for supporting Team SA on our journey to Portugal! 🏊‍♀️✨\n\n` +
       `_Together, we can. ♡_`
     );
     window.open(`https://wa.me/${ph}?text=${msg}`, '_blank');
-    entries[i].status = 'sent';
-    save(); render();
     toast('📱 WhatsApp opened for ' + e.name + ' — tap Send!');
   }
 
-  /* ── Delete entry ─────────────────────────────────── */
-  function deleteEntry(i) {
-    if (!confirm(`Remove entry for ${entries[i].name}? This cannot be undone.`)) return;
-    entries.splice(i, 1);
-    save(); render();
-    toast('Entry removed.');
-  }
-
-  /* ── Export / Import (copy entries between devices) ─── */
-  function exportEntries() {
-    const data = JSON.stringify({ entries, nextTicket, exportedAt: new Date().toISOString() });
-    document.getElementById('exportText').value = data;
-    document.getElementById('backupExportArea').style.display = 'block';
-    document.getElementById('backupImportArea').style.display = 'none';
-    // Try to copy to clipboard
+  /* ── Delete entry ── */
+  async function deleteEntry(i) {
+    const e = entries[i];
+    if (!confirm(`Remove entry for ${e.name}? This cannot be undone.`)) return;
+    showSpinner('Deleting…');
     try {
-      navigator.clipboard.writeText(data).catch(() => {});
-    } catch(e) {}
-    document.getElementById('exportText').focus();
-    document.getElementById('exportText').select();
+      const { error } = await sb.from('raffle_entries').delete().eq('id', e._id);
+      if (error) throw error;
+      entries.splice(i, 1);
+      render();
+      toast('Entry removed.');
+    } catch(err) {
+      console.error(err); toast('⚠️ Could not delete. Check connection.');
+    } finally { hideSpinner(); }
   }
 
-  function showImport() {
-    document.getElementById('backupImportArea').style.display = 'block';
-    document.getElementById('backupExportArea').style.display = 'none';
-    document.getElementById('importText').value = '';
-    document.getElementById('importText').focus();
+  /* ── Toast ── */
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3200);
   }
 
-  function importEntries() {
-    const text = document.getElementById('importText').value.trim();
-    if (!text) return;
-    try {
-      const data = JSON.parse(text);
-      if (!Array.isArray(data.entries)) throw new Error('Bad format');
-      const count = data.entries.length;
-      if (!confirm(`This will replace ${entries.length} current entries with ${count} imported entries.\n\nContinue?`)) return;
-      entries    = data.entries;
-      nextTicket = data.nextTicket || 1;
-      save(); render();
-      document.getElementById('backupImportArea').style.display = 'none';
-      toast(`✅ Imported ${count} entries successfully!`);
-    } catch(e) {
-      alert('Could not read that data — make sure you pasted the full exported text.');
+  /* ── Init app ── */
+  function initApp() {
+    document.getElementById('dateDisplay').textContent =
+      new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      document.getElementById('setupBanner').style.display = 'block';
+      document.getElementById('tbody').innerHTML =
+        '<tr><td colspan="9" class="empty">⚙️ Supabase not connected yet — see setup instructions above.</td></tr>';
+      document.getElementById('tableSub').textContent = 'Not connected.';
+      return;
     }
+
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    loadEntries();
   }
 
-  /* ── Handle ?add= URL param (magic link from website) ─ */
-  function checkURLParams() {
-    const params  = new URLSearchParams(window.location.search);
-    const addData = params.get('add');
-    if (!addData) return;
-    history.replaceState({}, '', window.location.pathname);
-
-    try {
-      const d  = JSON.parse(atob(addData));
-      const tc = PKG_TICKETS[String(d.pkg)] || d.tickets || 1;
-
-      const ok = confirm(
-        `New website entry — add to manager?\n\n` +
-        `👤  ${d.name}\n` +
-        `📱  ${d.phone}\n` +
-        `💰  R${d.pkg} · ${tc} ticket${tc > 1 ? 's' : ''}\n` +
-        `🔖  Ref: ${d.ref}\n\n` +
-        `Status: PENDING — tap ✓ Paid once you see the payment.`
-      );
-      if (!ok) return;
-
-      const nums = [];
-      for (let j = 0; j < tc; j++) nums.push(nextTicket++);
-      entries.push({
-        name: d.name, whatsapp: d.phone,
-        pkg: String(d.pkg), tickets: tc,
-        ticketNums: nums.join(', '),
-        notes: '', ref: d.ref,
-        date: new Date().toLocaleDateString('en-ZA'),
-        status: 'pending'
-      });
-      save(); render();
-      toast('✅ Entry added! Tap ✓ Paid once payment confirmed.');
-    } catch (err) {
-      console.warn('Invalid ?add param:', err);
-    }
-  }
-
-  /* ── Boot ─────────────────────────────────────────── */
+  /* ── Boot ── */
   initAuth();
 </script>
 </body>

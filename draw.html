@@ -6,6 +6,8 @@
   <title>Draw the Winner — Team SA Raffle 2026</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
@@ -481,38 +483,70 @@
 </footer>
 
 <script>
-  // ── Load data ──────────────────────────────────────
-  const entries = JSON.parse(localStorage.getItem('raffleEntries') || '[]');
+  // ── Load data from Supabase (paid entries only) ─────
+  const CFG = window.RAFFLE_CONFIG || {};
+  const sb  = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
 
-  // Build full ticket pool
-  const pool = [];
-  entries.forEach(e => {
-    e.ticketNums.split(', ').forEach(n => {
-      pool.push({ name: e.name, ticket: n, whatsapp: e.whatsapp || '' });
-    });
-  });
+  let entries = [];
+  let pool    = [];
 
-  // ── Stats ─────────────────────────────────────────
-  const raised = entries.reduce((s, e) => s + parseInt(e.pkg || 0), 0);
-  document.getElementById('sEntries').textContent = entries.length;
-  document.getElementById('sTickets').textContent = pool.length;
-  document.getElementById('sRaised').textContent  = 'R' + raised.toLocaleString('en-ZA');
-  document.getElementById('epCount').textContent  = pool.length + ' ticket' + (pool.length !== 1 ? 's' : '');
-
-  // ── Entries pills ─────────────────────────────────
-  const epFlex = document.getElementById('epFlex');
-  if (entries.length === 0) {
-    epFlex.innerHTML = '<div class="no-entries">No entries yet — add them in the Raffle Manager first.</div>';
+  async function loadDrawData() {
     document.getElementById('drawBtn').disabled = true;
-  } else {
-    entries.forEach((e, i) => {
-      const el = document.createElement('div');
-      el.className = 'ep-pill';
-      el.id = 'pill-' + i;
-      el.innerHTML = `<span class="ep-name">${e.name}</span><span class="ep-tkts">${e.tickets} ticket${e.tickets > 1 ? 's' : ''}</span>`;
-      epFlex.appendChild(el);
+    const epFlex = document.getElementById('epFlex');
+    epFlex.innerHTML = '<div class="no-entries">Loading entries from cloud…</div>';
+
+    try {
+      // Only confirmed/sent (paid) entries are eligible for the draw
+      const { data: rows, error } = await sb
+        .from('raffle_entries')
+        .select('*')
+        .in('status', ['confirmed', 'sent'])
+        .order('id');
+      if (error) throw error;
+
+      entries = (rows || []).map(r => ({
+        name: r.name, whatsapp: r.whatsapp || '',
+        pkg: r.pkg, tickets: r.tickets, ticketNums: r.ticket_nums || ''
+      }));
+    } catch (err) {
+      console.error(err);
+      epFlex.innerHTML = '<div class="no-entries">⚠️ Could not load entries. Check your connection and refresh.</div>';
+      return;
+    }
+
+    // Build the full ticket pool
+    pool = [];
+    entries.forEach(e => {
+      String(e.ticketNums).split(',').map(s => s.trim()).filter(Boolean).forEach(n => {
+        pool.push({ name: e.name, ticket: n, whatsapp: e.whatsapp || '' });
+      });
     });
+
+    // Stats
+    const raised = entries.reduce((s, e) => s + parseInt(e.pkg || 0), 0);
+    document.getElementById('sEntries').textContent = entries.length;
+    document.getElementById('sTickets').textContent = pool.length;
+    document.getElementById('sRaised').textContent  = 'R' + raised.toLocaleString('en-ZA');
+    document.getElementById('epCount').textContent  = pool.length + ' ticket' + (pool.length !== 1 ? 's' : '');
+
+    // Entry pills
+    if (entries.length === 0) {
+      epFlex.innerHTML = '<div class="no-entries">No paid entries yet — confirm payments in the Raffle Manager first.</div>';
+      document.getElementById('drawBtn').disabled = true;
+    } else {
+      epFlex.innerHTML = '';
+      entries.forEach((e, i) => {
+        const el = document.createElement('div');
+        el.className = 'ep-pill';
+        el.id = 'pill-' + i;
+        el.innerHTML = `<span class="ep-name">${e.name}</span><span class="ep-tkts">${e.tickets} ticket${e.tickets > 1 ? 's' : ''}</span>`;
+        epFlex.appendChild(el);
+      });
+      document.getElementById('drawBtn').disabled = false;
+    }
   }
+
+  loadDrawData();
 
   // ── Draw animation ────────────────────────────────
   let isDrawing = false;
@@ -575,7 +609,8 @@
 
     // Highlight winner pill
     entries.forEach((e, i) => {
-      if (e.ticketNums.split(', ').includes(w.ticket)) {
+      const nums = String(e.ticketNums).split(',').map(s => s.trim());
+      if (nums.includes(String(w.ticket))) {
         const pill = document.getElementById('pill-' + i);
         if (pill) pill.classList.add('is-winner');
       }
