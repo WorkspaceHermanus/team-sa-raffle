@@ -749,8 +749,8 @@
 
     <div class="goal-block">
       <div class="goal-labels">
-        <span>Fundraising goal</span>
-        <strong>R50,000</strong>
+        <span><strong id="goalRaised" style="color:var(--gold);font-size:13px">R0</strong> &nbsp;raised so far</span>
+        <strong>Goal · R50,000</strong>
       </div>
       <div class="goal-track">
         <div class="goal-fill" id="goalFill"></div>
@@ -1027,7 +1027,6 @@
 
 <script>
   /* ── Config ───────────────────────────────────────── */
-  const RAISED        = 0;
   const GOAL          = 50000;
   const PAYFAST_READY = true;
   const MERCHANT_ID   = '12344237';
@@ -1048,13 +1047,31 @@
 
   /* ── Init ─────────────────────────────────────────── */
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('goalFill').style.width =
-        Math.min((RAISED / GOAL) * 100, 100) + '%';
-    }, 500);
     document.querySelectorAll('[name="merchant_id"]').forEach(el => el.value = MERCHANT_ID);
     document.querySelectorAll('[name="merchant_key"]').forEach(el => el.value = MERCHANT_KEY);
+    loadProgress();
   });
+
+  /* ── Live fundraising total from the cloud ───────── */
+  async function loadProgress() {
+    if (!sb) return;
+    try {
+      const { data, error } = await sb
+        .from('raffle_entries')
+        .select('pkg,status')
+        .in('status', ['confirmed', 'sent']);   // verified (paid) money only
+      if (error) throw error;
+      const raised = (data || []).reduce((s, e) => s + (parseInt(e.pkg) || 0), 0);
+      const raisedEl = document.getElementById('goalRaised');
+      if (raisedEl) raisedEl.textContent = 'R' + raised.toLocaleString('en-ZA');
+      setTimeout(() => {
+        document.getElementById('goalFill').style.width =
+          Math.min((raised / GOAL) * 100, 100) + '%';
+      }, 400);
+    } catch (err) {
+      console.error('Progress load failed:', err);
+    }
+  }
 
   /* ── Unique reference (generated when modal opens) ── */
   function generateRef() {
